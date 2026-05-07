@@ -1,0 +1,121 @@
+---
+import PageHero from "@components/PageHero.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { excursionsAndSkiSections, pageMeta } from "@data/content";
+---
+
+<BaseLayout
+  title={pageMeta.escursioniSci.title}
+  description={pageMeta.escursioniSci.description}
+>
+  <PageHero
+    eyebrow="Escursioni e Sci"
+    title="Estate e inverno in quota"
+    lead="Due tracce stagionali per raccontare il cammino verso il Barrasso e la montagna innevata, con immagini e testi che potremo aggiornare con gli itinerari definitivi."
+  />
+
+  <section class="paper-surface py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-16">
+        {
+          excursionsAndSkiSections.map((item, index) => (
+            <article
+              class:list={[
+                "grid items-center gap-8 lg:grid-cols-2 lg:gap-14",
+                index % 2 === 1 ? "lg:[&_.season-media]:order-2" : "",
+              ]}
+            >
+              <p class="mb-[-1rem] text-sm font-bold uppercase tracking-[0.28em] text-majella-red lg:hidden">
+                {item.season}
+              </p>
+
+              <div class="season-media reveal overflow-hidden rounded-[0.625rem] border border-white/70 bg-majella-lightgreen shadow-soft">
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcset={`/assets/images/${item.imageBase}-400.webp 400w, /assets/images/${item.imageBase}-800.webp 800w, /assets/images/${item.imageBase}-1200.webp 1200w`}
+                    sizes="(max-width: 1023px) 100vw, 50vw"
+                  />
+                  <img
+                    src={`/assets/images/${item.imageFallback}`}
+                    srcset={`/assets/images/${item.imageBase}-400.jpg 400w, /assets/images/${item.imageBase}-800.jpg 800w, /assets/images/${item.imageBase}-1200.jpg 1200w`}
+                    sizes="(max-width: 1023px) 100vw, 50vw"
+                    alt={item.imageAlt}
+                    class="h-[24rem] w-full object-cover transition duration-700 hover:scale-[1.03] sm:h-[30rem] lg:h-[34rem]"
+                    loading={index === 0 ? "eager" : "lazy"}
+                    fetchpriority={index === 0 ? "high" : "auto"}
+                    width="1200"
+                    height="1600"
+                  />
+                </picture>
+              </div>
+
+              <div class="reveal reveal-delay">
+                <p class="mb-4 hidden text-sm font-bold uppercase tracking-[0.28em] text-majella-red lg:block">
+                  {item.season}
+                </p>
+                <h2 class="font-display text-3xl font-black uppercase leading-tight text-majella-green sm:text-5xl">
+                  {item.title}
+                </h2>
+                <div class="mt-6 space-y-5 text-lg leading-8 text-gray-600">
+                  {item.paragraphs?.map((paragraph) => (
+                    <p>{paragraph}</p>
+                  ))}
+                  {item.sections?.map((section) => (
+                    <section class="space-y-3">
+                      <h3 class="font-display text-2xl font-black uppercase leading-tight text-majella-green">
+                        {section.title}
+                      </h3>
+                      <p>{section.text}</p>
+                    </section>
+                  ))}
+                </div>
+                {item.moreInfoUrl && (
+                  <p class="mt-7 text-left text-lg font-bold text-majella-green">
+                    Per maggiori info:{" "}
+                    <a
+                      href={item.moreInfoUrl}
+                      class="text-majella-red underline decoration-majella-red/40 underline-offset-4 transition hover:text-red-800"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {item.moreInfoLabel}
+                    </a>
+                  </p>
+                )}
+                {item.extraRoutes?.map((route) => (
+                  <div class="mt-12 border-t border-majella-green/15 pt-10">
+                    <h2 class="font-display text-3xl font-black uppercase leading-tight text-majella-green sm:text-5xl">
+                      {route.title}
+                    </h2>
+                    <div class="mt-6 space-y-5 text-lg leading-8 text-gray-600">
+                      {route.sections.map((section) => (
+                        <section class="space-y-3">
+                          <h3 class="font-display text-2xl font-black uppercase leading-tight text-majella-green">
+                            {section.title}
+                          </h3>
+                          <p>{section.text}</p>
+                        </section>
+                      ))}
+                    </div>
+                    <p class="mt-7 text-left text-lg font-bold text-majella-green">
+                      Per maggiori info:{" "}
+                      <a
+                        href={route.moreInfoUrl}
+                        class="text-majella-red underline decoration-majella-red/40 underline-offset-4 transition hover:text-red-800"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {route.moreInfoLabel}
+                      </a>
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

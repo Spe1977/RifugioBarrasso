@@ -18,13 +18,13 @@ const isActive = (href: string) =>
   >
     <a href="/" class="flex min-w-0 items-center gap-3">
       <picture>
-        <source srcset="/assets/brand/logo2-96.webp" type="image/webp" />
+        <source srcset="/assets/brand/logo.png" type="image/png" />
         <img
-          src="/assets/brand/logo2-96.png"
-          alt=""
-          class="h-14 w-14 shrink-0 object-contain"
-          width="56"
-          height="56"
+          src="/assets/brand/logo.png"
+          alt="Logo del Rifugio Paolo Barrasso"
+          class="h-[54px] w-[54px] shrink-0 object-contain"
+          width="54"
+          height="54"
         />
       </picture>
       <span class="min-w-0">
@@ -42,7 +42,7 @@ const isActive = (href: string) =>
     </a>
 
     <nav
-      class="hidden items-center gap-5 lg:flex"
+      class="hidden items-center gap-4 xl:flex 2xl:gap-5"
       aria-label="Navigazione principale"
     >
       {
@@ -50,7 +50,7 @@ const isActive = (href: string) =>
           <a
             href={item.href}
             class:list={[
-              "border-b-2 py-2 text-xs font-bold uppercase tracking-widest transition-colors",
+              "border-b-2 py-2 text-[0.68rem] font-bold uppercase tracking-widest transition-colors 2xl:text-xs",
               isActive(item.href)
                 ? "border-majella-red text-majella-green"
                 : "border-transparent text-gray-500 hover:text-majella-green",
@@ -63,7 +63,7 @@ const isActive = (href: string) =>
     </nav>
 
     <button
-      class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-majella-green/20 text-majella-green lg:hidden"
+      class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-majella-green/20 text-majella-green xl:hidden"
       type="button"
       aria-label="Apri menu"
       aria-expanded="false"
@@ -80,7 +80,7 @@ const isActive = (href: string) =>
   </div>
 
   <nav
-    class="hidden border-t border-majella-green/10 bg-white px-4 py-3 lg:hidden"
+    class="hidden border-t border-majella-green/10 bg-white px-4 py-3 xl:hidden"
     data-mobile-menu
   >
     <div class="mx-auto grid max-w-7xl gap-1">

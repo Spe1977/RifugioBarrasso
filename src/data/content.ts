@@ -94,6 +94,62 @@ export const galleryImages = [
   "Foto da Leonardo(16).jpg",
 ];
 
+export const excursionsAndSkiSections = [
+  {
+    season: "Estate",
+    title: "Monte Rapina e Pescofalcone",
+    imageBase: "36",
+    imageFallback: "36-1200.jpg",
+    imageAlt:
+      "Escursionisti sui prati della Majella al tramonto vicino al Rifugio Paolo Barrasso",
+    paragraphs: [
+      "Il sentiero porta inizialmente in località Prato della Corte per poi inoltrarsi nel bosco.",
+      "Successivamente si sbuca sulla cresta da dove sono visibili la Valle dell'Orfento, il Monte Cavallo e il Monte Focalone. Il tracciato continua salendo fino a scorgere all'orizzonte il limite della Piana della Rapina. L’escursione è in costante salita terminando sulla vetta del Monte Rapina da cui si può godere di ampi panorami.",
+    ],
+    moreInfoUrl:
+      "https://www.caramanicotermenatura.it/it/vivi/gli-itinerari/i-sentieri-principali/Monte-Rapina-e-Pescofalcone-i76",
+    moreInfoLabel: "Monte Rapina e Pescofalcone",
+  },
+  {
+    season: "Inverno",
+    title: "PESCO FALCONE 2657 MT. PER IL MONTE RAPINA",
+    imageBase: "72",
+    imageFallback: "72-1200.jpg",
+    imageAlt: "Sci alpinisti sulla neve con vista sulle montagne della Majella",
+    sections: [
+      {
+        title: "Salita",
+        text: "Si inizia la salita dal bivio con la strada forestale per Guado S. Antonio, normalmente innevata e percorribile in auto solo a primavera inoltrata. Trascurando il suo tracciato, si aggira un colle sul lato nord, fino ad intercettare in una selletta la stessa strada forestale e raggiungere da qui la cresta nord ovest del M. Rapina. Arrivato sulla cresta, risalire fino all’altezza di una faggeta, alla cui base si trova il rifugio “Paolo Barrasso”. Dal rifugio, salire traversando in direzione est, per raggiungere la cresta nord ovest del M. Rapina che si affaccia sulla Valle dell’Orfento. Seguire quasi integralmente la cresta nord ovest, prestando attenzione alla possibilità di cornici, fino alla vetta del M. Rapina a 2273m. Dal lato nord della vetta, avanzare fino a raggiungere la cresta del M. Pesco Falcone. Dopo un primo tratto ripido, la pendenza della cresta diminuisce per aumentare di nuovo in prossimità di un roccione che si aggira sul lato destro. La salita termina presso alcune roccette dove la cresta nord ovest del Pesco Falcone si biforca attorno alla depressione di Rava Cupa, detta “Il Cucchiaio”.",
+      },
+      {
+        title: "Discesa",
+        text: "Dalle roccette scendere per qualche decina di metri, traversare verso destra fino ad entrare nella depressione. Percorrere il grande canale nel fondo seguendone l’ampia curva fino a quando si restringe in una gola fra due paretine rocciose dove termina il tratto sciabile. Rimettere le pelli e prendere appena dopo la gola, a sinistra, un sentiero che traversa a mezza costa, salendo in direzione ovest prestando attenzione alle possibili slavine, fino a sbucare dal bosco che ricopre la cresta nord ovest del M. Rapina all’altezza dell’intaglio di mezzo. Scendere infine fino a raggiungere la carrozzabile che porta a Guado S. Antonio.",
+      },
+    ],
+    moreInfoUrl:
+      "https://www.caramanicotermenatura.it/it/vivi/in-inverno/scialpinismo/Pesco-Falcone-m-2657-per-il-Monte-Rapina-sk102",
+    moreInfoLabel: "Pesco Falcone m 2657 per il Monte Rapina",
+    extraRoutes: [
+      {
+        title: "MONTE RAPINA 2027 MT.",
+        sections: [
+          {
+            title: "Salita",
+            text: "La salita inizia dal bivio con la strada forestale per Guado S. Antonio, normalmente innevata e percorribile in auto solo a primavera inoltrata. La strada forestale sale a mezza costa il versante ovest del rilievo, quindi piega decisamente a nord, tagliando per intero il versante occidentale del M.Rapina fino a Guado S. Antonio, dove è chiusa da una sbarra. Trascurando il suo tracciato, si aggira un colle sul lato nord, fino ad intercettare la stessa strada forestale in una selletta, e raggiungere da qui la cresta del M. Rapina. Arrivato sulla cresta, dovrai risalire fino all’altezza di una faggeta di forma circolare alla cui base si trova il rifugio “Paolo Barrasso”. Dal rifugio salire traversando in direzione est, per raggiungere la cresta nord ovest del M. Rapina che si affaccia sulla Valle dell’Orfento. Seguire quasi integralmente la cresta nord ovest e prestare attenzione alle possibili cornici fino alla vetta, simile ad un catino, del M. Rapina a 2027m.",
+          },
+          {
+            title: "Discesa",
+            text: "Dalla vetta del M. Rapina la prima parte della discesa può avvenire per un canale che scende direttamente verso il rifugio “Paolo Barrasso”, costeggiando la faggeta circolare sul lato nord, oppure per l’ampio Prato della Corte. Variante alla discesa dalla vetta, con direzione ovest, dalla cresta che guarda il versante del Morrone: scendere per 50m in un ripido canale e traversa verso destra sotto una prima fascia rocciosa. Continuare traversando, per costeggiare una seconda fascia di rocce e raggiungere un ampio costone che finisce sulla strada a sud del Colle della Tenda. Scendere infine lungo il costone prestando attenzione all’ultimo tratto della discesa che si svolge fra i pini di una zona di rimboschimento.",
+          },
+        ],
+        moreInfoUrl:
+          "https://www.caramanicotermenatura.it/it/vivi/in-inverno/scialpinismo/Monte-Rapina-m-2027-sk101",
+        moreInfoLabel: "Monte Rapina m 2027",
+      },
+    ],
+  },
+];
+
 /** Re-exported from the canonical dediche data file. */
 export { dediche } from "./dediche";
 
@@ -111,6 +167,11 @@ export const pageMeta = {
   galleria: {
     title: `Galleria | ${site.name}`,
     description: "Foto e immagini del Rifugio Paolo Barrasso e della Maiella.",
+  },
+  escursioniSci: {
+    title: `Escursioni e Sci | ${site.name}`,
+    description:
+      "Proposte estive e invernali per vivere i sentieri e la neve intorno al Rifugio Paolo Barrasso.",
   },
   prenotazioni: {
     title: `Prenotazioni | ${site.name}`,

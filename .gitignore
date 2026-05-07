@@ -12,3 +12,4 @@ screen/
 *.log
 playwright-report/
 test-results/
+output/

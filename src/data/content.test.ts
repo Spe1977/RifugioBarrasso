@@ -20,6 +20,7 @@ describe("site content", () => {
       "/",
       "/storia/",
       "/galleria/",
+      "/escursioni-e-sci/",
       "/prenotazioni/",
       "/quaderno-del-rifugio/",
       "/eventi/",

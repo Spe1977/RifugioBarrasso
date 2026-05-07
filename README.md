@@ -13,7 +13,7 @@ Sito statico multipagina del Rifugio Paolo Barrasso, realizzato con Astro e Tail
 
 ## Funzionalità
 
-- Pagine statiche: home, storia, galleria, prenotazioni, quaderno del rifugio, eventi, info e regole, privacy, 404.
+- Pagine statiche: home, storia, galleria, escursioni e sci, prenotazioni, quaderno del rifugio, eventi, info e regole, privacy, 404.
 - Galleria fotografica locale senza dipendenze esterne.
 - Modulo prenotazioni con validazione lato client, dichiarazioni obbligatorie (incluso luogo di nascita e numero documento) e invio a Google Apps Script.
 - Calendario disponibilità caricato solo dopo consenso dell'utente.

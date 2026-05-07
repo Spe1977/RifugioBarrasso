@@ -6,7 +6,8 @@ export const site = {
   domain: "https://www.rifugiobarrasso.com",
   operativeEmail: "rifugio.barrasso@gmail.com",
   technicalEmail: "sito.barrasso@gmail.com",
-  manager: "Associazione Amici del Barrasso",
+  manager:
+    "Associazione Culturale Amici del Barrasso Caramanico Terme (PE) C.F. 91177910683",
   municipality: "Comune di Caramanico Terme",
   location: "Prato della Corte, pendici del Monte Rapina",
 };
@@ -29,6 +30,7 @@ export const navigation = [
   { label: "Home", href: "/" },
   { label: "Storia", href: "/storia/" },
   { label: "Galleria", href: "/galleria/" },
+  { label: "Escursioni e Sci", href: "/escursioni-e-sci/" },
   { label: "Prenotazioni", href: "/prenotazioni/" },
   { label: "Quaderno", href: "/quaderno-del-rifugio/" },
   { label: "Eventi", href: "/eventi/" },

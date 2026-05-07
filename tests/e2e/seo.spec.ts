@@ -4,6 +4,7 @@ test.describe("SEO and Accessibility Basics", () => {
   const pages = [
     { url: "/", title: "Rifugio Paolo Barrasso" },
     { url: "/storia/", title: "Storia" },
+    { url: "/escursioni-e-sci/", title: "Escursioni e Sci" },
     { url: "/info-e-regole/", title: "Info e Regole" },
     { url: "/prenotazioni/", title: "Prenotazioni" },
     { url: "/quaderno-del-rifugio/", title: "Quaderno" },
