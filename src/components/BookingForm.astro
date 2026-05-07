@@ -1,0 +1,692 @@
+---
+import { bookingConfig, site } from "@data/site";
+
+const endpoint = import.meta.env.PUBLIC_BOOKING_ENDPOINT || "";
+const hasEndpoint = endpoint.length > 0;
+const formAction = hasEndpoint ? endpoint : "#";
+
+const bookingDeclarations = [
+  {
+    name: "accettazione_regole",
+    short: "Accetto regolamento e norme di comportamento.",
+    title: "Regolamento",
+    text: "Dichiaro di aver preso visione e di accettare il Regolamento di utilizzo della struttura e delle norme di comportamento.",
+  },
+  {
+    name: "accettazione_contributo",
+    short: "Prendo atto del contributo e della riconsegna chiavi.",
+    title: "Contributo e chiavi",
+    text: "Dichiaro di aver preso visione circa le modalità di versamento del contributo spese forfettario di 10 euro giornaliere e del ritiro della chiave del locale chiuso del rifugio e mi impegno alla restituzione della stessa dove concordato al termine del periodo di utilizzo.",
+  },
+  {
+    name: "presa_visione_responsabilita",
+    short: "Prendo atto delle responsabilità di utilizzo.",
+    title: "Responsabilità",
+    text: "Il gestore del Rifugio Paolo Barrasso, l'Associazione Amici del Barrasso ed il proprietario, il Comune di Caramanico Terme non si assumono alcuna responsabilità per eventuali infortuni, incidenti o danni verificatisi all'interno del rifugio stesso. L'uso di tutti i servizi e delle attrezzature del rifugio è a proprio rischio e pericolo. Si consiglia vivamente ai fruitori di utilizzare il buon senso e prendere tutte le precauzioni necessarie per garantire la propria sicurezza e quella degli altri.",
+  },
+  {
+    name: "accettazione_privacy",
+    short: "Ho letto l'informativa privacy e autorizzo il trattamento dati.",
+    title: "Privacy",
+    text: "Acconsento ai sensi dell'articolo 13 del GDPR 2016/679 e del D.lgs. 196/2003 \"Codice in materia di protezione dei dati personali\", al trattamento dei dati raccolti attraverso il presente modulo esclusivamente all'interno dell'Associazione Amici del Barrasso. I dati non saranno divulgati a terzi. Su richiesta scritta si provvederà alla cancellazione o modifica dei dati comunicati.",
+  },
+];
+---
+
+<form
+  class="grid gap-6"
+  action={formAction}
+  method="post"
+  data-booking-form
+  data-endpoint={endpoint}
+  aria-describedby="booking-note"
+  novalidate
+>
+  <input type="hidden" name="tipo_richiesta" value="pernottamento" />
+  <input type="hidden" name="lingua" value="it" />
+  <input type="hidden" name="form_version" value={bookingConfig.formVersion} />
+  <input type="hidden" name="page_url" value="" data-page-url />
+  <input type="hidden" name="submitted_at_client" value="" data-submitted-at />
+  <input
+    class="hidden"
+    type="text"
+    name="honeypot"
+    tabindex="-1"
+    autocomplete="off"
+  />
+
+  <div class="grid gap-5 md:grid-cols-2">
+    <label class="grid gap-2 text-sm font-bold text-majella-green">
+      Nome e Cognome *
+      <input
+        class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone"
+        name="nome"
+        autocomplete="name"
+        required
+      />
+      <span
+        class="hidden text-xs font-normal text-majella-red"
+        data-error="nome"></span>
+    </label>
+
+    <label class="grid gap-2 text-sm font-bold text-majella-green">
+      Data di nascita *
+      <input
+        class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone"
+        name="data_nascita"
+        type="date"
+        required
+      />
+      <span
+        class="hidden text-xs font-normal text-majella-red"
+        data-error="data_nascita"></span>
+    </label>
+
+    <label class="grid gap-2 text-sm font-bold text-majella-green">
+      Indirizzo Email *
+      <input
+        class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone"
+        name="email"
+        type="email"
+        autocomplete="email"
+        required
+      />
+      <span
+        class="hidden text-xs font-normal text-majella-red"
+        data-error="email"></span>
+    </label>
+
+    <label class="grid gap-2 text-sm font-bold text-majella-green">
+      Numero di Telefono *
+      <input
+        class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone"
+        name="telefono"
+        autocomplete="tel"
+        required
+      />
+      <span
+        class="hidden text-xs font-normal text-majella-red"
+        data-error="telefono"></span>
+    </label>
+
+    <label class="grid gap-2 text-sm font-bold text-majella-green">
+      Data di Arrivo (ritiro chiavi) *
+      <input
+        class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone"
+        name="data_arrivo"
+        type="date"
+        required
+      />
+      <span
+        class="hidden text-xs font-normal text-majella-red"
+        data-error="data_arrivo"></span>
+    </label>
+
+    <label class="grid gap-2 text-sm font-bold text-majella-green">
+      Data di Partenza (riconsegna chiavi) *
+      <input
+        class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone"
+        name="data_partenza"
+        type="date"
+        required
+      />
+      <span
+        class="hidden text-xs font-normal text-majella-red"
+        data-error="data_partenza"></span>
+    </label>
+  </div>
+
+  <div class="grid gap-5 md:grid-cols-2">
+    <fieldset class="grid gap-3">
+      <legend class="text-sm font-bold text-majella-green mb-2"
+        >Numero notti (massimo {bookingConfig.maxNotti}) *</legend
+      >
+      <label
+        class="flex items-center gap-3 text-sm text-gray-700 cursor-pointer"
+      >
+        <input
+          type="radio"
+          name="notti"
+          value="1"
+          class="h-4 w-4 accent-majella-red"
+          required
+        />
+        1 Notte
+      </label>
+      <label
+        class="flex items-center gap-3 text-sm text-gray-700 cursor-pointer"
+      >
+        <input
+          type="radio"
+          name="notti"
+          value="2"
+          class="h-4 w-4 accent-majella-red"
+          required
+        />
+        2 Notti
+      </label>
+      <span
+        class="hidden text-xs font-normal text-majella-red"
+        data-error="notti"></span>
+    </fieldset>
+
+    <label class="grid gap-2 text-sm font-bold text-majella-green self-start">
+      Numero Totale di Ospiti (massimo {bookingConfig.maxPersone}) *
+      <select
+        class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone"
+        name="persone"
+        required
+      >
+        <option value="">Seleziona...</option>
+        {
+          [...Array(bookingConfig.maxPersone)].map((_, i) => (
+            <option value={i + 1}>
+              {i + 1} partecipante{i + 1 > 1 ? "i" : ""}
+            </option>
+          ))
+        }
+      </select>
+      <span
+        class="hidden text-xs font-normal text-majella-red"
+        data-error="persone"></span>
+    </label>
+  </div>
+
+  <label class="grid gap-2 text-sm font-bold text-majella-green">
+    <span>
+      Elenco dei partecipanti (se previsti) *
+      <span class="block mt-1 text-xs font-normal leading-5 text-gray-600">
+        Il richiedente in qualità di capogruppo, elenca di seguito il nome ed il
+        cognome di ogni partecipante, consapevole delle sanzioni penali previste
+        dall'art 76 del D.P.R. 28 Dicembre 2000 nr. 445 e s.m.i, in caso di
+        dichiarazioni mendaci, di cui all'art. 75 del richiamato D.P.R.
+      </span>
+    </span>
+    <textarea
+      class="min-h-24 rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone"
+      name="elenco_partecipanti"
+      required></textarea>
+    <span
+      class="hidden text-xs font-normal text-majella-red"
+      data-error="elenco_partecipanti"></span>
+  </label>
+
+  <fieldset class="grid gap-3">
+    <legend class="text-sm font-bold text-majella-green mb-2"
+      >Attività prevista *</legend
+    >
+    <label class="flex items-center gap-3 text-sm text-gray-700 cursor-pointer">
+      <input
+        type="radio"
+        name="attivita_prevista"
+        value="Solo escursione"
+        class="h-4 w-4 accent-majella-red"
+        required
+      />
+      Solo escursione
+    </label>
+    <label class="flex items-center gap-3 text-sm text-gray-700 cursor-pointer">
+      <input
+        type="radio"
+        name="attivita_prevista"
+        value="Escursione e pernottamento"
+        class="h-4 w-4 accent-majella-red"
+        required
+      />
+      Escursione e pernottamento
+    </label>
+    <span
+      class="hidden text-xs font-normal text-majella-red"
+      data-error="attivita_prevista"></span>
+  </fieldset>
+
+  <label class="grid gap-2 text-sm font-bold text-majella-green">
+    Note aggiuntive
+    <textarea
+      class="min-h-20 rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone"
+      name="note"></textarea>
+  </label>
+
+  <div
+    class="grid gap-4 border-t border-gray-100 pt-6 text-sm leading-6 text-gray-700"
+  >
+    <div
+      class="rounded-lg border border-majella-green/12 bg-majella-lightgreen/60 p-4"
+    >
+      <div
+        class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
+      >
+        <div>
+          <strong
+            class="block font-black uppercase tracking-widest text-majella-green"
+          >
+            Dichiarazioni e privacy
+          </strong>
+          <p class="mt-2 text-sm leading-6 text-gray-700">
+            Prima dell'invio conferma le dichiarazioni obbligatorie su regole,
+            contributo, responsabilità e trattamento dei dati.
+          </p>
+        </div>
+        <button
+          class="inline-flex w-fit shrink-0 items-center justify-center rounded-full border border-majella-green/20 bg-white px-4 py-2 text-xs font-black uppercase tracking-widest text-majella-green transition hover:border-majella-red hover:text-majella-red"
+          type="button"
+          data-open-declarations
+        >
+          Leggi dettagli e privacy
+        </button>
+      </div>
+    </div>
+
+    {
+      bookingDeclarations.map((declaration) => (
+        <>
+          <label class="flex items-start gap-3">
+            <input
+              class="mt-1 h-4 w-4 shrink-0 accent-majella-red"
+              type="checkbox"
+              name={declaration.name}
+              required
+            />
+            <span>{declaration.short}</span>
+          </label>
+          <span
+            class="hidden text-xs text-majella-red"
+            data-error={declaration.name}
+          />
+        </>
+      ))
+    }
+
+    <label class="flex gap-3 items-start">
+      <input
+        class="mt-1 h-4 w-4 shrink-0 accent-majella-red"
+        type="checkbox"
+        name="consenso_ricontatto"
+        required
+      />
+      <span
+        >Accetto di essere ricontattato dal gestore per la conferma della
+        disponibilità.</span
+      >
+    </label>
+    <span
+      class="hidden text-xs text-majella-red"
+      data-error="consenso_ricontatto"></span>
+  </div>
+
+  <dialog
+    class="booking-dialog w-[min(92vw,720px)] rounded-2xl border border-majella-green/14 bg-white p-0 text-majella-darkstone shadow-soft backdrop:bg-majella-green/70"
+    data-declarations-dialog
+    aria-labelledby="booking-declarations-title"
+  >
+    <div class="max-h-[82svh] overflow-y-auto">
+      <div
+        class="sticky top-0 z-10 flex items-start justify-between gap-6 border-b border-majella-green/10 bg-white px-5 py-4 sm:px-6"
+      >
+        <div>
+          <p
+            class="text-xs font-black uppercase tracking-widest text-majella-red"
+          >
+            Prenotazioni
+          </p>
+          <h3
+            id="booking-declarations-title"
+            class="mt-1 font-display text-2xl font-black uppercase text-majella-green"
+          >
+            Dichiarazioni e privacy
+          </h3>
+        </div>
+        <button
+          class="rounded-full border border-majella-green/15 px-3 py-2 text-sm font-black uppercase text-majella-green transition hover:border-majella-red hover:text-majella-red"
+          type="button"
+          data-close-declarations
+          aria-label="Chiudi dichiarazioni e privacy"
+        >
+          Chiudi
+        </button>
+      </div>
+
+      <div class="grid gap-4 px-5 py-5 sm:px-6">
+        {
+          bookingDeclarations.map((declaration, index) => (
+            <article class="border-l-4 border-majella-red bg-majella-stone px-5 py-4">
+              <h4 class="font-display text-sm font-black uppercase tracking-widest text-majella-green">
+                {index + 1}. {declaration.title}
+              </h4>
+              <p class="mt-3 text-sm leading-7 text-gray-700">
+                {declaration.text}
+              </p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </dialog>
+
+  <div class="rounded-md bg-amber-50 p-4 border border-amber-200 mt-2">
+    <p class="text-sm text-amber-900 leading-6">
+      <strong>Ritiro chiavi:</strong> Le chiavi del rifugio vanno ritirate presso
+      la <a
+        href={bookingConfig.ritiroChiavi.mapsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-bold underline text-majella-green"
+        >{bookingConfig.ritiroChiavi.nome}</a
+      > in {bookingConfig.ritiroChiavi.indirizzo}, {
+        bookingConfig.ritiroChiavi.orario
+      }. La procedura online serve solo a inviare la richiesta e bloccare le
+      date dopo conferma del gestore: non è previsto alcun pagamento sul sito.
+      Il contributo viene versato di persona al momento del ritiro delle chiavi.
+    </p>
+  </div>
+
+  <p id="booking-note" class="text-sm leading-6 text-gray-600 mt-2">
+    La richiesta non equivale a prenotazione confermata. Le notifiche operative
+    saranno inviate a
+    <a
+      class="font-bold text-majella-green underline"
+      href={`mailto:${site.operativeEmail}`}>{site.operativeEmail}</a
+    >.
+  </p>
+
+  <button
+    class="inline-flex w-fit items-center justify-center gap-3 rounded-full bg-majella-red px-7 py-3 text-sm font-black uppercase tracking-widest text-white transition hover:bg-red-800 disabled:cursor-wait disabled:opacity-60"
+    type="submit"
+    data-submit-btn
+  >
+    <span data-submit-label>Invia richiesta</span>
+    <svg
+      class="hidden h-5 w-5 animate-spin"
+      data-submit-spinner
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        stroke-width="3"
+        class="opacity-25"></circle>
+      <path
+        fill="currentColor"
+        d="M4 12a8 8 0 0 1 8-8v3a5 5 0 0 0-5 5H4z"
+        class="opacity-75"></path>
+    </svg>
+  </button>
+
+  <!-- Success feedback -->
+  <div
+    class="hidden border-l-4 border-green-600 bg-green-50 px-5 py-4 text-sm font-bold text-green-800"
+    data-booking-success
+  >
+    ✓ Richiesta inviata con successo! Riceverai una email di conferma ricezione.
+    Il gestore ti ricontatterà per verificare la disponibilità.
+  </div>
+
+  <!-- Error feedback -->
+  <div
+    class="hidden border-l-4 border-majella-red bg-red-50 px-5 py-4 text-sm font-bold text-red-800"
+    data-booking-error
+  >
+    Si è verificato un errore nell'invio. Riprova tra qualche istante oppure
+    contatta direttamente
+    <a class="underline" href={`mailto:${site.operativeEmail}`}
+      >{site.operativeEmail}</a
+    >.
+  </div>
+
+  <!-- Fallback when endpoint is not configured -->
+  {
+    !hasEndpoint && (
+      <div
+        class="border-l-4 border-majella-red bg-majella-lightgreen px-4 py-3 text-sm font-bold text-majella-green"
+        data-booking-fallback
+      >
+        Modulo predisposto. Il collegamento a Google Apps Script sarà
+        configurato quando l'endpoint sarà impostato nelle variabili d'ambiente.
+      </div>
+    )
+  }
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("[data-booking-form]");
+  const submitBtn =
+    document.querySelector<HTMLButtonElement>("[data-submit-btn]");
+  const submitLabel = document.querySelector("[data-submit-label]");
+  const submitSpinner = document.querySelector("[data-submit-spinner]");
+  const successEl = document.querySelector("[data-booking-success]");
+  const errorEl = document.querySelector("[data-booking-error]");
+  const declarationsDialog = document.querySelector<HTMLDialogElement>(
+    "[data-declarations-dialog]",
+  );
+  const openDeclarationsBtn = document.querySelector<HTMLButtonElement>(
+    "[data-open-declarations]",
+  );
+  const closeDeclarationsBtn = document.querySelector<HTMLButtonElement>(
+    "[data-close-declarations]",
+  );
+
+  openDeclarationsBtn?.addEventListener("click", () => {
+    if (declarationsDialog?.showModal) {
+      declarationsDialog.showModal();
+    }
+  });
+
+  closeDeclarationsBtn?.addEventListener("click", () => {
+    declarationsDialog?.close();
+  });
+
+  declarationsDialog?.addEventListener("click", (event) => {
+    if (event.target === declarationsDialog) {
+      declarationsDialog.close();
+    }
+  });
+
+  /** Show inline validation error. */
+  function showError(name: string, msg: string) {
+    const el = document.querySelector(`[data-error="${name}"]`);
+    if (el) {
+      el.textContent = msg;
+      el.classList.remove("hidden");
+    }
+  }
+
+  /** Clear all inline validation errors. */
+  function clearErrors() {
+    document.querySelectorAll("[data-error]").forEach((el) => {
+      el.textContent = "";
+      el.classList.add("hidden");
+    });
+    successEl?.classList.add("hidden");
+    errorEl?.classList.add("hidden");
+  }
+
+  /** Simple client-side validation mirroring booking-validation.ts. */
+  function validateClient(fd: FormData): boolean {
+    let valid = true;
+
+    const nome = (fd.get("nome") as string) || "";
+    if (nome.trim().length === 0) {
+      showError("nome", "Nome e cognome obbligatorio.");
+      valid = false;
+    }
+
+    const dataNascita = (fd.get("data_nascita") as string) || "";
+    if (dataNascita.trim().length === 0) {
+      showError("data_nascita", "Data di nascita obbligatoria.");
+      valid = false;
+    }
+
+    const email = (fd.get("email") as string) || "";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showError("email", "Email non valida.");
+      valid = false;
+    }
+
+    const telefono = (fd.get("telefono") as string) || "";
+    if (telefono.trim().length === 0) {
+      showError("telefono", "Telefono obbligatorio.");
+      valid = false;
+    }
+
+    const dataArrivo = (fd.get("data_arrivo") as string) || "";
+    const dA = new Date(dataArrivo + "T00:00:00");
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (isNaN(dA.getTime()) || dA < today) {
+      showError("data_arrivo", "Data arrivo non valida o nel passato.");
+      valid = false;
+    }
+
+    const dataPartenza = (fd.get("data_partenza") as string) || "";
+    const dP = new Date(dataPartenza + "T00:00:00");
+    if (isNaN(dP.getTime()) || dP <= dA) {
+      showError(
+        "data_partenza",
+        "Data partenza non valida o precedente all'arrivo.",
+      );
+      valid = false;
+    }
+
+    const notti = parseInt(fd.get("notti") as string, 10);
+    if (isNaN(notti) || notti < 1 || notti > 2) {
+      showError("notti", "Seleziona 1 o 2 notti.");
+      valid = false;
+    }
+
+    const persone = parseInt(fd.get("persone") as string, 10);
+    if (isNaN(persone) || persone < 1 || persone > 8) {
+      showError("persone", "Seleziona il numero di partecipanti.");
+      valid = false;
+    }
+
+    const elenco = (fd.get("elenco_partecipanti") as string) || "";
+    if (elenco.trim().length === 0) {
+      showError("elenco_partecipanti", "Elenco partecipanti obbligatorio.");
+      valid = false;
+    }
+
+    const attivita = (fd.get("attivita_prevista") as string) || "";
+    if (attivita.trim().length === 0) {
+      showError("attivita_prevista", "Seleziona l'attività prevista.");
+      valid = false;
+    }
+
+    if (!fd.get("accettazione_regole")) {
+      showError("accettazione_regole", "Devi accettare regolamento e norme.");
+      valid = false;
+    }
+    if (!fd.get("accettazione_contributo")) {
+      showError(
+        "accettazione_contributo",
+        "Devi prendere visione di contributo e riconsegna chiavi.",
+      );
+      valid = false;
+    }
+    if (!fd.get("presa_visione_responsabilita")) {
+      showError(
+        "presa_visione_responsabilita",
+        "Devi prendere visione delle responsabilità di utilizzo.",
+      );
+      valid = false;
+    }
+    if (!fd.get("accettazione_privacy")) {
+      showError("accettazione_privacy", "Devi accettare la privacy.");
+      valid = false;
+    }
+    if (!fd.get("consenso_ricontatto")) {
+      showError("consenso_ricontatto", "Devi acconsentire al ricontatto.");
+      valid = false;
+    }
+
+    // Honeypot
+    const hp = (fd.get("honeypot") as string) || "";
+    if (hp.length > 0) {
+      valid = false;
+    }
+
+    return valid;
+  }
+
+  if (form) {
+    // Fill dynamic hidden fields
+    const pageUrlInput =
+      form.querySelector<HTMLInputElement>("[data-page-url]");
+    if (pageUrlInput) pageUrlInput.value = window.location.href;
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearErrors();
+
+      const fd = new FormData(form);
+
+      // Set checkbox values to "sì" for the backend
+      fd.set("accettazione_regole", fd.has("accettazione_regole") ? "sì" : "");
+      fd.set(
+        "accettazione_contributo",
+        fd.has("accettazione_contributo") ? "sì" : "",
+      );
+      fd.set(
+        "presa_visione_responsabilita",
+        fd.has("presa_visione_responsabilita") ? "sì" : "",
+      );
+      fd.set(
+        "accettazione_privacy",
+        fd.has("accettazione_privacy") ? "sì" : "",
+      );
+      fd.set("consenso_ricontatto", fd.has("consenso_ricontatto") ? "sì" : "");
+
+      // Timestamp
+      const tsInput = form.querySelector<HTMLInputElement>(
+        "[data-submitted-at]",
+      );
+      if (tsInput) {
+        tsInput.value = new Date().toISOString();
+        fd.set("submitted_at_client", tsInput.value);
+      }
+
+      // Validate before setting checkbox values for display
+      const rawFd = new FormData(form);
+      if (!validateClient(rawFd)) return;
+
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) {
+        // No endpoint configured – show fallback
+        const fallback = document.querySelector("[data-booking-fallback]");
+        fallback?.classList.remove("hidden");
+        return;
+      }
+
+      // UI: loading state
+      if (submitBtn) submitBtn.disabled = true;
+      submitLabel?.classList.add("hidden");
+      submitSpinner?.classList.remove("hidden");
+
+      try {
+        // Use no-cors fetch to avoid CORS preflight issues with Apps Script
+        await fetch(endpoint, {
+          method: "POST",
+          body: fd,
+          mode: "no-cors",
+        });
+
+        // With no-cors the response is opaque (status 0), but if fetch
+        // didn't throw, the request was sent successfully.
+        // Apps Script returns a redirect that the browser follows silently.
+        successEl?.classList.remove("hidden");
+        form.reset();
+        // Re-fill page_url after reset
+        if (pageUrlInput) pageUrlInput.value = window.location.href;
+      } catch {
+        errorEl?.classList.remove("hidden");
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+        submitLabel?.classList.remove("hidden");
+        submitSpinner?.classList.add("hidden");
+      }
+    });
+  }
+</script>

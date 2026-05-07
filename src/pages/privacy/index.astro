@@ -1,0 +1,67 @@
+---
+import PageHero from "@components/PageHero.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { pageMeta } from "@data/content";
+import { site } from "@data/site";
+---
+
+<BaseLayout
+  title={pageMeta.privacy.title}
+  description={pageMeta.privacy.description}
+>
+  <PageHero
+    eyebrow="Privacy"
+    title="Dati personali e richieste"
+    lead="Bozza operativa da validare prima della pubblicazione definitiva."
+  />
+
+  <section class="paper-surface py-20">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        eyebrow="Informativa"
+        title="Dati raccolti"
+        lead="Il sito raccoglierà solo i dati necessari a gestire richieste di prenotazione e dediche."
+      />
+      <div class="grid gap-8 text-lg leading-8 text-gray-700">
+        <section>
+          <h2
+            class="font-display text-2xl font-black uppercase text-majella-green"
+          >
+            Prenotazioni
+          </h2>
+          <p class="mt-3">
+            Nome, email, telefono, numero persone, date e note eventuali saranno
+            usati per valutare la richiesta e ricontattare il referente.
+          </p>
+        </section>
+        <section>
+          <h2
+            class="font-display text-2xl font-black uppercase text-majella-green"
+          >
+            Dediche
+          </h2>
+          <p class="mt-3">
+            Nome o soprannome, provenienza opzionale e testo della dedica
+            saranno trattati solo con consenso alla pubblicazione.
+          </p>
+        </section>
+        <section>
+          <h2
+            class="font-display text-2xl font-black uppercase text-majella-green"
+          >
+            Gestione
+          </h2>
+          <p class="mt-3">
+            Le notifiche operative sono destinate a
+            <a
+              class="font-bold text-majella-green underline"
+              href={`mailto:${site.operativeEmail}`}>{site.operativeEmail}</a
+            >. La versione definitiva dovrà indicare titolare, tempi di
+            conservazione e strumenti esterni.
+          </p>
+        </section>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

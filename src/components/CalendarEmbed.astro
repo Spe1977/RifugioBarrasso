@@ -1,0 +1,85 @@
+---
+/**
+ * CalendarEmbed – privacy-friendly Google Calendar embed.
+ * Shows a "load" button first; the iframe is injected only on user interaction.
+ * Falls back gracefully when PUBLIC_GOOGLE_CALENDAR_EMBED_URL is not set.
+ */
+const calendarUrl = import.meta.env.PUBLIC_GOOGLE_CALENDAR_EMBED_URL || "";
+const hasCalendar = calendarUrl.length > 0;
+---
+
+<div class="grid gap-6" data-calendar-embed>
+  {
+    hasCalendar ? (
+      <>
+        <div data-calendar-placeholder>
+          <button
+            class="inline-flex items-center gap-3 rounded-full bg-majella-green px-7 py-3 text-sm font-black uppercase tracking-widest text-white transition hover:bg-majella-red"
+            type="button"
+            data-calendar-load
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              class="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <path d="M16 2v4M8 2v4M3 10h18" />
+            </svg>
+            Mostra calendario disponibilità
+          </button>
+          <p class="mt-3 text-sm text-gray-500">
+            Il calendario è fornito da Google Calendar. Cliccando accetti il
+            caricamento di contenuti esterni.
+          </p>
+        </div>
+        <div
+          class="hidden overflow-hidden rounded-md shadow-soft"
+          data-calendar-frame
+        >
+          <iframe
+            title="Calendario disponibilità Rifugio Paolo Barrasso"
+            class="h-[480px] w-full border-0"
+            loading="lazy"
+          />
+        </div>
+        <p class="text-sm text-gray-500">
+          <a
+            href={calendarUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-bold text-majella-green underline"
+          >
+            Apri calendario in una nuova finestra
+          </a>
+        </p>
+      </>
+    ) : (
+      <div class="border-l-4 border-majella-red bg-white p-6 leading-8 text-gray-700 shadow-soft">
+        Il calendario disponibilità verrà incorporato quando l'URL sarà
+        configurato nelle variabili d'ambiente.
+      </div>
+    )
+  }
+</div>
+
+<script is:inline define:vars={{ calendarUrl }}>
+  const loadBtn = document.querySelector("[data-calendar-load]");
+  const placeholder = document.querySelector("[data-calendar-placeholder]");
+  const frameWrapper = document.querySelector("[data-calendar-frame]");
+
+  if (loadBtn && placeholder && frameWrapper) {
+    loadBtn.addEventListener("click", () => {
+      const iframe = frameWrapper.querySelector("iframe");
+      if (iframe && calendarUrl) {
+        iframe.src = calendarUrl;
+        placeholder.classList.add("hidden");
+        frameWrapper.classList.remove("hidden");
+      }
+    });
+  }
+</script>

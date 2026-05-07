@@ -1,0 +1,62 @@
+---
+type Props = {
+  eyebrow?: string;
+  title: string;
+  lead: string;
+  tone?: "dark" | "light";
+};
+
+const { eyebrow, title, lead, tone = "dark" } = Astro.props;
+const dark = tone === "dark";
+---
+
+<section
+  class:list={[
+    dark ? "terrain-surface text-white" : "paper-surface text-majella-green",
+    "relative overflow-hidden",
+  ]}
+>
+  <div
+    class="mx-auto grid min-h-[46svh] max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_340px] lg:px-8 lg:py-20"
+  >
+    <div class="reveal max-w-3xl">
+      {
+        eyebrow && (
+          <p
+            class:list={[
+              dark ? "text-majella-wood" : "text-majella-red",
+              "mb-5 text-sm font-bold uppercase tracking-[0.28em]",
+            ]}
+          >
+            {eyebrow}
+          </p>
+        )
+      }
+      <h1
+        class="font-display text-4xl font-black uppercase leading-[0.95] tracking-normal sm:text-6xl"
+      >
+        {title}
+      </h1>
+      <p
+        class:list={[
+          dark ? "text-white/82" : "text-majella-darkstone",
+          "mt-6 measure text-lg leading-8",
+        ]}
+      >
+        {lead}
+      </p>
+    </div>
+    <div class="reveal reveal-delay hidden justify-self-end lg:block">
+      <img
+        src="/assets/brand/logo.png"
+        alt=""
+        class:list={[
+          "h-72 w-72 object-contain transition-transform duration-500 hover:scale-[1.03]",
+          dark ? "drop-shadow-2xl" : "",
+        ]}
+        width="288"
+        height="288"
+      />
+    </div>
+  </div>
+</section>

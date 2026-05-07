@@ -1,0 +1,87 @@
+---
+import PageHero from "@components/PageHero.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+import TallyEmbed from "@components/TallyEmbed.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { pageMeta } from "@data/content";
+import { dediche } from "@data/dediche";
+import { site } from "@data/site";
+
+const postItColors: Record<string, string> = {
+  yellow: "bg-[#fff8b8] border-yellow-200",
+  blue: "bg-[#eef7fa] border-blue-200",
+  green: "bg-[#f2f8ec] border-green-200",
+  pink: "bg-[#fce4ec] border-pink-200",
+};
+
+const rotations = ["-rotate-2", "rotate-3", "-rotate-1", "rotate-2"];
+---
+
+<BaseLayout
+  title={pageMeta.quaderno.title}
+  description={pageMeta.quaderno.description}
+>
+  <PageHero
+    eyebrow="Quaderno del Rifugio"
+    title="Tracce dei viandanti"
+    lead="Pensieri, ricordi e dediche di chi è passato dal Barrasso. Pubblicate solo dopo consenso e moderazione."
+  />
+
+  <section class="paper-surface py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        eyebrow="Messaggi approvati"
+        title="Voci dalla montagna"
+        lead={`Le notifiche delle nuove dediche arrivano a ${site.operativeEmail}. Solo quelle approvate compaiono qui.`}
+      />
+      {
+        dediche.length > 0 ? (
+          <div class="grid gap-6 md:grid-cols-3">
+            {dediche.map((item, index) => (
+              <article
+                class:list={[
+                  postItColors[item.colore] || postItColors.yellow,
+                  "border p-7 shadow-soft transition-transform duration-300 hover:-translate-y-1",
+                  rotations[index % rotations.length],
+                  index === 1 ? "md:translate-y-6" : "",
+                ]}
+              >
+                <p class="font-handwriting text-xl leading-snug text-majella-green md:text-2xl md:leading-relaxed">
+                  "{item.testo}"
+                </p>
+                <p class="mt-6 flex flex-col justify-between sm:flex-row sm:items-end">
+                  <span class="text-sm font-black uppercase tracking-widest text-majella-red">
+                    {item.nome}
+                    {item.luogo ? ` (${item.luogo})` : ""}
+                  </span>
+                  <span class="mt-2 text-xs font-bold text-majella-wood sm:mt-0">
+                    {new Date(item.data).toLocaleDateString("it-IT", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </span>
+                </p>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p class="text-lg leading-8 text-gray-600">
+            Nessuna dedica pubblicata ancora. Sii il primo!
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="bg-white py-20">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        eyebrow="Scrivi"
+        title="Lascia la tua dedica"
+        lead="Il tuo messaggio sarà letto dal gestore e, se approvato, pubblicato su questa bacheca."
+      />
+      <TallyEmbed />
+    </div>
+  </section>
+</BaseLayout>

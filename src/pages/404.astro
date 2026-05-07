@@ -1,0 +1,26 @@
+---
+import PageHero from "@components/PageHero.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { site } from "@data/site";
+---
+
+<BaseLayout
+  title={`Pagina non trovata | ${site.name}`}
+  description="La pagina richiesta non esiste."
+>
+  <PageHero
+    eyebrow="404"
+    title="Sentiero non trovato"
+    lead="La pagina richiesta non esiste o è stata spostata."
+  />
+  <section class="paper-surface py-12">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <a
+        class="inline-flex rounded-full bg-majella-green px-7 py-3 text-sm font-black uppercase tracking-widest text-white transition hover:bg-majella-red"
+        href="/"
+      >
+        Torna alla home
+      </a>
+    </div>
+  </section>
+</BaseLayout>

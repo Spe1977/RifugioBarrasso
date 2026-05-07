@@ -1,0 +1,37 @@
+---
+import PageHero from "@components/PageHero.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { galleryImages, pageMeta } from "@data/content";
+---
+
+<BaseLayout
+  title={pageMeta.galleria.title}
+  description={pageMeta.galleria.description}
+>
+  <PageHero
+    eyebrow="Galleria"
+    title="Immagini dal Barrasso"
+    lead="Una selezione di scatti per raccontare l'atmosfera del rifugio, i paesaggi della Majella e la bellezza di questi luoghi in ogni stagione."
+  />
+
+  <section class="paper-surface py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          galleryImages.map((image, index) => (
+            <figure class="group rounded-[0.625rem] border border-majella-green/10 bg-white/80 p-2 shadow-soft ring-1 ring-white/70 transition duration-300 hover:-translate-y-1 hover:border-majella-wood/45 hover:bg-white">
+              <div class="relative aspect-[3/4] overflow-hidden rounded-md bg-majella-lightgreen">
+                <img
+                  src={`/assets/images/${image}`}
+                  alt={`Foto ${index + 1} del Rifugio Paolo Barrasso e della Majella`}
+                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

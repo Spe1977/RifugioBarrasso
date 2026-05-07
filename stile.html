@@ -1,0 +1,1503 @@
+﻿<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rifugio Paolo Barrasso | Majella</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              majella: {
+                green: "#1b3b22",
+                lightgreen: "#edf2ee",
+                red: "#b81d1d",
+                stone: "#f4f3f0",
+                darkstone: "#3a3836",
+                wood: "#c29a6b",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              display: ["Montserrat", "sans-serif"],
+              handwriting: ["Caveat", "cursive"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background-color: #f4f3f0;
+      }
+      .tab-content {
+        display: none;
+        animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .tab-content.active {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .shadow-soft {
+        box-shadow: 0 10px 40px -10px rgba(27, 59, 34, 0.1);
+      }
+      .text-shadow-strong {
+        text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6);
+      }
+      .bg-cork {
+        background-image: url("https://www.transparenttextures.com/patterns/cork-board.png");
+        background-color: #c9a57b;
+      }
+      .post-it {
+        box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+      .post-it:hover {
+        transform: scale(1.05) rotate(0deg) !important;
+        box-shadow: 5px 15px 25px rgba(0, 0, 0, 0.2);
+        z-index: 20;
+      }
+      .hero-gradient {
+        background: linear-gradient(
+          to bottom,
+          rgba(27, 59, 34, 0.3),
+          rgba(0, 0, 0, 0.6)
+        );
+      }
+    </style>
+  </head>
+  <body class="text-majella-darkstone font-sans flex flex-col min-h-screen">
+    <header
+      class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b-4 border-majella-red"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20 md:h-24">
+          <div
+            class="flex-shrink-0 flex items-center cursor-pointer transform hover:scale-105 transition duration-300"
+            onclick="switchTab('home')"
+          >
+            <img
+              src="LogoRB.png"
+              alt="Logo Rifugio"
+              class="h-12 md:h-16 w-auto object-contain mr-3"
+              onerror="
+                this.src =
+                  'https://via.placeholder.com/150x60?text=Logo+Barrasso'
+              "
+            />
+            <div class="flex flex-col">
+              <h1
+                class="font-display text-sm sm:text-lg md:text-xl font-black text-majella-green leading-tight uppercase tracking-wide"
+              >
+                Rifugio Paolo Barrasso
+              </h1>
+              <p
+                class="font-sans text-[10px] sm:text-xs text-majella-wood font-bold tracking-widest uppercase"
+              >
+                Majella - 1.542m
+              </p>
+            </div>
+          </div>
+
+          <nav class="hidden lg:flex space-x-3 xl:space-x-6" id="desktop-nav">
+            <button
+              onclick="switchTab('home')"
+              class="nav-btn text-majella-green border-b-2 border-majella-red text-xs xl:text-sm font-bold uppercase tracking-widest transition-colors duration-200"
+              data-target="home"
+            >
+              Home
+            </button>
+            <button
+              onclick="switchTab('storia')"
+              class="nav-btn text-gray-500 hover:text-majella-green text-xs xl:text-sm font-bold uppercase tracking-widest transition-colors duration-200"
+              data-target="storia"
+            >
+              Storia
+            </button>
+            <button
+              onclick="switchTab('gallery')"
+              class="nav-btn text-gray-500 hover:text-majella-green text-xs xl:text-sm font-bold uppercase tracking-widest transition-colors duration-200"
+              data-target="gallery"
+            >
+              Gallery
+            </button>
+            <button
+              onclick="switchTab('libro')"
+              class="nav-btn text-gray-500 hover:text-majella-green text-xs xl:text-sm font-bold uppercase tracking-widest transition-colors duration-200"
+              data-target="libro"
+            >
+              Il Libro
+            </button>
+            <button
+              onclick="switchTab('prenotazioni')"
+              class="nav-btn text-gray-500 hover:text-majella-green text-xs xl:text-sm font-bold uppercase tracking-widest transition-colors duration-200"
+              data-target="prenotazioni"
+            >
+              Prenotazioni
+            </button>
+            <button
+              onclick="switchTab('contatti')"
+              class="nav-btn text-gray-500 hover:text-majella-green text-xs xl:text-sm font-bold uppercase tracking-widest transition-colors duration-200"
+              data-target="contatti"
+            >
+              Info & Regole
+            </button>
+          </nav>
+
+          <div class="lg:hidden flex items-center">
+            <button
+              onclick="toggleMobileMenu()"
+              class="text-majella-green hover:text-majella-red focus:outline-none transition"
+            >
+              <i class="fa-solid fa-bars text-3xl" id="menu-icon"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="mobile-menu"
+        class="hidden lg:hidden bg-white shadow-inner border-t border-gray-100"
+      >
+        <div class="px-4 py-3 space-y-2">
+          <button
+            onclick="switchTab('home')"
+            class="mob-nav-btn block w-full text-left px-4 py-4 rounded-xl text-sm font-bold uppercase tracking-widest bg-majella-lightgreen text-majella-green border-l-4 border-majella-red"
+            data-target="home"
+          >
+            Home
+          </button>
+          <button
+            onclick="switchTab('storia')"
+            class="mob-nav-btn block w-full text-left px-4 py-4 rounded-xl text-sm font-bold uppercase tracking-widest text-gray-500 hover:bg-gray-50"
+            data-target="storia"
+          >
+            Storia
+          </button>
+          <button
+            onclick="switchTab('gallery')"
+            class="mob-nav-btn block w-full text-left px-4 py-4 rounded-xl text-sm font-bold uppercase tracking-widest text-gray-500 hover:bg-gray-50"
+            data-target="gallery"
+          >
+            Gallery
+          </button>
+          <button
+            onclick="switchTab('libro')"
+            class="mob-nav-btn block w-full text-left px-4 py-4 rounded-xl text-sm font-bold uppercase tracking-widest text-gray-500 hover:bg-gray-50"
+            data-target="libro"
+          >
+            Il Libro del Rifugio
+          </button>
+          <button
+            onclick="switchTab('prenotazioni')"
+            class="mob-nav-btn block w-full text-left px-4 py-4 rounded-xl text-sm font-bold uppercase tracking-widest text-gray-500 hover:bg-gray-50"
+            data-target="prenotazioni"
+          >
+            Prenotazioni
+          </button>
+          <button
+            onclick="switchTab('contatti')"
+            class="mob-nav-btn block w-full text-left px-4 py-4 rounded-xl text-sm font-bold uppercase tracking-widest text-gray-500 hover:bg-gray-50"
+            data-target="contatti"
+          >
+            Info & Regole
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-grow">
+      <section id="home" class="tab-content active">
+        <div
+          class="relative h-[70vh] md:h-[80vh] flex items-center justify-center bg-cover bg-center"
+          style="background-image: url(&quot;1000380620.jpg&quot;)"
+        >
+          <div class="absolute inset-0 hero-gradient"></div>
+          <div class="relative z-10 text-center px-4 max-w-5xl mt-8">
+            <h1
+              class="font-display text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 tracking-tight uppercase text-shadow-strong leading-tight"
+            >
+              Il Focolare nel<br />Cielo d'Abruzzo
+            </h1>
+            <p
+              class="text-xl md:text-3xl text-majella-stone mb-10 font-medium text-shadow-strong"
+            >
+              Tra l'abbraccio del Monte Padre e della Montagna Madre.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-5">
+              <button
+                onclick="switchTab('prenotazioni')"
+                class="bg-majella-red hover:bg-red-800 text-white font-bold py-4 px-8 rounded-full shadow-lg transition duration-300 transform hover:-translate-y-1 flex items-center justify-center text-lg tracking-wide"
+              >
+                <i class="fa-solid fa-key mr-3"></i> Prenota il Locale
+              </button>
+              <button
+                onclick="switchTab('storia')"
+                class="bg-white/90 hover:bg-white text-majella-green font-bold py-4 px-8 rounded-full shadow-lg transition duration-300 transform hover:-translate-y-1 flex items-center justify-center text-lg tracking-wide border-2 border-transparent hover:border-majella-green"
+              >
+                <i class="fa-solid fa-mountain mr-3"></i> Scopri la Storia
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="py-16 md:py-20 bg-majella-stone">
+          <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+            <h2
+              class="font-display text-3xl md:text-4xl font-extrabold text-majella-green mb-10 uppercase tracking-widest"
+            >
+              Due Mondi Ancestrali
+            </h2>
+            <div
+              class="text-lg md:text-xl text-majella-darkstone leading-relaxed space-y-6 text-left font-normal"
+            >
+              <p>
+                C'è una magia silenziosa che avvolge chiunque decida di
+                incamminarsi sui sentieri della Majella che portano al Rifugio
+                Paolo Barrasso. È la sensazione di camminare in equilibrio tra
+                due mondi ancestrali, opposti ma indissolubilmente legati tra
+                loro.
+              </p>
+
+              <p>
+                Da un lato c'è la grande fierezza della Majella che spinse
+                Plinio il Vecchio a definire questo monte il
+                <em class="font-semibold text-majella-green">Pater Montium</em>,
+                il "Padre dei Monti": un colosso severo e protettivo, che da
+                millenni scruta l'orizzonte fino al mare con solenne maestà.
+                Dall'altro, c'è la dolcezza di una sagoma sinuosa che accarezza
+                il cielo, nata dalla leggenda della dea Maja, la più bella fra
+                le Pleiadi greche. Fuggita dalla Frigia fin qui per salvare suo
+                figlio Ermete gravemente ferito, alla morte di quest'ultimo – le
+                cui spoglie diedero forma al Gran Sasso – si lasciò morire
+                addormentandosi a terra. Giove, impietosito, trasformò il suo
+                corpo nella montagna stessa, donandole per sempre le forme di
+                una donna. Da qui, il nome Majella, "La Montagna Madre".
+              </p>
+
+              <div
+                class="my-8 border-l-8 border-majella-red pl-6 py-4 italic text-majella-green text-xl md:text-2xl font-bold bg-white rounded-r-2xl shadow-sm"
+              >
+                "È proprio su questo confine invisibile, nel cuore
+                dell'abbraccio tra il Padre e la Madre, dove il silenzio
+                accompagna lo sguardo attraverso la contemplazione del
+                paesaggio, che si trova il Rifugio Paolo Barrasso."
+              </div>
+
+              <p>
+                Questo non è solo un riparo dal freddo o dal buio: è un focolare
+                sospeso a 1.542 metri, dove i due volti della montagna si
+                incontrano. Qui, tra queste mura, il respiro della natura e
+                l'abbraccio della Majella si fanno intimi. Nel Rifugio Paolo
+                Barrasso la fatica del cammino svanisce davanti al fuoco e
+                lascia spazio alla meraviglia.
+              </p>
+
+              <p>
+                Lo spirito autentico del rifugio è indissolubilmente legato a
+                Paolo Barrasso, pioniere della conservazione, che proprio in
+                questi luoghi lottò per proteggerne la flora e la fauna. Il suo
+                amore incondizionato per la natura vibra ancora oggi,
+                ricordandoci che la montagna va vissuta sempre con rispetto e
+                stupore.
+              </p>
+
+              <p
+                class="font-display font-black text-majella-red text-center text-3xl md:text-4xl mt-12 mb-0 uppercase tracking-widest"
+              >
+                Benvenuti a casa.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="h-64 md:h-[450px] w-full bg-majella-darkstone bg-cover bg-center bg-fixed shadow-inner flex items-center justify-center relative"
+          style="
+            background-image: url(&quot;1000380617.jpg&quot;);
+            border-top: 4px solid #1b3b22;
+            border-bottom: 4px solid #1b3b22;
+          "
+        ></div>
+
+        <div class="py-20 bg-white">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+              <div
+                onclick="switchTab('gallery')"
+                class="group cursor-pointer rounded-3xl overflow-hidden shadow-soft bg-white border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              >
+                <div
+                  class="h-56 bg-cover bg-center"
+                  style="background-image: url(&quot;1000380626.jpg&quot;)"
+                ></div>
+                <div class="p-6 text-center relative">
+                  <div
+                    class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-majella-green text-white w-20 h-20 rounded-full flex items-center justify-center border-4 border-white shadow-md group-hover:bg-majella-red transition-colors duration-300"
+                  >
+                    <i class="fa-solid fa-camera-retro text-2xl"></i>
+                  </div>
+                  <h3
+                    class="font-display text-xl font-bold mb-3 text-majella-green mt-8"
+                  >
+                    Le Nostre Foto
+                  </h3>
+                  <p class="text-gray-600 text-sm font-medium">
+                    Esplora la bellezza della Majella attraverso le stagioni e i
+                    volti di chi la vive.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                onclick="switchTab('prenotazioni')"
+                class="group cursor-pointer rounded-3xl overflow-hidden shadow-soft bg-white border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              >
+                <div
+                  class="h-56 bg-cover bg-center"
+                  style="background-image: url(&quot;1000380500.jpg&quot;)"
+                ></div>
+                <div class="p-6 text-center relative">
+                  <div
+                    class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-majella-green text-white w-20 h-20 rounded-full flex items-center justify-center border-4 border-white shadow-md group-hover:bg-majella-red transition-colors duration-300"
+                  >
+                    <i class="fa-solid fa-door-open text-2xl"></i>
+                  </div>
+                  <h3
+                    class="font-display text-xl font-bold mb-3 text-majella-green mt-8"
+                  >
+                    Prenota il Locale
+                  </h3>
+                  <p class="text-gray-600 text-sm font-medium">
+                    Verifica la disponibilità e richiedi le chiavi per la zona
+                    notte del rifugio.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                onclick="switchTab('libro')"
+                class="group cursor-pointer rounded-3xl overflow-hidden shadow-soft bg-white border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              >
+                <div
+                  class="h-56 bg-cover bg-center"
+                  style="background-image: url(&quot;1000380513.jpg&quot;)"
+                ></div>
+                <div class="p-6 text-center relative">
+                  <div
+                    class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-majella-green text-white w-20 h-20 rounded-full flex items-center justify-center border-4 border-white shadow-md group-hover:bg-majella-red transition-colors duration-300"
+                  >
+                    <i class="fa-solid fa-book-open-reader text-2xl"></i>
+                  </div>
+                  <h3
+                    class="font-display text-xl font-bold mb-3 text-majella-green mt-8"
+                  >
+                    Libro di Vetta
+                  </h3>
+                  <p class="text-gray-600 text-sm font-medium">
+                    Sfoglia la nostra bacheca virtuale e lascia una traccia del
+                    tuo passaggio.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="storia" class="tab-content py-20 bg-majella-stone">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8">
+          <div class="mb-12 border-b-4 border-majella-red inline-block pb-2">
+            <h1
+              class="font-display text-4xl md:text-5xl font-black text-majella-green uppercase tracking-wide"
+            >
+              La Nostra Storia
+            </h1>
+          </div>
+
+          <div
+            class="relative rounded-3xl overflow-hidden shadow-soft mb-16 border-4 border-white"
+          >
+            <img
+              src="1000380588.jpg"
+              alt="Le cime innevate della Majella"
+              class="w-full h-[400px] object-cover"
+            />
+          </div>
+
+          <div
+            class="space-y-12 text-lg text-majella-darkstone leading-relaxed"
+          >
+            <div
+              class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-gray-100"
+            >
+              <h2
+                class="font-display text-3xl font-bold text-majella-green mb-5 flex items-center"
+              >
+                <i
+                  class="fa-solid fa-house-flag text-majella-wood mr-4 text-2xl"
+                ></i>
+                Le origini: "Il Casotto"
+              </h2>
+              <p>
+                Il rifugio fu costruito
+                <strong>tra il 1935 e il 1940</strong> dal Comune di Caramanico
+                Terme su terreno comunale. Nacque originariamente come
+                <em class="text-majella-green font-medium">stazzo pastorale</em>
+                a servizio dei pastori che, seguendo i ritmi antichi della
+                transumanza, portavano a pascolare le greggi al "Prato della
+                Corte", sulle pendici del Monte Rapina. Per anni, i
+                caramanichesi lo hanno affettuosamente chiamato semplicemente
+                "il casotto". Dopo un periodo di abbandono e chiusura negli anni
+                '70 e '80, la struttura era pronta per una nuova vita.
+              </p>
+            </div>
+
+            <div
+              class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-gray-100"
+            >
+              <h2
+                class="font-display text-3xl font-bold text-majella-green mb-5 flex items-center"
+              >
+                <i class="fa-solid fa-leaf text-majella-wood mr-4 text-2xl"></i>
+                1992: Il tributo a Paolo Barrasso
+              </h2>
+              <p>
+                Nel 1992 il rifugio fu ristrutturato dal Comune e intitolato a
+                <strong>Paolo Barrasso</strong>. Paolo era uno stimato biologo
+                del <em>Corpo Forestale dello Stato</em> e un vero pioniere
+                della conservazione ambientale. Il suo nome è indissolubilmente
+                legato all'"Operazione San Francesco", il progetto che negli
+                anni '70 salvò il Lupo Appenninico dall'estinzione. Paolo amava
+                immensamente questa montagna e dedicò la sua vita allo studio
+                della sua fauna, fino alla sua tragica e prematura scomparsa
+                sulle montagne del Morrone nel 1991.
+              </p>
+            </div>
+
+            <div
+              class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-gray-100"
+            >
+              <h2
+                class="font-display text-3xl font-bold text-majella-green mb-5 flex items-center"
+              >
+                <i
+                  class="fa-solid fa-mountain-sun text-majella-wood mr-4 text-2xl"
+                ></i>
+                Gli anni del CAI (Fino al 2019)
+              </h2>
+              <p>
+                Fino al 2019 la struttura è stata gestita come bivacco e Capanna
+                Sociale dal <strong>CAI di Pescara</strong>. Venne istituita la
+                formula che ancora oggi lo caratterizza: un locale sempre aperto
+                a disposizione di tutti i passanti in cerca di riparo, e un
+                locale chiuso (all'epoca riservato solo ai soci CAI) a cui si
+                accedeva tramite chiave.
+              </p>
+            </div>
+
+            <div
+              class="bg-majella-lightgreen p-8 md:p-10 rounded-3xl shadow-soft border-l-8 border-majella-red"
+            >
+              <h3
+                class="font-display text-3xl font-bold mb-6 flex items-center text-majella-green"
+              >
+                <i class="fa-solid fa-paint-roller text-majella-red mr-4"></i>
+                Dal 2024 a oggi: La Rinascita
+              </h3>
+              <p class="mb-6 font-medium text-majella-darkstone">
+                Dopo esser rimasto chiuso dal 2020 al 2024, nel
+                <strong>settembre 2024</strong> il Comune di Caramanico Terme ha
+                effettuato una profonda ristrutturazione per restituire il
+                rifugio agli escursionisti. I lavori hanno compreso:
+              </p>
+              <ul
+                class="list-disc pl-6 space-y-3 font-semibold text-majella-green mb-8"
+              >
+                <li>
+                  Riqualificazione esterna con nuove staccionate e panche in
+                  legno.
+                </li>
+                <li>
+                  Verniciatura degli infissi nel caratteristico
+                  <strong>colore rosso</strong>.
+                </li>
+                <li>
+                  Riverniciatura degli interni e sistemazione della mobilia.
+                </li>
+                <li>
+                  Rifacimento completo del camino, canna fumaria e guaina del
+                  tetto.
+                </li>
+              </ul>
+              <p class="font-medium">
+                Dal <strong>21 febbraio 2025</strong>, con un accordo di 6 anni,
+                la gestione, la cura del decoro e la manutenzione sono state
+                affidate all'Associazione culturale
+                <strong class="text-majella-red">"Amici del Barrasso"</strong>
+                di Caramanico Terme. La grande novità di questa gestione è che
+                oggi il locale chiuso è finalmente prenotabile e accessibile da
+                <strong>chiunque</strong> ne faccia richiesta.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="gallery" class="tab-content py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h1
+              class="font-display text-4xl md:text-5xl font-black text-majella-green uppercase tracking-widest mb-4"
+            >
+              La Majella negli Occhi di Chi la Vive
+            </h1>
+            <p class="text-xl text-gray-500 font-medium">
+              Frammenti di bellezza catturati tra boschi e crinali.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div
+              class="group relative rounded-2xl overflow-hidden shadow-md h-80 bg-majella-stone"
+            >
+              <img
+                src="1000380620.jpg"
+                alt="Rifugio d'estate"
+                class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700 ease-in-out"
+              />
+            </div>
+            <div
+              class="group relative rounded-2xl overflow-hidden shadow-md h-80 bg-majella-stone"
+            >
+              <img
+                src="1000380626.jpg"
+                alt="Rifugio sotto la neve"
+                class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700 ease-in-out"
+              />
+            </div>
+            <div
+              class="group relative rounded-2xl overflow-hidden shadow-md h-80 bg-majella-stone"
+            >
+              <img
+                src="1000380617.jpg"
+                alt="Panorama Majella"
+                class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700 ease-in-out"
+              />
+            </div>
+            <div
+              class="group relative rounded-2xl overflow-hidden shadow-md h-80 bg-majella-stone"
+            >
+              <img
+                src="1000380588.jpg"
+                alt="Cime e nuvole"
+                class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700 ease-in-out"
+              />
+            </div>
+            <div
+              class="group relative rounded-2xl overflow-hidden shadow-md h-80 bg-majella-stone"
+            >
+              <img
+                src="1000380513.jpg"
+                alt="Focolare accesso"
+                class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700 ease-in-out"
+              />
+            </div>
+            <div
+              class="group relative rounded-2xl overflow-hidden shadow-md h-80 bg-majella-stone"
+            >
+              <img
+                src="1000380500.jpg"
+                alt="Tramonto e bandiera"
+                class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700 ease-in-out"
+              />
+            </div>
+          </div>
+
+          <div
+            class="mt-20 bg-majella-lightgreen border-2 border-majella-green/20 p-10 rounded-3xl shadow-sm text-center max-w-3xl mx-auto flex flex-col items-center"
+          >
+            <div class="bg-white p-4 rounded-full shadow-sm mb-6">
+              <i class="fa-brands fa-instagram text-4xl text-majella-red"></i>
+            </div>
+            <h3
+              class="font-display text-3xl font-black text-majella-green mb-3"
+            >
+              #RifugioBarrasso
+            </h3>
+            <p class="text-majella-darkstone text-lg font-medium">
+              Pubblica le tue foto su Instagram con questo hashtag. Le storie
+              più belle verranno aggiunte a questa bacheca per ispirare altri
+              viandanti!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="libro"
+        class="tab-content py-20 bg-cork relative overflow-hidden min-h-[90vh]"
+      >
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div
+            class="text-center mb-10 bg-white/95 p-10 rounded-3xl shadow-soft inline-block mx-auto backdrop-blur-md border-b-8 border-majella-wood"
+          >
+            <h1
+              class="font-display text-4xl md:text-5xl font-black text-majella-green uppercase tracking-wider"
+            >
+              Tracce sul Sentiero
+            </h1>
+            <p class="text-gray-600 mt-4 text-xl font-medium">
+              Il quaderno virtuale del rifugio. Leggi i pensieri di chi è
+              passato.
+            </p>
+
+            <button
+              onclick="
+                document
+                  .getElementById('form-messaggio')
+                  .classList.toggle('hidden')
+              "
+              class="mt-8 bg-majella-red text-white px-8 py-4 rounded-xl font-bold hover:bg-red-800 transition shadow-lg text-lg transform hover:-translate-y-1"
+            >
+              <i class="fa-solid fa-pen-nib mr-2"></i> Lascia il tuo messaggio
+            </button>
+
+            <div
+              id="form-messaggio"
+              class="hidden mt-6 bg-majella-stone p-6 rounded-2xl shadow-inner border border-gray-200 text-left max-w-md mx-auto"
+            >
+              <h3
+                class="font-bold text-majella-green mb-3 uppercase tracking-wider text-sm"
+              >
+                Scrivi la tua dedica
+              </h3>
+              <form onsubmit="inviaMessaggioBacheca(event)">
+                <input
+                  type="text"
+                  placeholder="Il tuo Nome (es. Marco da Roma)"
+                  class="w-full mb-3 p-3 rounded-lg bg-white border border-gray-300 focus:outline-none focus:border-majella-red"
+                  required
+                />
+                <textarea
+                  placeholder="Scrivi il tuo messaggio per la bacheca..."
+                  rows="3"
+                  class="w-full mb-3 p-3 rounded-lg bg-white border border-gray-300 focus:outline-none focus:border-majella-red resize-none"
+                  required
+                ></textarea>
+                <button
+                  type="submit"
+                  class="w-full bg-majella-green text-white font-bold py-3 rounded-lg hover:bg-green-900 transition uppercase tracking-widest text-sm"
+                >
+                  Appendi in bacheca <i class="fa-solid fa-thumbtack ml-2"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-10"
+          >
+            <div
+              class="post-it bg-[#fdf5c9] p-8 rounded-sm transform -rotate-2 relative cursor-default border border-yellow-200"
+            >
+              <div
+                class="absolute top-3 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-majella-red rounded-full shadow-inner opacity-90"
+              ></div>
+              <p
+                class="font-handwriting text-3xl text-gray-800 mt-6 mb-6 leading-tight"
+              >
+                "Salita dura sotto la tormenta, ma il calore di questo bivacco
+                ci ha letteralmente rimesso al mondo. Grazie Majella!"
+              </p>
+              <p
+                class="text-right text-gray-500 font-sans text-xs font-bold uppercase tracking-widest border-t border-yellow-300 pt-3"
+              >
+                - Marco e Luca
+              </p>
+            </div>
+
+            <div
+              class="post-it bg-[#eef7fa] p-8 rounded-sm transform rotate-3 relative cursor-default border border-blue-200"
+            >
+              <div
+                class="absolute top-2 left-1/2 transform -translate-x-1/2 w-12 h-5 bg-white/60 shadow-sm rotate-1 border border-gray-200"
+              ></div>
+              <p
+                class="font-handwriting text-3xl text-gray-800 mt-6 mb-6 leading-tight"
+              >
+                "Un pensiero speciale a Paolo Barrasso. Sentire l'ululato
+                stanotte dalla finestra lassù è stata un'emozione
+                indescrivibile."
+              </p>
+              <p
+                class="text-right text-gray-500 font-sans text-xs font-bold uppercase tracking-widest border-t border-blue-200 pt-3"
+              >
+                - Sara (Roma)
+              </p>
+            </div>
+
+            <div
+              class="post-it bg-[#f2f8ec] p-8 rounded-sm transform -rotate-1 relative cursor-default border border-green-200"
+            >
+              <div
+                class="absolute top-3 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full shadow-inner opacity-90"
+              ></div>
+              <p
+                class="font-handwriting text-3xl text-gray-800 mt-6 mb-6 leading-tight"
+              >
+                "Abbiamo spazzato e lasciato un po' di legna secca vicino alla
+                stufa per i prossimi che saliranno. Viva gli Amici del
+                Barrasso!"
+              </p>
+              <p
+                class="text-right text-gray-500 font-sans text-xs font-bold uppercase tracking-widest border-t border-green-200 pt-3"
+              >
+                - Famiglia Di Lizio
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="prenotazioni" class="tab-content py-20 bg-majella-stone">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="mb-12 text-center">
+            <h1
+              class="font-display text-4xl md:text-5xl font-black text-majella-green uppercase tracking-wider"
+            >
+              Prenota il Locale
+            </h1>
+            <p class="text-xl text-majella-darkstone mt-4 font-medium">
+              Modulo di richiesta gestito dall'Ass. Amici del Barrasso.
+            </p>
+          </div>
+
+          <div
+            class="bg-white p-10 rounded-3xl shadow-sm border-2 border-majella-lightgreen mb-10"
+          >
+            <h3
+              class="font-display text-2xl font-bold text-majella-green mb-6 flex items-center"
+            >
+              <i
+                class="fa-solid fa-circle-info text-majella-red mr-3 text-3xl"
+              ></i>
+              Da sapere prima di prenotare
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="flex items-start bg-gray-50 p-4 rounded-xl">
+                <div class="bg-white p-2 rounded-lg shadow-sm mr-4 mt-1">
+                  <i
+                    class="fa-solid fa-door-open text-majella-green text-xl"
+                  ></i>
+                </div>
+                <div>
+                  <strong class="block text-majella-green mb-1"
+                    >Il Bivacco è libero</strong
+                  >
+                  <span class="text-sm text-gray-600 leading-relaxed"
+                    >Il locale "bivacco" (con tavolo, panche e camino) è
+                    <em>sempre aperto</em> e non necessita di
+                    prenotazione.</span
+                  >
+                </div>
+              </div>
+              <div class="flex items-start bg-gray-50 p-4 rounded-xl">
+                <div class="bg-white p-2 rounded-lg shadow-sm mr-4 mt-1">
+                  <i class="fa-solid fa-bed text-majella-green text-xl"></i>
+                </div>
+                <div>
+                  <strong class="block text-majella-green mb-1"
+                    >Locale Chiuso (Max 2 Notti)</strong
+                  >
+                  <span class="text-sm text-gray-600 leading-relaxed"
+                    >Prenotabile da escursionisti e gruppi. Non è consentito
+                    riservare a uso esclusivo anche il locale bivacco.</span
+                  >
+                </div>
+              </div>
+              <div class="flex items-start bg-gray-50 p-4 rounded-xl">
+                <div class="bg-white p-2 rounded-lg shadow-sm mr-4 mt-1">
+                  <i class="fa-solid fa-coins text-majella-green text-xl"></i>
+                </div>
+                <div>
+                  <strong class="block text-majella-green mb-1"
+                    >Contributo di 10€</strong
+                  >
+                  <span class="text-sm text-gray-600 leading-relaxed"
+                    >È previsto un contributo spese forfettario giornaliero per
+                    persona, da versare al ritiro delle chiavi.</span
+                  >
+                </div>
+              </div>
+              <div class="flex items-start bg-gray-50 p-4 rounded-xl">
+                <div class="bg-white p-2 rounded-lg shadow-sm mr-4 mt-1">
+                  <i class="fa-solid fa-key text-majella-green text-xl"></i>
+                </div>
+                <div>
+                  <strong class="block text-majella-green mb-1"
+                    >Ritiro Chiavi</strong
+                  >
+                  <span class="text-sm text-gray-600 leading-relaxed"
+                    >Presso la
+                    <strong>Gelateria Caffetteria del Corso</strong> a
+                    Caramanico Terme (entro le ore 20:00), previa nostra
+                    conferma.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="bg-white rounded-3xl shadow-soft overflow-hidden border border-gray-100"
+          >
+            <div
+              class="bg-majella-green p-8 text-center border-b-4 border-majella-red"
+            >
+              <h2
+                class="font-display text-2xl font-bold text-white uppercase tracking-widest"
+              >
+                Modulo di Richiesta
+              </h2>
+            </div>
+
+            <div class="p-8 md:p-12">
+              <form
+                id="bookingForm"
+                class="space-y-8"
+                onsubmit="inviaPrenotazione(event)"
+              >
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <label
+                      class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider"
+                      >Nome e Cognome Referente *</label
+                    >
+                    <input
+                      type="text"
+                      class="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-majella-darkstone focus:bg-white focus:ring-2 focus:ring-majella-green focus:border-transparent outline-none transition"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label
+                      class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider"
+                      >Email *</label
+                    >
+                    <input
+                      type="email"
+                      class="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-majella-darkstone focus:bg-white focus:ring-2 focus:ring-majella-green focus:border-transparent outline-none transition"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div>
+                    <label
+                      class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider"
+                      >Telefono / WhatsApp *</label
+                    >
+                    <input
+                      type="tel"
+                      class="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-majella-darkstone focus:bg-white focus:ring-2 focus:ring-majella-green focus:border-transparent outline-none transition"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label
+                      class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider"
+                      >N° di Persone *</label
+                    >
+                    <input
+                      type="number"
+                      min="1"
+                      max="8"
+                      class="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-majella-darkstone focus:bg-white focus:ring-2 focus:ring-majella-green focus:border-transparent outline-none transition"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label
+                      class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider"
+                      >N° di Notti (Max 2) *</label
+                    >
+                    <select
+                      class="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-majella-darkstone focus:bg-white focus:ring-2 focus:ring-majella-green focus:border-transparent outline-none transition"
+                      required
+                    >
+                      <option value="1">1 Notte</option>
+                      <option value="2">2 Notti</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <label
+                      class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider"
+                      >Data di Arrivo *</label
+                    >
+                    <input
+                      type="date"
+                      class="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-majella-darkstone focus:bg-white focus:ring-2 focus:ring-majella-green focus:border-transparent outline-none transition"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label
+                      class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider"
+                      >Tipologia Gruppo</label
+                    >
+                    <input
+                      type="text"
+                      placeholder="Es. CAI, Famiglia, Trekking..."
+                      class="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-majella-darkstone focus:bg-white focus:ring-2 focus:ring-majella-green focus:border-transparent outline-none transition"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider"
+                    >Note aggiuntive per la prenotazione</label
+                  >
+                  <textarea
+                    rows="3"
+                    class="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-majella-darkstone focus:bg-white focus:ring-2 focus:ring-majella-green focus:border-transparent outline-none transition resize-none"
+                  ></textarea>
+                </div>
+
+                <div
+                  class="flex items-start bg-majella-lightgreen p-6 rounded-xl border border-majella-green/20"
+                >
+                  <div class="flex items-center h-6 mt-1">
+                    <input
+                      type="checkbox"
+                      required
+                      class="w-6 h-6 border-2 border-majella-green rounded text-majella-red focus:ring-majella-red bg-white cursor-pointer"
+                    />
+                  </div>
+                  <label
+                    class="ml-4 text-sm text-majella-green font-semibold leading-relaxed cursor-pointer"
+                  >
+                    Confermo di aver letto e compreso le "Regole del Buon
+                    Viandante", prestando particolare attenzione al
+                    <strong class="text-majella-red uppercase"
+                      >divieto assoluto di introdurre cani</strong
+                    >
+                    all'interno dell'area.
+                  </label>
+                </div>
+
+                <button
+                  type="submit"
+                  class="w-full bg-majella-red hover:bg-red-800 text-white font-black py-5 px-8 rounded-2xl shadow-lg transition duration-300 uppercase tracking-widest text-lg transform hover:-translate-y-1"
+                >
+                  Invia Richiesta di Prenotazione
+                  <i class="fa-solid fa-paper-plane ml-3"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contatti" class="tab-content py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="mb-16 text-center">
+            <h1
+              class="font-display text-4xl md:text-5xl font-black text-majella-green mb-4 uppercase tracking-widest"
+            >
+              Info & Regole
+            </h1>
+            <p class="text-xl text-gray-500 font-medium">
+              Vivere la Montagna Madre in sicurezza e con rispetto.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div class="space-y-8 flex flex-col h-full">
+              <div
+                class="bg-majella-stone p-8 md:p-10 rounded-3xl border border-gray-200 shadow-soft border-t-8 border-t-majella-green flex-grow"
+              >
+                <h2
+                  class="font-display text-2xl md:text-3xl font-bold text-majella-green mb-4 uppercase"
+                >
+                  Il Patto del Buon Viandante
+                </h2>
+                <p
+                  class="text-gray-600 mb-8 font-medium border-b border-gray-300 pb-4 leading-relaxed"
+                >
+                  Scegliere di salire fino al Barrasso significa abbracciare la
+                  filosofia della montagna più autentica. Questo rifugio è la
+                  casa di tutti: mantenerla accogliente, pulita e sicura per chi
+                  verrà dopo di te è il dono più grande che puoi fare alla
+                  Majella.
+                </p>
+
+                <ul class="space-y-6 text-majella-darkstone font-medium">
+                  <li
+                    class="flex items-start bg-red-50 p-5 rounded-2xl border border-red-100"
+                  >
+                    <div
+                      class="bg-white p-3 rounded-full shadow-sm mr-4 mt-1 shrink-0"
+                    >
+                      <i
+                        class="fa-solid fa-paw text-majella-red text-xl w-6 text-center"
+                      ></i>
+                    </div>
+                    <div>
+                      <strong
+                        class="text-majella-red block text-lg mb-1 uppercase"
+                        >I nostri Amici a 4 Zampe</strong
+                      >
+                      <span class="text-gray-700 text-sm leading-relaxed block"
+                        >Sappiamo quanto sia bello camminare con il proprio
+                        cane, ma purtroppo il rifugio si trova nel cuore della
+                        <strong>Zona A (Riserva Integrale)</strong> del Parco
+                        Nazionale. Per tutelare la delicatissima fauna selvatica
+                        che vive in queste aree (come lupi e camosci),
+                        <strong
+                          >è assolutamente vietato l'accesso ai cani</strong
+                        >. Confidiamo nella tua comprensione per proteggere
+                        questo fragile ecosistema.</span
+                      >
+                    </div>
+                  </li>
+
+                  <li class="flex items-start">
+                    <div
+                      class="bg-blue-50 p-3 rounded-full shadow-sm mr-4 mt-1 shrink-0"
+                    >
+                      <i
+                        class="fa-solid fa-faucet-drip text-blue-500 text-xl w-6 text-center"
+                      ></i>
+                    </div>
+                    <div>
+                      <strong class="text-majella-green block text-lg mb-1"
+                        >Acqua e Servizi</strong
+                      >
+                      <span class="text-gray-600 text-sm leading-relaxed block"
+                        >Lassù si vive con l'essenziale. Ricordati che
+                        all'interno e all'esterno della struttura
+                        <strong
+                          >non ci sono servizi igienici e non c'è acqua
+                          potabile</strong
+                        >. Fai scorta di abbondante acqua a valle prima di
+                        iniziare la salita!</span
+                      >
+                    </div>
+                  </li>
+
+                  <li class="flex items-start">
+                    <div
+                      class="bg-gray-100 p-3 rounded-full shadow-sm mr-4 mt-1 shrink-0"
+                    >
+                      <i
+                        class="fa-solid fa-box-open text-majella-wood text-xl w-6 text-center"
+                      ></i>
+                    </div>
+                    <div>
+                      <strong class="text-majella-green block text-lg mb-1"
+                        >La Regola dello Zaino</strong
+                      >
+                      <span class="text-gray-600 text-sm leading-relaxed block"
+                        >Tutto ciò che sale, deve scendere. Riporta a valle i
+                        tuoi rifiuti (e se porti via anche quelli scordati da
+                        altri, la montagna ti ringrazierà!).
+                        <strong>Non lasciare cibo aperto.</strong> Puoi donare
+                        solo alimenti integri e sigillati (es. in latta) per le
+                        emergenze.</span
+                      >
+                    </div>
+                  </li>
+
+                  <li class="flex items-start">
+                    <div
+                      class="bg-orange-50 p-3 rounded-full shadow-sm mr-4 mt-1 shrink-0"
+                    >
+                      <i
+                        class="fa-solid fa-fire-flame-curved text-orange-500 text-xl w-6 text-center"
+                      ></i>
+                    </div>
+                    <div>
+                      <strong class="text-majella-green block text-lg mb-1"
+                        >Il Calore del Bivacco</strong
+                      >
+                      <span class="text-gray-600 text-sm leading-relaxed block"
+                        >Usa il camino con cura. Prima di partire, prepara un
+                        po' di legna secca per chi arriverà infreddolito dopo di
+                        te. Un dettaglio vitale:
+                        <strong
+                          >è severamente vietato svuotare la cenere
+                          all'esterno</strong
+                        >, per prevenire incendi.</span
+                      >
+                    </div>
+                  </li>
+
+                  <li class="flex items-start">
+                    <div
+                      class="bg-white border border-gray-200 p-3 rounded-full shadow-sm mr-4 mt-1 shrink-0"
+                    >
+                      <i
+                        class="fa-solid fa-door-closed text-gray-600 text-xl w-6 text-center"
+                      ></i>
+                    </div>
+                    <div>
+                      <strong class="text-majella-green block text-lg mb-1"
+                        >Gli Ultimi Gesti</strong
+                      >
+                      <span class="text-gray-600 text-sm leading-relaxed block"
+                        >Prima di salutare il Barrasso, verifica di aver chiuso
+                        saldamente finestre e mandate. Questo semplice gesto
+                        impedisce alle bufere e agli animali selvatici di
+                        entrare e danneggiare il rifugio.</span
+                      >
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="space-y-8 flex flex-col h-full">
+              <div
+                class="bg-majella-lightgreen p-8 rounded-3xl border border-majella-green/20 shadow-sm flex items-center justify-between"
+              >
+                <div>
+                  <h2
+                    class="font-display text-xl font-bold text-majella-green uppercase mb-1"
+                  >
+                    Contatti Gestione
+                  </h2>
+                  <p class="text-majella-darkstone font-semibold">
+                    Ass. "Amici del Barrasso"
+                  </p>
+                </div>
+                <div class="flex space-x-3">
+                  <a
+                    href="https://wa.me/393000000000"
+                    class="bg-white w-12 h-12 rounded-full flex items-center justify-center text-green-600 hover:bg-green-600 hover:text-white transition shadow-sm border border-gray-200"
+                  >
+                    <i class="fa-brands fa-whatsapp text-2xl"></i>
+                  </a>
+                  <a
+                    href="mailto:info@rifugiobarrasso.it"
+                    class="bg-white w-12 h-12 rounded-full flex items-center justify-center text-majella-green hover:bg-majella-green hover:text-white transition shadow-sm border border-gray-200"
+                  >
+                    <i class="fa-regular fa-envelope text-xl"></i>
+                  </a>
+                </div>
+              </div>
+
+              <div
+                class="bg-majella-darkstone p-2 rounded-3xl shadow-xl text-white flex-grow flex flex-col overflow-hidden relative"
+              >
+                <div class="p-8 z-10 relative">
+                  <h2
+                    class="font-display text-2xl font-bold mb-6 flex items-center uppercase"
+                  >
+                    <i
+                      class="fa-solid fa-location-dot mr-3 text-majella-red"
+                    ></i>
+                    Come Arrivare
+                  </h2>
+                  <p class="mb-6 text-gray-300 font-medium leading-relaxed">
+                    Punto di partenza auto:
+                    <strong>Guado di Sant'Antonio</strong> (1.225 m),
+                    raggiungibile dalla frazione San Nicolao di Caramanico
+                    Terme.
+                  </p>
+
+                  <div
+                    class="bg-white/10 backdrop-blur-sm border border-white/20 p-5 rounded-2xl mb-4 flex justify-between items-center"
+                  >
+                    <div>
+                      <p
+                        class="font-sans text-xs text-majella-wood font-bold uppercase tracking-wider mb-1"
+                      >
+                        GPS Rifugio
+                      </p>
+                      <p class="font-mono text-sm tracking-wide">
+                        42.13584° N, 14.06078° E
+                      </p>
+                    </div>
+                    <div class="text-right">
+                      <p
+                        class="font-sans text-xs text-majella-wood font-bold uppercase tracking-wider mb-1"
+                      >
+                        Quota
+                      </p>
+                      <p class="font-display font-black text-2xl text-white">
+                        1.542 <span class="text-sm font-medium">m</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <a
+                  href="https://maps.google.com/?q=42.13584,14.06078"
+                  target="_blank"
+                  class="block w-full flex-grow min-h-[180px] bg-black rounded-2xl overflow-hidden relative group mt-auto border border-gray-700 hover:border-majella-red"
+                >
+                  <div
+                    class="absolute inset-0 bg-cover bg-center opacity-50 group-hover:opacity-70 transition duration-500"
+                    style="
+                      background-image: url(&quot;1000380617.jpg&quot;);
+                      filter: grayscale(30%);
+                    "
+                  ></div>
+                  <div
+                    class="absolute inset-0 flex flex-col items-center justify-center z-10 bg-black/20 group-hover:bg-black/10 transition"
+                  >
+                    <div
+                      class="bg-majella-red w-16 h-16 rounded-full flex items-center justify-center mb-3 shadow-lg group-hover:scale-110 transition duration-300"
+                    >
+                      <i
+                        class="fa-solid fa-map-location-dot text-white text-2xl"
+                      ></i>
+                    </div>
+                    <span
+                      class="font-bold text-white text-sm uppercase tracking-widest bg-black/60 px-4 py-2 rounded-full backdrop-blur-sm border border-white/20"
+                      >Apri Mappa</span
+                    >
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer
+      class="bg-majella-green text-majella-lightgreen pt-20 pb-10 mt-auto border-t-[12px] border-majella-wood"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-16 mb-16">
+          <div>
+            <img
+              src="LogoRB.png"
+              alt="Logo"
+              class="h-24 mb-8 bg-white p-3 rounded-2xl object-contain shadow-lg"
+              onerror="
+                this.src = 'https://via.placeholder.com/150x60?text=Logo'
+              "
+            />
+            <p class="text-majella-stone leading-relaxed font-medium text-lg">
+              Il focolare nel cielo d'Abruzzo. Un presidio di natura e memoria a
+              1.542 metri sulla Montagna Madre.
+            </p>
+          </div>
+
+          <div>
+            <h3
+              class="font-display text-xl font-bold text-white mb-8 uppercase tracking-widest border-b-2 border-majella-wood pb-3 inline-block"
+            >
+              Esplora
+            </h3>
+            <ul class="space-y-4 font-medium text-lg">
+              <li>
+                <button
+                  onclick="switchTab('storia')"
+                  class="hover:text-white hover:translate-x-2 transition transform inline-block flex items-center"
+                >
+                  <i
+                    class="fa-solid fa-chevron-right text-majella-wood text-sm mr-3"
+                  ></i>
+                  La Storia
+                </button>
+              </li>
+              <li>
+                <button
+                  onclick="switchTab('libro')"
+                  class="hover:text-white hover:translate-x-2 transition transform inline-block flex items-center"
+                >
+                  <i
+                    class="fa-solid fa-chevron-right text-majella-wood text-sm mr-3"
+                  ></i>
+                  Il Libro di Vetta
+                </button>
+              </li>
+              <li>
+                <button
+                  onclick="switchTab('prenotazioni')"
+                  class="hover:text-white hover:translate-x-2 transition transform inline-block flex items-center"
+                >
+                  <i
+                    class="fa-solid fa-chevron-right text-majella-wood text-sm mr-3"
+                  ></i>
+                  Prenota Posto Letto
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3
+              class="font-display text-xl font-bold text-white mb-8 uppercase tracking-widest border-b-2 border-majella-wood pb-3 inline-block"
+            >
+              Riferimenti
+            </h3>
+            <ul class="space-y-6 font-medium text-lg">
+              <li class="flex items-start">
+                <div
+                  class="bg-white/10 w-10 h-10 rounded-full flex items-center justify-center mr-4 mt-1 shrink-0"
+                >
+                  <i class="fa-solid fa-mountain text-majella-wood"></i>
+                </div>
+                <span
+                  >Prato della Corte<br /><span
+                    class="text-sm text-majella-stone"
+                    >Caramanico Terme (PE)</span
+                  ></span
+                >
+              </li>
+              <li class="flex items-center">
+                <div
+                  class="bg-white/10 w-10 h-10 rounded-full flex items-center justify-center mr-4 shrink-0"
+                >
+                  <i class="fa-solid fa-key text-majella-wood"></i>
+                </div>
+                <span
+                  >Ritiro Chiavi:<br /><span class="text-sm text-majella-stone"
+                    >Gelateria del Corso (entro h20)</span
+                  ></span
+                >
+              </li>
+              <li class="flex items-center">
+                <div
+                  class="bg-white/10 w-10 h-10 rounded-full flex items-center justify-center mr-4 shrink-0"
+                >
+                  <i class="fa-solid fa-users text-majella-wood"></i>
+                </div>
+                <span
+                  >Gestione:<br /><span class="text-sm text-majella-stone"
+                    >Ass. Amici del Barrasso</span
+                  ></span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center text-sm font-medium text-white/60"
+        >
+          <p>
+            © <span id="year"></span> Rifugio Paolo Barrasso. Majella, Abruzzo.
+          </p>
+          <p class="mt-2 md:mt-0">Progettato per la Montagna Madre.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      function switchTab(tabId) {
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((el) => el.classList.remove("active"));
+        document.getElementById(tabId).classList.add("active");
+
+        document.querySelectorAll(".nav-btn").forEach((btn) => {
+          if (btn.dataset.target === tabId) {
+            btn.classList.remove("text-gray-500");
+            btn.classList.add(
+              "text-majella-green",
+              "border-b-2",
+              "border-majella-red",
+            );
+          } else {
+            btn.classList.add("text-gray-500");
+            btn.classList.remove(
+              "text-majella-green",
+              "border-b-2",
+              "border-majella-red",
+            );
+          }
+        });
+
+        document.querySelectorAll(".mob-nav-btn").forEach((btn) => {
+          if (btn.dataset.target === tabId) {
+            btn.classList.remove("text-gray-500", "hover:bg-gray-50");
+            btn.classList.add(
+              "bg-majella-lightgreen",
+              "text-majella-green",
+              "border-l-4",
+              "border-majella-red",
+            );
+          } else {
+            btn.classList.add("text-gray-500", "hover:bg-gray-50");
+            btn.classList.remove(
+              "bg-majella-lightgreen",
+              "text-majella-green",
+              "border-l-4",
+              "border-majella-red",
+            );
+          }
+        });
+
+        document.getElementById("mobile-menu").classList.add("hidden");
+        document
+          .getElementById("menu-icon")
+          .classList.replace("fa-xmark", "fa-bars");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobile-menu");
+        const icon = document.getElementById("menu-icon");
+        if (menu.classList.contains("hidden")) {
+          menu.classList.remove("hidden");
+          icon.classList.replace("fa-bars", "fa-xmark");
+        } else {
+          menu.classList.add("hidden");
+          icon.classList.replace("fa-xmark", "fa-bars");
+        }
+      }
+
+      function inviaPrenotazione(event) {
+        event.preventDefault();
+        alert(
+          "Richiesta di prenotazione registrata! (Questa è una simulazione).\n\nRicordiamo che il costo è di 10€/giorno a persona e che le chiavi andranno ritirate presso la Gelateria Caffetteria del Corso entro le ore 20:00, dopo la nostra email di conferma.",
+        );
+        document.getElementById("bookingForm").reset();
+      }
+
+      function inviaMessaggioBacheca(event) {
+        event.preventDefault();
+        alert(
+          "Grazie! Il tuo messaggio è stato appeso in bacheca. (Simulazione)",
+        );
+        document.getElementById("form-messaggio").classList.add("hidden");
+        event.target.reset();
+      }
+    </script>
+  </body>
+</html>

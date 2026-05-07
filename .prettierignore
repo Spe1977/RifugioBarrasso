@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.lighthouseci/
+.agents/
+.codex/
+screen/
+playwright-report/
+test-results/
+sito.md
+stile.html
+Info.docx
+storia.docx
+logo.png

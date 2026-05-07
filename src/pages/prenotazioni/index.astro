@@ -1,0 +1,85 @@
+---
+import BookingForm from "@components/BookingForm.astro";
+import CalendarEmbed from "@components/CalendarEmbed.astro";
+import PageHero from "@components/PageHero.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { bookingSteps, pageMeta, rules } from "@data/content";
+import { bookingConfig } from "@data/site";
+---
+
+<BaseLayout
+  title={pageMeta.prenotazioni.title}
+  description={pageMeta.prenotazioni.description}
+>
+  <PageHero
+    eyebrow="Prenotazioni"
+    title="Richiedi il locale chiuso"
+    lead="La richiesta viene valutata dal gestore e diventa prenotazione solo dopo conferma esplicita."
+  />
+
+  <section class="paper-surface py-20">
+    <div
+      class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.82fr_1.18fr] lg:px-8"
+    >
+      <aside>
+        <SectionHeading
+          eyebrow="Regole rapide"
+          title="Prima di inviare"
+          lead={`Massimo ${bookingConfig.maxPersone} persone, massimo ${bookingConfig.maxNotti} notti, contributo di ${bookingConfig.contributoGiornalieroPersona} euro al giorno per persona.`}
+        />
+        <ol class="grid gap-4">
+          {
+            bookingSteps.map((step, index) => (
+              <li class="grid grid-cols-[40px_1fr] gap-4 border-t border-majella-green/12 pt-4">
+                <span class="flex h-10 w-10 items-center justify-center rounded-full bg-majella-red text-sm font-black text-white">
+                  {index + 1}
+                </span>
+                <span class="leading-7 text-gray-700">{step}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </aside>
+
+      <div class="bg-white p-6 shadow-soft md:p-8">
+        <h2
+          class="mb-6 font-display text-2xl font-black uppercase text-majella-green"
+        >
+          Modulo di richiesta
+        </h2>
+        <BookingForm />
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white py-20">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        eyebrow="Disponibilità"
+        title="Calendario"
+        lead="Consulta i giorni disponibili prima di inviare la richiesta. Il calendario mostra solo lo stato libero/occupato."
+      />
+      <CalendarEmbed />
+    </div>
+  </section>
+
+  <section class="paper-surface py-20">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        eyebrow="Uso del rifugio"
+        title="Regole essenziali"
+        lead="Il locale aperto resta sempre a disposizione di eventuali fruitori in cerca di riparo."
+      />
+      <ul class="grid gap-3 md:grid-cols-2">
+        {
+          rules.map((rule) => (
+            <li class="border-l-4 border-majella-red bg-white px-5 py-4 leading-7 shadow-soft">
+              {rule}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,85 @@
+---
+/**
+ * TallyEmbed – privacy-friendly Tally form embed for dedications.
+ * Shows a "load" button first; the iframe is injected only on user interaction.
+ * Falls back gracefully when PUBLIC_TALLY_FORM_ID is not set.
+ */
+const tallyId = import.meta.env.PUBLIC_TALLY_FORM_ID || "";
+const hasTally = tallyId.length > 0;
+const tallyUrl = hasTally
+  ? `https://tally.so/embed/${tallyId}?alignLeft=1&hideTitle=1&transparentBackground=1`
+  : "";
+const tallyDirect = hasTally ? `https://tally.so/r/${tallyId}` : "";
+---
+
+<div class="grid gap-6" data-tally-embed>
+  {
+    hasTally ? (
+      <>
+        <div data-tally-placeholder>
+          <button
+            class="inline-flex items-center gap-3 rounded-full bg-majella-red px-7 py-3 text-sm font-black uppercase tracking-widest text-white transition hover:bg-red-800"
+            type="button"
+            data-tally-load
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              class="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <path d="M12 20h9M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4Z" />
+            </svg>
+            Lascia una dedica
+          </button>
+          <p class="mt-3 text-sm text-gray-500">
+            Il modulo è fornito da Tally. Cliccando accetti il caricamento di
+            contenuti esterni.
+          </p>
+        </div>
+        <div class="hidden overflow-hidden rounded-md" data-tally-frame>
+          <iframe
+            title="Form dediche Rifugio Paolo Barrasso"
+            class="min-h-[520px] w-full border-0"
+            loading="lazy"
+          />
+        </div>
+        <p class="text-sm text-gray-500">
+          <a
+            href={tallyDirect}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-bold text-majella-green underline"
+          >
+            Apri il modulo dediche in una nuova finestra
+          </a>
+        </p>
+      </>
+    ) : (
+      <div class="border-l-4 border-majella-red bg-white p-6 leading-8 text-gray-700 shadow-soft">
+        Il modulo per le dediche verrà incorporato quando l'ID Tally sarà
+        configurato nelle variabili d'ambiente.
+      </div>
+    )
+  }
+</div>
+
+<script is:inline define:vars={{ tallyUrl }}>
+  const loadBtn = document.querySelector("[data-tally-load]");
+  const placeholder = document.querySelector("[data-tally-placeholder]");
+  const frameWrapper = document.querySelector("[data-tally-frame]");
+
+  if (loadBtn && placeholder && frameWrapper) {
+    loadBtn.addEventListener("click", () => {
+      const iframe = frameWrapper.querySelector("iframe");
+      if (iframe && tallyUrl) {
+        iframe.src = tallyUrl;
+        placeholder.classList.add("hidden");
+        frameWrapper.classList.remove("hidden");
+      }
+    });
+  }
+</script>

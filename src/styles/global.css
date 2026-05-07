@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --header-height: 5rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  background: #f4f3f0;
+  color: #3a3836;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  text-underline-offset: 0.22em;
+}
+
+:focus-visible {
+  outline: 3px solid #b81d1d;
+  outline-offset: 4px;
+}
+
+::selection {
+  background: #b81d1d;
+  color: #fff;
+}
+
+.site-shell {
+  min-height: 100svh;
+}
+
+.terrain-surface {
+  background:
+    linear-gradient(125deg, rgba(27, 59, 34, 0.92), rgba(27, 59, 34, 0.72)),
+    radial-gradient(
+      circle at 25% 20%,
+      rgba(244, 243, 240, 0.11) 0 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at 75% 65%,
+      rgba(194, 154, 107, 0.16) 0 2px,
+      transparent 3px
+    ),
+    #1b3b22;
+  background-size:
+    auto,
+    42px 42px,
+    54px 54px,
+    auto;
+}
+
+.paper-surface {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.78),
+      rgba(244, 243, 240, 0.92)
+    ),
+    #f4f3f0;
+}
+
+.section-edge {
+  border-top: 1px solid rgba(27, 59, 34, 0.12);
+}
+
+.measure {
+  max-width: 68ch;
+}
+
+main :where(p:not(.font-display), li) {
+  text-align: justify;
+  text-wrap: pretty;
+}
+
+.reveal {
+  animation: reveal 680ms ease-out both;
+}
+
+.reveal-delay {
+  animation-delay: 140ms;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,142 @@
+---
+import SectionHeading from "@components/SectionHeading.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { homeHighlights, pageMeta } from "@data/content";
+import { site } from "@data/site";
+---
+
+<BaseLayout title={pageMeta.home.title} description={pageMeta.home.description}>
+  <section class="terrain-surface relative overflow-hidden text-white">
+    <div
+      class="mx-auto grid min-h-[calc(100svh-5rem)] max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_420px] lg:px-8"
+    >
+      <div class="reveal max-w-4xl">
+        <p
+          class="mb-5 text-sm font-bold uppercase tracking-[0.3em] text-majella-wood"
+        >
+          {site.subtitle}
+        </p>
+        <h1
+          class="font-display text-5xl font-black uppercase leading-[0.9] tracking-normal sm:text-7xl lg:text-8xl"
+        >
+          Il Focolare nel<br />Cielo d'Abruzzo
+        </h1>
+        <p class="mt-7 measure text-xl leading-8 text-white/84">
+          Tra l'abbraccio del Monte Padre e della Montagna Madre.
+        </p>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+          <a
+            class="inline-flex justify-center rounded-full bg-majella-red px-7 py-3 text-sm font-black uppercase tracking-widest text-white transition hover:bg-red-800"
+            href="/prenotazioni/"
+          >
+            Prenota il locale
+          </a>
+          <a
+            class="inline-flex justify-center rounded-full border border-white/35 px-7 py-3 text-sm font-black uppercase tracking-widest text-white transition hover:bg-white hover:text-majella-green"
+            href="/storia/"
+          >
+            Scopri la storia
+          </a>
+        </div>
+      </div>
+      <div class="reveal reveal-delay justify-self-center">
+        <img
+          src="/assets/brand/logo.png"
+          alt="Logo del Rifugio Paolo Barrasso"
+          class="h-72 w-72 object-contain drop-shadow-2xl sm:h-96 sm:w-96"
+          width="384"
+          height="384"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white py-20">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+      <h2
+        class="font-display text-3xl font-black uppercase tracking-widest text-majella-green sm:text-4xl mb-10"
+      >
+        Due Mondi Ancestrali
+      </h2>
+      <div
+        class="space-y-6 text-left text-lg leading-relaxed text-gray-700 sm:text-xl"
+      >
+        <p>
+          C'è una magia silenziosa che avvolge chiunque decida di incamminarsi
+          sui sentieri della Majella che portano al Rifugio Paolo Barrasso. È la
+          sensazione di camminare in equilibrio tra due mondi ancestrali,
+          opposti ma indissolubilmente legati tra loro.
+        </p>
+
+        <p>
+          Da un lato c'è la grande fierezza della Majella che spinse Plinio il
+          Vecchio a definire questo monte il
+          <em class="font-bold text-majella-green">Pater Montium</em>, il "Padre
+          dei Monti": un colosso severo e protettivo, che da millenni scruta
+          l'orizzonte fino al mare con solenne maestà. Dall'altro, c'è la
+          dolcezza di una sagoma sinuosa che accarezza il cielo, nata dalla
+          leggenda della dea Maja, la più bella fra le Pleiadi greche. Fuggita
+          dalla Frigia fin qui per salvare suo figlio Ermete gravemente ferito,
+          alla morte di quest'ultimo – le cui spoglie diedero forma al Gran
+          Sasso – si lasciò morire addormentandosi a terra. Giove, impietosito,
+          trasformò il suo corpo nella montagna stessa, donandole per sempre le
+          forme di una donna. Da qui, il nome Majella, "La Montagna Madre".
+        </p>
+
+        <div
+          class="my-8 rounded-r-2xl border-l-8 border-majella-red bg-gray-50 py-6 pl-6 pr-4 text-xl font-bold italic text-majella-green shadow-sm sm:text-2xl"
+        >
+          "È proprio su questo confine invisibile, nel cuore dell'abbraccio tra
+          il Padre e la Madre, dove il silenzio accompagna lo sguardo attraverso
+          la contemplazione del paesaggio, che si trova il Rifugio Paolo
+          Barrasso."
+        </div>
+
+        <p>
+          Questo non è solo un riparo dal freddo o dal buio: è un focolare
+          sospeso a 1.542 metri, dove i due volti della montagna si incontrano.
+          Qui, tra queste mura, il respiro della natura e l'abbraccio della
+          Majella si fanno intimi. Nel Rifugio Paolo Barrasso la fatica del
+          cammino svanisce davanti al fuoco e lascia spazio alla meraviglia.
+        </p>
+
+        <p>
+          Lo spirito autentico del rifugio è indissolubilmente legato a Paolo
+          Barrasso, pioniere della conservazione, che proprio in questi luoghi
+          lottò per proteggerne la flora e la fauna. Il suo amore incondizionato
+          per la natura vibra ancora oggi, ricordandoci che la montagna va
+          vissuta sempre con rispetto e stupore.
+        </p>
+
+        <p
+          class="mt-12 text-center font-display text-3xl font-black uppercase tracking-widest text-majella-red sm:text-4xl"
+        >
+          Benvenuti a casa.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper-surface section-edge py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        eyebrow="Cosa sapere"
+        title="Una casa essenziale in quota"
+        lead="Il Barrasso funziona quando ogni persona che arriva lo usa con attenzione e lo lascia pronto per la successiva."
+      />
+      <div class="grid gap-6 md:grid-cols-3">
+        {
+          homeHighlights.map((item) => (
+            <article class="border-l-4 border-majella-red bg-white p-6 shadow-soft">
+              <h3 class="font-display text-xl font-black uppercase text-majella-green">
+                {item.title}
+              </h3>
+              <p class="mt-4 leading-7 text-gray-600">{item.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

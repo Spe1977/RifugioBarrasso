@@ -1,0 +1,185 @@
+---
+import PageHero from "@components/PageHero.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { pageMeta, rules } from "@data/content";
+import { site } from "@data/site";
+---
+
+<BaseLayout title={pageMeta.info.title} description={pageMeta.info.description}>
+  <PageHero
+    eyebrow="Info e regole"
+    title="Il patto del buon viandante"
+    lead="Il rifugio è aperto alla montagna, ma resta utilizzabile solo se ogni persona contribuisce a conservarlo."
+  />
+
+  <section class="paper-surface py-20">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div>
+        <div
+          class="mb-12 rounded-3xl bg-white p-8 shadow-sm border border-majella-green/10 sm:p-10"
+        >
+          <p
+            class="font-display text-lg font-medium leading-relaxed text-justify text-majella-darkstone sm:text-xl"
+          >
+            Scegliere di salire fino al Barrasso significa abbracciare la
+            filosofia della montagna più autentica. Questo rifugio è la casa di
+            tutti: mantenerla accogliente, pulita e sicura per chi verrà dopo di
+            te è il dono più grande che puoi fare alla Majella.
+          </p>
+        </div>
+
+        <ul class="space-y-6 text-majella-darkstone font-medium">
+          <li
+            class="flex items-start rounded-2xl border border-red-100 bg-red-50 p-5"
+          >
+            <div
+              class="mr-4 mt-1 shrink-0 rounded-full bg-white p-3 shadow-sm flex items-center justify-center w-12 h-12"
+            >
+              <span class="text-2xl" aria-hidden="true">🐾</span>
+            </div>
+            <div>
+              <strong class="mb-1 block text-lg uppercase text-majella-red"
+                >I nostri Amici a 4 Zampe</strong
+              >
+              <span class="block text-sm leading-relaxed text-gray-700"
+                >Sappiamo quanto sia bello camminare con il proprio cane, ma
+                purtroppo il rifugio si trova nel cuore della <strong
+                  >Zona A (Riserva Integrale)</strong
+                > del Parco Nazionale. Per tutelare la delicatissima fauna selvatica
+                che vive in queste aree (come lupi e camosci), <strong
+                  >è assolutamente vietato l'accesso ai cani</strong
+                >. Confidiamo nella tua comprensione per proteggere questo
+                fragile ecosistema.</span
+              >
+            </div>
+          </li>
+
+          <li class="flex items-start">
+            <div
+              class="mr-4 mt-1 shrink-0 rounded-full bg-blue-50 p-3 shadow-sm flex items-center justify-center w-12 h-12"
+            >
+              <span class="text-2xl" aria-hidden="true">💧</span>
+            </div>
+            <div>
+              <strong class="mb-1 block text-lg text-majella-green"
+                >Acqua e Servizi</strong
+              >
+              <span class="block text-sm leading-relaxed text-gray-600"
+                >Lassù si vive con l'essenziale. Ricordati che all'interno e
+                all'esterno della struttura <strong
+                  >non ci sono servizi igienici e non c'è acqua potabile</strong
+                >. Fai scorta di abbondante acqua a valle prima di iniziare la
+                salita!</span
+              >
+            </div>
+          </li>
+
+          <li class="flex items-start">
+            <div
+              class="mr-4 mt-1 shrink-0 rounded-full bg-gray-100 p-3 shadow-sm flex items-center justify-center w-12 h-12"
+            >
+              <span class="text-2xl" aria-hidden="true">🎒</span>
+            </div>
+            <div>
+              <strong class="mb-1 block text-lg text-majella-green"
+                >La Regola dello Zaino</strong
+              >
+              <span class="block text-sm leading-relaxed text-gray-600"
+                >Tutto ciò che sale, deve scendere. Riporta a valle i tuoi
+                rifiuti (e se porti via anche quelli scordati da altri, la
+                montagna ti ringrazierà!). <strong
+                  >Non lasciare cibo aperto.</strong
+                > Puoi donare solo alimenti integri e sigillati (es. in latta) per
+                le emergenze.</span
+              >
+            </div>
+          </li>
+
+          <li class="flex items-start">
+            <div
+              class="mr-4 mt-1 shrink-0 rounded-full bg-orange-50 p-3 shadow-sm flex items-center justify-center w-12 h-12"
+            >
+              <span class="text-2xl" aria-hidden="true">🔥</span>
+            </div>
+            <div>
+              <strong class="mb-1 block text-lg text-majella-green"
+                >Il Calore del Bivacco</strong
+              >
+              <span class="block text-sm leading-relaxed text-gray-600"
+                >Usa il camino con cura. Prima di partire, prepara un po' di
+                legna secca per chi arriverà infreddolito dopo di te. Un
+                dettaglio vitale: <strong
+                  >è severamente vietato svuotare la cenere all'esterno</strong
+                >, per prevenire incendi.</span
+              >
+            </div>
+          </li>
+
+          <li class="flex items-start">
+            <div
+              class="mr-4 mt-1 shrink-0 rounded-full border border-gray-200 bg-white p-3 shadow-sm flex items-center justify-center w-12 h-12"
+            >
+              <span class="text-2xl" aria-hidden="true">🚪</span>
+            </div>
+            <div>
+              <strong class="mb-1 block text-lg text-majella-green"
+                >Gli Ultimi Gesti</strong
+              >
+              <span class="block text-sm leading-relaxed text-gray-600"
+                >Prima di salutare il Barrasso, verifica di aver chiuso
+                saldamente finestre e mandate. Questo semplice gesto impedisce
+                alle bufere e agli animali selvatici di entrare e danneggiare il
+                rifugio.</span
+              >
+            </div>
+          </li>
+        </ul>
+
+        <div
+          class="mt-16 rounded-3xl border-l-8 border-majella-green bg-white p-8 shadow-sm sm:flex sm:items-center sm:justify-between sm:p-10"
+        >
+          <div class="mb-6 sm:mb-0">
+            <p
+              class="mb-2 text-sm font-black uppercase tracking-widest text-majella-red"
+            >
+              Gestione
+            </p>
+            <p
+              class="font-display text-xl font-bold text-majella-green sm:text-2xl"
+            >
+              {site.manager}
+            </p>
+          </div>
+          <div class="sm:text-right">
+            <p
+              class="mb-2 text-sm font-black uppercase tracking-widest text-majella-red"
+            >
+              Contatto operativo
+            </p>
+            <a
+              href={`mailto:${site.operativeEmail}`}
+              class="font-display text-xl font-bold text-majella-darkstone underline transition-colors hover:text-majella-red sm:text-2xl"
+              >{site.operativeEmail}</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white py-20">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading eyebrow="Utilizzo" title="Regolamento Tecnico" />
+      <ul class="grid gap-3 md:grid-cols-2">
+        {
+          rules.map((rule) => (
+            <li class="border-l-4 border-majella-green/20 bg-majella-stone px-5 py-4 leading-7 text-sm font-medium text-majella-darkstone">
+              {rule}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

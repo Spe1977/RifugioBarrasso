@@ -1,0 +1,136 @@
+---
+import PageHero from "@components/PageHero.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { pageMeta } from "@data/content";
+---
+
+<BaseLayout
+  title={pageMeta.storia.title}
+  description={pageMeta.storia.description}
+>
+  <PageHero
+    eyebrow="La storia"
+    title="Il casotto, Paolo Barrasso, la rinascita"
+    lead="Dallo stazzo pastorale degli anni Trenta alla gestione degli Amici del Barrasso: una cronologia essenziale, fondata sui documenti ufficiali."
+  />
+
+  <section class="paper-surface py-20">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div
+        class="relative mb-16 overflow-hidden rounded-3xl border-4 border-white shadow-soft"
+      >
+        <img
+          src="/assets/images/Foto da Leonardo(2).jpg"
+          alt="Le cime innevate della Majella"
+          class="h-[400px] w-full object-cover"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="space-y-12 text-lg leading-relaxed text-majella-darkstone">
+        <div
+          class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm md:p-10"
+        >
+          <h2
+            class="mb-5 flex items-center font-display text-3xl font-bold text-majella-green"
+          >
+            <span class="mr-4 text-3xl" aria-hidden="true">🛖</span>
+            Le origini: "Il Casotto"
+          </h2>
+          <p>
+            Il rifugio fu costruito
+            <strong>tra il 1935 e il 1940</strong> dal Comune di Caramanico Terme
+            su terreno comunale. Nacque originariamente come
+            <em class="font-medium text-majella-green">stazzo pastorale</em>
+            a servizio dei pastori che, seguendo i ritmi antichi della transumanza,
+            portavano a pascolare le greggi al "Prato della Corte", sulle pendici
+            del Monte Rapina. Per anni, i caramanichesi lo hanno affettuosamente chiamato
+            semplicemente "il casotto". Dopo un periodo di abbandono e chiusura negli
+            anni '70 e '80, la struttura era pronta per una nuova vita.
+          </p>
+        </div>
+
+        <div
+          class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm md:p-10"
+        >
+          <h2
+            class="mb-5 flex items-center font-display text-3xl font-bold text-majella-green"
+          >
+            <span class="mr-4 text-3xl" aria-hidden="true">🍃</span>
+            1992: Il tributo a Paolo Barrasso
+          </h2>
+          <p>
+            Nel 1992 il rifugio fu ristrutturato dal Comune e intitolato a
+            <strong>Paolo Barrasso</strong>. Paolo era uno stimato biologo del <em
+              >Corpo Forestale dello Stato</em
+            > e un vero pioniere della conservazione ambientale. Il suo nome è indissolubilmente
+            legato all'"Operazione San Francesco", il progetto che negli anni '70
+            salvò il Lupo Appenninico dall'estinzione. Paolo amava immensamente questa
+            montagna e dedicò la sua vita allo studio della sua fauna, fino alla sua
+            tragica e prematura scomparsa sulle montagne del Morrone nel 1991.
+          </p>
+        </div>
+
+        <div
+          class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm md:p-10"
+        >
+          <h2
+            class="mb-5 flex items-center font-display text-3xl font-bold text-majella-green"
+          >
+            <span class="mr-4 text-3xl" aria-hidden="true">⛰️</span>
+            Gli anni del CAI (Fino al 2019)
+          </h2>
+          <p>
+            Fino al 2019 la struttura è stata gestita come bivacco e Capanna
+            Sociale dal <strong>CAI di Pescara</strong>. Venne istituita la
+            formula che ancora oggi lo caratterizza: un locale sempre aperto a
+            disposizione di tutti i passanti in cerca di riparo, e un locale
+            chiuso (all'epoca riservato solo ai soci CAI) a cui si accedeva
+            tramite chiave.
+          </p>
+        </div>
+
+        <div
+          class="rounded-3xl border-l-8 border-majella-red bg-majella-stone p-8 shadow-soft md:p-10"
+        >
+          <h3
+            class="mb-6 flex items-center font-display text-3xl font-bold text-majella-green"
+          >
+            <span class="mr-4 text-3xl" aria-hidden="true">🎨</span>
+            Dal 2024 a oggi: La Rinascita
+          </h3>
+          <p class="mb-6 font-medium text-majella-darkstone">
+            Dopo esser rimasto chiuso dal 2020 al 2024, nel
+            <strong>settembre 2024</strong> il Comune di Caramanico Terme ha effettuato
+            una profonda ristrutturazione per restituire il rifugio agli escursionisti.
+            I lavori hanno compreso:
+          </p>
+          <ul
+            class="mb-8 list-disc space-y-3 pl-6 font-semibold text-majella-green"
+          >
+            <li>
+              Riqualificazione esterna con nuove staccionate e panche in legno.
+            </li>
+            <li>
+              Verniciatura degli infissi nel caratteristico
+              <strong>colore rosso</strong>.
+            </li>
+            <li>Riverniciatura degli interni e sistemazione della mobilia.</li>
+            <li>
+              Rifacimento completo del camino, canna fumaria e guaina del tetto.
+            </li>
+          </ul>
+          <p class="font-medium">
+            Dal <strong>21 febbraio 2025</strong>, con un accordo di 6 anni, la
+            gestione, la cura del decoro e la manutenzione sono state affidate
+            all'Associazione culturale
+            <strong class="text-majella-red">"Amici del Barrasso"</strong>
+            di Caramanico Terme. La grande novità di questa gestione è che oggi il
+            locale chiuso è finalmente prenotabile e accessibile da
+            <strong>chiunque</strong> ne faccia richiesta.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

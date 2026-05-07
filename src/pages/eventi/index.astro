@@ -1,0 +1,82 @@
+---
+import PageHero from "@components/PageHero.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { pageMeta } from "@data/content";
+import { currentEvent } from "@data/events";
+---
+
+<BaseLayout
+  title={pageMeta.eventi.title}
+  description={pageMeta.eventi.description}
+>
+  <PageHero
+    eyebrow="Eventi"
+    title={currentEvent.active
+      ? currentEvent.title
+      : "Appuntamenti del rifugio"}
+    lead={currentEvent.active
+      ? currentEvent.description
+      : "Pagina predisposta per ciaspolate, escursioni, aperture speciali e iniziative degli Amici del Barrasso."}
+  />
+
+  <section class="paper-surface py-20">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      {
+        currentEvent.active ? (
+          <>
+            <SectionHeading
+              eyebrow="Prossimo appuntamento"
+              title={currentEvent.title}
+              lead={currentEvent.date}
+            />
+            {currentEvent.image && (
+              <div class="mb-10 overflow-hidden rounded-md shadow-soft">
+                <img
+                  src={`/assets/images/${currentEvent.image}`}
+                  alt={currentEvent.title}
+                  class="w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            )}
+            <div class="border-l-4 border-majella-red bg-white p-8 shadow-soft">
+              <p class="text-lg leading-8 text-gray-700">
+                {currentEvent.description}
+              </p>
+            </div>
+            {currentEvent.bookingEnabled && (
+              <div class="mt-8">
+                <a
+                  class="inline-flex items-center gap-3 rounded-full bg-majella-red px-7 py-3 text-sm font-black uppercase tracking-widest text-white transition hover:bg-red-800"
+                  href="/prenotazioni/"
+                >
+                  Richiedi partecipazione
+                </a>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            <div class="mt-8 rounded-3xl border border-majella-green/10 bg-white p-8 text-center shadow-sm sm:p-12">
+              <span class="mb-6 block text-6xl" aria-hidden="true">
+                🥾
+              </span>
+              <p class="font-display text-2xl font-bold text-majella-green sm:text-3xl">
+                La montagna riposa, ma noi no!
+              </p>
+              <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-majella-darkstone sm:text-xl">
+                Stiamo organizzando i prossimi appuntamenti al Barrasso. Che si
+                tratti di una ciaspolata sotto le stelle, un'escursione botanica
+                o un ritrovo in quota, troverai presto qui tutte le novità.
+              </p>
+              <p class="mt-8 text-sm font-black uppercase tracking-widest text-majella-red">
+                Torna a trovarci presto
+              </p>
+            </div>
+          </>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+.lighthouseci/
+.agents/
+.codex/
+screen/
+.DS_Store
+*.log
+playwright-report/
+test-results/
