@@ -47,16 +47,19 @@ const dark = tone === "dark";
       </p>
     </div>
     <div class="reveal reveal-delay hidden justify-self-end lg:block">
-      <img
-        src="/assets/brand/logo.png"
-        alt=""
-        class:list={[
-          "h-72 w-72 object-contain transition-transform duration-500 hover:scale-[1.03]",
-          dark ? "drop-shadow-2xl" : "",
-        ]}
-        width="288"
-        height="288"
-      />
+      <picture>
+        <source srcset="/assets/brand/logo2-384.webp" type="image/webp" />
+        <img
+          src="/assets/brand/logo2-384.png"
+          alt=""
+          class:list={[
+            "h-72 w-72 object-contain transition-transform duration-500 hover:scale-[1.03]",
+            dark ? "drop-shadow-2xl" : "",
+          ]}
+          width="288"
+          height="288"
+        />
+      </picture>
     </div>
   </div>
 </section>

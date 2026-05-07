@@ -16,18 +16,17 @@ const isActive = (href: string) =>
   <div
     class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
   >
-    <a
-      href="/"
-      class="flex min-w-0 items-center gap-3"
-      aria-label={`${site.name} home`}
-    >
-      <img
-        src="/assets/brand/logo.png"
-        alt=""
-        class="h-14 w-14 shrink-0 object-contain"
-        width="56"
-        height="56"
-      />
+    <a href="/" class="flex min-w-0 items-center gap-3">
+      <picture>
+        <source srcset="/assets/brand/logo2-96.webp" type="image/webp" />
+        <img
+          src="/assets/brand/logo2-96.png"
+          alt=""
+          class="h-14 w-14 shrink-0 object-contain"
+          width="56"
+          height="56"
+        />
+      </picture>
       <span class="min-w-0">
         <span
           class="block truncate font-display text-sm font-black uppercase tracking-wide text-majella-green sm:text-lg"
@@ -35,7 +34,7 @@ const isActive = (href: string) =>
           {site.name}
         </span>
         <span
-          class="block text-xs font-bold uppercase tracking-widest text-majella-wood"
+          class="block text-xs font-bold uppercase tracking-widest text-majella-wood-dark"
         >
           Maiella - {site.altitude}
         </span>

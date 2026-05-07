@@ -6,7 +6,7 @@ test.describe("SEO and Accessibility Basics", () => {
     { url: "/storia/", title: "Storia" },
     { url: "/info-e-regole/", title: "Info e Regole" },
     { url: "/prenotazioni/", title: "Prenotazioni" },
-    { url: "/quaderno-del-rifugio/", title: "Quaderno" }
+    { url: "/quaderno-del-rifugio/", title: "Quaderno" },
   ];
 
   for (const p of pages) {

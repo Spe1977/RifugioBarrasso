@@ -11,6 +11,7 @@ export default {
           stone: "#f4f3f0",
           darkstone: "#3a3836",
           wood: "#c29a6b",
+          "wood-dark": "#8b6432",
         },
       },
       fontFamily: {

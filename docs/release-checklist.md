@@ -8,6 +8,9 @@ Usare questa checklist prima di pubblicare una nuova versione del sito.
 - Verificare che la galleria usi solo immagini autorizzate.
 - Verificare che il calendario mostri correttamente le disponibilità.
 - Verificare che l'informativa privacy nel form sia coerente con la pagina Privacy.
+- Verificare che le immagini hero e il logo abbiano tutte le varianti responsive
+  (`/assets/brand/logo2-96|384.{png,webp}`, `/assets/brand/favicon-64.png`,
+  `/assets/images/foto-leonardo-{2,9}-{400,800,1600}.{jpg,webp}`).
 
 ## Configurazione
 

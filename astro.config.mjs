@@ -6,6 +6,9 @@ export default defineConfig({
   output: "static",
   site: "https://www.rifugiobarrasso.com",
   integrations: [sitemap()],
+  build: {
+    inlineStylesheets: "always",
+  },
   vite: {
     resolve: {
       alias: {

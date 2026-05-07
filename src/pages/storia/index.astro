@@ -19,12 +19,23 @@ import { pageMeta } from "@data/content";
       <div
         class="relative mb-16 overflow-hidden rounded-3xl border-4 border-white shadow-soft"
       >
-        <img
-          src="/assets/images/Foto da Leonardo(2).jpg"
-          alt="Le cime innevate della Majella"
-          class="h-[400px] w-full object-cover"
-          loading="lazy"
-        />
+        <picture>
+          <source
+            type="image/webp"
+            srcset="/assets/images/foto-leonardo-2-400.webp 400w, /assets/images/foto-leonardo-2-800.webp 800w, /assets/images/foto-leonardo-2-1600.webp 1600w"
+            sizes="(max-width: 480px) 400px, (max-width: 1024px) 800px, 1600px"
+          />
+          <img
+            src="/assets/images/foto-leonardo-2-1600.jpg"
+            srcset="/assets/images/foto-leonardo-2-400.jpg 400w, /assets/images/foto-leonardo-2-800.jpg 800w, /assets/images/foto-leonardo-2-1600.jpg 1600w"
+            sizes="(max-width: 480px) 400px, (max-width: 1024px) 800px, 1600px"
+            alt="Le cime innevate della Majella"
+            class="h-[400px] w-full object-cover"
+            width="1600"
+            height="900"
+            loading="lazy"
+          />
+        </picture>
       </div>
 
       <div class="space-y-12 text-lg leading-relaxed text-majella-darkstone">

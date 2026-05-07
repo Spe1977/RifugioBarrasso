@@ -9,6 +9,7 @@ il locale "bivacco" del rifugio con tavolo, panche e camino è sempre aperto e d
 
 è utile sapere che all'interno ed all'esterno del rifugio non sono presenti i bagni e non c'è acqua potabile.
 E' compito degli utilizzatori garantire:
+
 1. il mantenimento delle buone condizioni igienico-sanitarie del rifugio e delle sue pertinenze;
 2. l’utilizzo del rifugio e di tutte le attrezzature con diligenza e cura;
 3. il corretto smaltimento dei rifiuti che dovranno essere riportati a valle;
@@ -18,6 +19,7 @@ E' compito degli utilizzatori garantire:
 7. la corretta chiusura delle finestre e della porta.
 
 LOCALE CHIUSO - SU PRENOTAZIONE
+
 - L’uso del locale chiuso all'interno del rifugio è concesso a tutte le categorie sopra elencate per massimo n°2 notti purché prenotato compilando un modulo presente sulla pagina dedicata al rifugio che trovate sul sito turistico del Comune di Caramanico Terme al seguente link >>>;
 - è compito degli utilizzatori garantire quanto indicato nel paragrafo superiore e si raccomanda il corretto utilizzo della bombola del gas che alimenta i fornelli, assicurandosi la corretta chiusura dopo l'utilizzo;
 - durante l'utilizzo del locale chiuso all'interno del rifugio non è possibile riservare ad utilizzo esclusivo il locale "bivacco" del rifugio, lo stesso deve essere reso disponibile per l'accoglienza di eventuali altri fruitori in cerca di riparo;

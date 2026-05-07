@@ -21,7 +21,12 @@ const canonical = new URL(Astro.url.pathname, site.domain).toString();
     <meta name="description" content={description} />
     <meta name="theme-color" content="#1b3b22" />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/assets/brand/logo.png" type="image/png" />
+    <link
+      rel="icon"
+      href="/assets/brand/favicon-64.png"
+      type="image/png"
+      sizes="64x64"
+    />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />

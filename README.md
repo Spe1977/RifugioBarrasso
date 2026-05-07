@@ -15,8 +15,10 @@ Sito statico multipagina del Rifugio Paolo Barrasso, realizzato con Astro e Tail
 
 - Pagine statiche: home, storia, galleria, prenotazioni, quaderno del rifugio, eventi, info e regole, privacy, 404.
 - Galleria fotografica locale senza dipendenze esterne.
-- Modulo prenotazioni con validazione lato client, dichiarazioni obbligatorie e invio a Google Apps Script.
+- Modulo prenotazioni con validazione lato client, dichiarazioni obbligatorie (incluso luogo di nascita e numero documento) e invio a Google Apps Script.
 - Calendario disponibilità caricato solo dopo consenso dell'utente.
+- Immagini hero e logo responsive con `<picture>`, varianti WebP/JPEG/PNG e `srcset` multi-dimensione (400/800/1600 px per le foto, 96/384 px per il logo).
+- CSS critico inline nel build Astro (`inlineStylesheets: "always"`) per ridurre i round-trip di rete.
 - Sitemap, robots.txt, header di sicurezza e cache ottimizzata per Cloudflare Pages.
 
 ## Comandi locali

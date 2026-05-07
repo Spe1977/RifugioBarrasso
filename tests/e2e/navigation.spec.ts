@@ -16,7 +16,9 @@ test("renders the Italian multipage navigation", async ({ page }) => {
 test("booking form exposes the official limits", async ({ page }) => {
   await page.goto("/prenotazioni/");
 
-  await expect(page.getByText("Numero Totale di Ospiti (massimo 8) *")).toBeVisible();
+  await expect(
+    page.getByText("Numero Totale di Ospiti (massimo 8) *"),
+  ).toBeVisible();
   await expect(page.getByText("Numero notti (massimo 2) *")).toBeVisible();
   await expect(
     page

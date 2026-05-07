@@ -9,14 +9,17 @@ const year = new Date().getFullYear();
     class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr] lg:px-8"
   >
     <div>
-      <img
-        src="/assets/brand/logo.png"
-        alt=""
-        class="mb-5 h-20 w-20 bg-white/95 object-contain p-2"
-        loading="lazy"
-        width="80"
-        height="80"
-      />
+      <picture>
+        <source srcset="/assets/brand/logo2-96.webp" type="image/webp" />
+        <img
+          src="/assets/brand/logo2-96.png"
+          alt=""
+          class="mb-5 h-20 w-20 bg-white/95 object-contain p-2"
+          loading="lazy"
+          width="80"
+          height="80"
+        />
+      </picture>
       <p class="font-display text-2xl font-black uppercase tracking-wide">
         {site.name}
       </p>
