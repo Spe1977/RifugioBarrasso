@@ -8,6 +8,8 @@ export interface BookingFormData {
   lingua: string;
   nome: string;
   data_nascita: string;
+  luogo_nascita: string;
+  numero_documento: string;
   email: string;
   telefono: string;
   data_arrivo: string;
@@ -74,6 +76,14 @@ export function validateBookingPayload(
 
   if (!data.data_nascita?.trim()) {
     errors.data_nascita = "Data di nascita obbligatoria.";
+  }
+
+  if (!data.luogo_nascita?.trim()) {
+    errors.luogo_nascita = "Luogo di nascita obbligatorio.";
+  }
+
+  if (!data.numero_documento?.trim()) {
+    errors.numero_documento = "Numero documento obbligatorio.";
   }
 
   if (!data.email || !validateEmail(data.email)) {
@@ -148,6 +158,8 @@ export function buildBookingPayload(
     lingua: (formData.get("lingua") as string) || "it",
     nome: (formData.get("nome") as string) || "",
     data_nascita: (formData.get("data_nascita") as string) || "",
+    luogo_nascita: (formData.get("luogo_nascita") as string) || "",
+    numero_documento: (formData.get("numero_documento") as string) || "",
     email: (formData.get("email") as string) || "",
     telefono: (formData.get("telefono") as string) || "",
     data_arrivo: (formData.get("data_arrivo") as string) || "",

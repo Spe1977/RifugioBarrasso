@@ -68,6 +68,8 @@ function doPost(e) {
         "stato",
         "nome",
         "data_nascita",
+        "luogo_nascita",
+        "numero_documento",
         "email",
         "telefono",
         "persone",
@@ -102,6 +104,8 @@ function doPost(e) {
       "nuova",
       p.nome,
       p.data_nascita,
+      p.luogo_nascita,
+      p.numero_documento,
       p.email,
       p.telefono,
       parseInt(p.persone, 10),
@@ -140,6 +144,8 @@ function doPost(e) {
         "ID richiesta: " + bookingId,
         "Nome: " + p.nome,
         "Data di nascita: " + p.data_nascita,
+        "Luogo di nascita: " + p.luogo_nascita,
+        "Numero documento: " + p.numero_documento,
         "Email: " + p.email,
         "Telefono: " + p.telefono,
         "Data arrivo: " + p.data_arrivo,
@@ -200,8 +206,8 @@ function doPost(e) {
     }
 
     /* ── aggiorna colonne email ── */
-    sheet.getRange(lastRow, 25).setValue(emailNotificaOk ? "sì" : "errore");
-    sheet.getRange(lastRow, 26).setValue(emailUtenteOk ? "sì" : "errore");
+    sheet.getRange(lastRow, 27).setValue(emailNotificaOk ? "sì" : "errore");
+    sheet.getRange(lastRow, 28).setValue(emailUtenteOk ? "sì" : "errore");
 
     return buildResponse("ok", bookingId);
   } catch (err) {
@@ -218,6 +224,10 @@ function validate(p) {
   if (!p.nome || p.nome.trim().length === 0) errors.push("Nome obbligatorio");
   if (!p.data_nascita || p.data_nascita.trim().length === 0)
     errors.push("Data nascita obbligatoria");
+  if (!p.luogo_nascita || p.luogo_nascita.trim().length === 0)
+    errors.push("Luogo di nascita obbligatorio");
+  if (!p.numero_documento || p.numero_documento.trim().length === 0)
+    errors.push("Numero documento obbligatorio");
   if (!p.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email))
     errors.push("Email non valida");
   if (!p.telefono || p.telefono.trim().length === 0)

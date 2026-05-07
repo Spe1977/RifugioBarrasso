@@ -83,6 +83,32 @@ const bookingDeclarations = [
     </label>
 
     <label class="grid gap-2 text-sm font-bold text-majella-green">
+      Luogo di nascita *
+      <input
+        class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone"
+        name="luogo_nascita"
+        autocomplete="off"
+        required
+      />
+      <span
+        class="hidden text-xs font-normal text-majella-red"
+        data-error="luogo_nascita"></span>
+    </label>
+
+    <label class="grid gap-2 text-sm font-bold text-majella-green">
+      Numero documento *
+      <input
+        class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone"
+        name="numero_documento"
+        autocomplete="off"
+        required
+      />
+      <span
+        class="hidden text-xs font-normal text-majella-red"
+        data-error="numero_documento"></span>
+    </label>
+
+    <label class="grid gap-2 text-sm font-bold text-majella-green">
       Indirizzo Email *
       <input
         class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone"
@@ -312,6 +338,13 @@ const bookingDeclarations = [
     <span
       class="hidden text-xs text-majella-red"
       data-error="consenso_ricontatto"></span>
+
+    <p
+      class="rounded-xl border border-majella-green/15 bg-majella-green/5 p-4 text-sm font-bold text-majella-green"
+    >
+      Nella quota di prenotazione è inclusa la Polizza assicurativa RC n.
+      450246854 emessa da Generali Assicurazioni.
+    </p>
   </div>
 
   <dialog
@@ -390,9 +423,10 @@ const bookingDeclarations = [
   </p>
 
   <button
-    class="inline-flex w-fit items-center justify-center gap-3 rounded-full bg-majella-red px-7 py-3 text-sm font-black uppercase tracking-widest text-white transition hover:bg-red-800 disabled:cursor-wait disabled:opacity-60"
+    class="inline-flex w-fit items-center justify-center gap-3 rounded-full bg-majella-red px-7 py-3 text-sm font-black uppercase tracking-widest text-white transition hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-60"
     type="submit"
     data-submit-btn
+    disabled
   >
     <span data-submit-label>Invia richiesta</span>
     <svg
@@ -415,6 +449,15 @@ const bookingDeclarations = [
         class="opacity-75"></path>
     </svg>
   </button>
+
+  <p
+    class="text-sm font-bold text-majella-red"
+    data-submit-hint
+    aria-live="polite"
+  >
+    Per inviare la richiesta è necessario spuntare tutte e 5 le caselle di
+    accettazione e presa visione.
+  </p>
 
   <!-- Success feedback -->
   <div
@@ -520,6 +563,18 @@ const bookingDeclarations = [
       valid = false;
     }
 
+    const luogoNascita = (fd.get("luogo_nascita") as string) || "";
+    if (luogoNascita.trim().length === 0) {
+      showError("luogo_nascita", "Luogo di nascita obbligatorio.");
+      valid = false;
+    }
+
+    const numeroDocumento = (fd.get("numero_documento") as string) || "";
+    if (numeroDocumento.trim().length === 0) {
+      showError("numero_documento", "Numero documento obbligatorio.");
+      valid = false;
+    }
+
     const email = (fd.get("email") as string) || "";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       showError("email", "Email non valida.");
@@ -611,15 +666,58 @@ const bookingDeclarations = [
     return valid;
   }
 
+  const declarationCheckboxNames = [
+    "accettazione_regole",
+    "accettazione_contributo",
+    "presa_visione_responsabilita",
+    "accettazione_privacy",
+    "consenso_ricontatto",
+  ] as const;
+  const submitHint = document.querySelector<HTMLElement>("[data-submit-hint]");
+
+  function declarationCheckboxes(scope: HTMLFormElement): HTMLInputElement[] {
+    return declarationCheckboxNames
+      .map((name) =>
+        scope.querySelector<HTMLInputElement>(
+          `input[type="checkbox"][name="${name}"]`,
+        ),
+      )
+      .filter((el): el is HTMLInputElement => el !== null);
+  }
+
+  function allDeclarationsChecked(scope: HTMLFormElement): boolean {
+    const boxes = declarationCheckboxes(scope);
+    return (
+      boxes.length === declarationCheckboxNames.length &&
+      boxes.every((box) => box.checked)
+    );
+  }
+
+  function syncSubmitGate(scope: HTMLFormElement) {
+    const ok = allDeclarationsChecked(scope);
+    if (submitBtn) submitBtn.disabled = !ok;
+    submitHint?.classList.toggle("hidden", ok);
+  }
+
   if (form) {
     // Fill dynamic hidden fields
     const pageUrlInput =
       form.querySelector<HTMLInputElement>("[data-page-url]");
     if (pageUrlInput) pageUrlInput.value = window.location.href;
 
+    declarationCheckboxes(form).forEach((checkbox) => {
+      checkbox.addEventListener("change", () => syncSubmitGate(form));
+    });
+    syncSubmitGate(form);
+
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
       clearErrors();
+
+      if (!allDeclarationsChecked(form)) {
+        syncSubmitGate(form);
+        return;
+      }
 
       const fd = new FormData(form);
 
@@ -683,9 +781,9 @@ const bookingDeclarations = [
       } catch {
         errorEl?.classList.remove("hidden");
       } finally {
-        if (submitBtn) submitBtn.disabled = false;
         submitLabel?.classList.remove("hidden");
         submitSpinner?.classList.add("hidden");
+        syncSubmitGate(form);
       }
     });
   }

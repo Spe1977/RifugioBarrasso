@@ -20,7 +20,7 @@ Cloudflare Pages eseguirà automaticamente il build e pubblicherà una nuova ver
 Impostare in Cloudflare Pages, sezione Settings > Environment variables:
 
 ```bash
-PUBLIC_BOOKING_ENDPOINT=https://script.google.com/macros/s/AKfycbz3HbSRzEB5g-nRmoa-ezZGDFwhaseBb2Bg5wF4kqlvOdTPNEbcjvrMhdDaEya3jheaag/exec
+PUBLIC_BOOKING_ENDPOINT=https://script.google.com/macros/s/AKfycbxCib48ZpIhhRXbUoQk6UEKd7f7UlZY_uSTGYbBckEZ9iDI6K1HI1kkhFVfZhcoTWzluQ/exec
 PUBLIC_GOOGLE_CALENDAR_EMBED_URL=<url embed Google Calendar>
 PUBLIC_TALLY_FORM_ID=<id modulo Tally>
 ```

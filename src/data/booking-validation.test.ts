@@ -80,6 +80,8 @@ describe("booking validation", () => {
     const validData = {
       nome: "Mario Rossi",
       data_nascita: "1980-01-01",
+      luogo_nascita: "Roma",
+      numero_documento: "AX1234567",
       email: "mario@example.com",
       telefono: "3331234567",
       data_arrivo: "2099-12-01",
