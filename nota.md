@@ -1,101 +1,104 @@
-Fatto: commit e push completati su main.
+# Stato sviluppo Rifugio Barrasso
 
-Repository: https://github.com/Spe1977/RifugioBarrasso.git
-Commit: a5e3546 (Prepare Rifugio Barrasso site for Cloudflare deploy)
+Aggiornato: 2026-05-08.
 
-Ho aggiunto/ottimizzato:
+## Stato app
 
-- documentazione principale in README.md
-- guida Cloudflare in docs/cloudflare-pages.md
-- checklist rilascio in docs/release-checklist.md
-- wrangler.jsonc per Pages con output ./dist
-- robots.txt
-- header Cloudflare in public/\_headers con sicurezza + cache asset
-- script preview:cloudflare e deploy:cloudflare
-- .gitignore aggiornato per escludere .env, dist, node_modules, report e
-  screenshot
-- fix lint su test-h1.spec.ts
+- Sito Astro statico pronto per Cloudflare Pages.
+- Deploy target: Cloudflare Pages da branch `main`.
+- Build command: `npm run build`.
+- Build output directory: `dist`.
+- Configurazione Pages presente in `wrangler.jsonc`.
+- Documentazione presente in `README.md`, `docs/cloudflare-pages.md` e
+  `docs/release-checklist.md`.
+- Header Cloudflare presenti in `public/_headers` con CSP, cache asset e
+  protezioni base.
+- `robots.txt` presente.
+- Form prenotazioni collegato tramite variabile:
+  `PUBLIC_BOOKING_ENDPOINT`.
+- Embed Google Calendar e Tally caricati solo dopo click esplicito
+  dell'utente, con URL/ID letti da variabili pubbliche.
+
+Variabili da impostare su Cloudflare Pages:
+
+- `PUBLIC_BOOKING_ENDPOINT`
+- `PUBLIC_GOOGLE_CALENDAR_EMBED_URL`
+- `PUBLIC_TALLY_FORM_ID`
+
+## Sicurezza
+
+- Nessun segreto noto committato.
+- Il vettore `GHSA-j687-52p2-xcff` / XSS Astro `define:vars` è chiuso lato
+  codice: `CalendarEmbed.astro` e `TallyEmbed.astro` non usano più
+  `define:vars`.
+- Astro aggiornato a `6.3.1` nel branch dedicato `upgrade-astro-6`.
+  `npm audit --omit dev` non segnala vulnerabilità di produzione.
+- L'audit completo segnala ancora 9 vulnerabilità dev-only, quindi non
+  incluse nel bundle statico di produzione:
+  - `tmp <=0.2.3`, via `@lhci/cli` e `inquirer -> external-editor -> tmp`:
+    gestione insicura di directory temporanee tramite symlink; rischio pratico
+    basso in questo progetto perché riguarda tooling di sviluppo/CI.
+  - `yaml 2.0.0 - 2.8.2`, via
+    `@astrojs/check -> @astrojs/language-server -> volar-service-yaml`:
+    possibile stack overflow con YAML molto annidati; gravità moderate,
+    limitata al tooling di check/language server.
+  - `npm audit fix --force` propone fix breaking/downgrade, quindi meglio
+    attendere aggiornamenti non-breaking di `@lhci/cli` e `@astrojs/check`.
+- Rate limiting Apps Script implementato in `apps-script/booking-handler.gs`:
+  3 richieste per stessa email/24h, 3 per stesso telefono/24h, 30 richieste
+  complessive/ora. Email e telefono vengono normalizzati prima del confronto.
+- Rimozione di `'unsafe-inline'` dalla CSP ancora opzionale: Astro continua a
+  generare script inline in alcuni casi, quindi serve strategia dedicata
+  tramite bundle esterni, hash o nonce.
+
+## Test attuali
+
+Suite aggiornata:
+
+- 35 test unitari Vitest.
+- 64 test E2E Playwright su Chromium desktop e Pixel 7.
+- `@axe-core/playwright` integrato per controlli accessibilità automatici.
+
+Copertura E2E critica ora presente:
+
+- SEO base e H1 singolo su tutte le pagine principali:
+  `/`, `/storia/`, `/eventi/`, `/galleria/`, `/escursioni-e-sci/`,
+  `/info-e-regole/`, `/prenotazioni/`, `/quaderno-del-rifugio/`,
+  `/grazie-prenotazione/`, `/privacy/`, `/404/`.
+- Accessibilità automatica axe su tutte le pagine principali.
+- Menu mobile.
+- Flusso prenotazioni: validazione vuota, submit riuscito, errore rete.
+- UX cross-field prenotazioni:
+  - partenza non successiva all'arrivo;
+  - soggiorno oltre 2 notti.
+- Gating privacy degli embed:
+  - iframe Google Calendar assente prima del consenso e presente dopo click;
+  - iframe Tally assente prima del consenso e presente dopo click.
+- Rate limiting Apps Script:
+  - normalizzazione email e telefono;
+  - blocco quarta richiesta per stessa email/24h;
+  - blocco quarta richiesta per stesso telefono/24h;
+  - blocco trentunesima richiesta complessiva/ora;
+  - ignorate richieste più vecchie di 24 ore.
+
+Correzioni fatte perché emerse dai test a11y:
+
+- Rimosso `aside` annidato nella pagina prenotazioni.
+- Migliorato contrasto della data nelle dediche del quaderno.
 
 Verifiche passate:
 
-- npm run build
-- npm test
-- npm run lint
-- Prettier sui file modificati/supportati
+- `npm run lint`
+- `npm test` -> 35 passed
+- `npm run build`
+- `npm run test:e2e:server` -> 64 passed
 
-Per Cloudflare Pages usa:
+## Priorità rimaste
 
-- Production branch: main
-- Build command: npm run build
-- Build output directory: dist
-
-Da impostare su Cloudflare Pages come variabile ambiente:
-PUBLIC_BOOKING_ENDPOINT = https://script.google.com/macros/s/AKfycbxCib48ZpIhhRXbUoQk6UEKd7f7UlZY_uSTGYbBckEZ9iDI6K1HI1kkhFVfZhcoTWzluQ/exec
-
-Fonti Cloudflare usate: guida Astro Pages e configurazione build ufficiali:
-https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/
-https://developers.cloudflare.com/pages/configuration/build-configuration/
-
-## Raccomandazioni di sicurezza (audit 2026-05-07)
-
-Nessuna vulnerabilità sfruttabile e nessun segreto trapelato. Punti aperti:
-
-1. Aggiornare Astro a >= 6.1.6 (XSS in `define:vars`, GHSA-j687-52p2-xcff —
-   attualmente 5.18.1, fix richiede `npm audit fix --force`, breaking).
-2. Completare l'informativa privacy in `src/pages/privacy/index.astro`
-   (oggi marcata come bozza) prima del go-live: titolare, base giuridica,
-   tempi di conservazione, diritti GDPR artt. 15-22.
-3. Aggiungere rate limiting in `apps-script/booking-handler.gs` (es. max N
-   richieste per email/giorno leggendo le ultime righe del foglio).
-4. (Opzionale) Rimuovere `'unsafe-inline'` dalla CSP in `public/_headers`
-   rifattorizzando i `<script is:inline>` di CalendarEmbed/TallyEmbed.
-5. Rebuild di `dist/` prima del deploy: l'endpoint Apps Script attuale in
-   `.env` (`AKfycbxCib48...`) differisce da quello compilato in
-   `dist/prenotazioni/index.html` (`AKfycbz3HbSR...`).
-
-## Test da implementare (audit 2026-05-07)
-
-Suite attuale: 29 unit (Vitest) + 10 E2E (Playwright su Chromium + Pixel 7).
-Copre bene validazione/submit del booking, contratto dei dati di
-contenuto, SEO base e presenza degli embed. Lacune da chiudere in ordine
-di priorità:
-
-### Alta
-
-1. Accessibilità: integrare `@axe-core/playwright` ed eseguire un check
-   a11y su ogni pagina (contrasti, ARIA, label/error association, focus
-   order, skip-link).
-2. Estendere `seo.spec.ts` alle pagine mancanti: `/eventi/`, `/galleria/`,
-   `/grazie-prenotazione/`, `/privacy/`, `/404`.
-3. Consent gating del calendario: oggi `embeds.spec.ts` verifica solo la
-   presenza dell'iframe. Aggiungere test che senza consenso l'iframe non
-   sia caricato e che dopo click sul consenso compaia.
-4. Cross-field UX del booking: messaggi visibili per "data partenza >
-   arrivo" e "max 2 notti" (oggi coperti solo a livello dati).
-
-### Media
-
-5. SEO avanzato: `link rel=canonical`, Open Graph completo
-   (`og:title/description/image/url`), Twitter card, JSON-LD
-   (`Organization`/`LocalBusiness`/`BreadcrumbList`), `sitemap-index.xml`
-   accessibile e completo, `robots.txt` con riferimento sitemap.
-6. Header HTTP/sicurezza (`public/_headers`): CSP, X-Frame-Options, HSTS,
-   `Cache-Control: immutable` su `/assets/*`. Verificabili con
-   `request.fetch()` di Playwright sul preview server.
-7. Immagini responsive: verificare presenza di
-   `<picture><source type="image/webp">` su hero e logo, e `alt`
-   significativo dove richiesto.
-8. Lighthouse CI: passare da `warn`-only a soglie hard su LCP/CLS/INP
-   per bloccare regressioni di performance al deploy.
-
-### Bassa
-
-9. Apps Script (`apps-script/booking-handler.gs`): test di forma del
-   payload e, una volta implementato, del rate limiting.
-10. Visual regression con `expect(page).toHaveScreenshot()` su home,
-    prenotazioni e galleria.
-11. Status code della 404 su path inesistente.
-12. Aggiungere progetto WebKit a `playwright.config.ts` per coprire
-    Safari/iOS.
-
-Quick win (80% del valore): 1, 2 e 3.
+1. Test header HTTP/CSP/cache con Playwright sul preview server.
+2. SEO avanzato: Open Graph completo, Twitter card, JSON-LD, canonical e
+   sitemap/robots verificati da test.
+3. Lighthouse CI con soglie hard su LCP/CLS/INP.
+4. Test immagini responsive e `alt` significativi.
+5. Visual regression su home, prenotazioni e galleria.
+6. Progetto WebKit Playwright per copertura Safari/iOS.

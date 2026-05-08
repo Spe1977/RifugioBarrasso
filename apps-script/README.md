@@ -58,6 +58,13 @@ PUBLIC_BOOKING_ENDPOINT=https://script.google.com/macros/s/.../exec
 ## Note
 
 - L'URL dell'Apps Script è **pubblico** (sta nel frontend). Non è un segreto.
+- Il rate limiting blocca nuove scritture quando trova:
+  - 3 richieste con la stessa email nelle ultime 24 ore;
+  - 3 richieste con lo stesso telefono nelle ultime 24 ore;
+  - 30 richieste complessive nell'ultima ora.
+- Email e telefono vengono normalizzati prima del confronto: email in
+  minuscolo e senza spazi esterni; telefono senza spazi, punti, trattini,
+  parentesi e con gestione dei prefissi `+39` / `0039`.
 - Il rate limit di `MailApp.sendEmail` è ~100 email/giorno per account gratuito.
 - `LockService` previene scritture concorrenti.
 - Per aggiornare lo script: **Deploy** → **Manage deployments** → **Edit** → incrementare versione.

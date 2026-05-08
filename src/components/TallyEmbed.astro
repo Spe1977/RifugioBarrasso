@@ -12,7 +12,7 @@ const tallyUrl = hasTally
 const tallyDirect = hasTally ? `https://tally.so/r/${tallyId}` : "";
 ---
 
-<div class="grid gap-6" data-tally-embed>
+<div class="grid gap-6" data-tally-embed data-tally-url={tallyUrl}>
   {
     hasTally ? (
       <>
@@ -67,15 +67,17 @@ const tallyDirect = hasTally ? `https://tally.so/r/${tallyId}` : "";
   }
 </div>
 
-<script is:inline define:vars={{ tallyUrl }}>
-  const loadBtn = document.querySelector("[data-tally-load]");
-  const placeholder = document.querySelector("[data-tally-placeholder]");
-  const frameWrapper = document.querySelector("[data-tally-frame]");
+<script>
+  const root = document.querySelector("[data-tally-embed]");
+  const loadBtn = root?.querySelector("[data-tally-load]");
+  const placeholder = root?.querySelector("[data-tally-placeholder]");
+  const frameWrapper = root?.querySelector("[data-tally-frame]");
+  const tallyUrl = root?.getAttribute("data-tally-url") ?? "";
 
-  if (loadBtn && placeholder && frameWrapper) {
+  if (root && loadBtn && placeholder && frameWrapper && tallyUrl) {
     loadBtn.addEventListener("click", () => {
       const iframe = frameWrapper.querySelector("iframe");
-      if (iframe && tallyUrl) {
+      if (iframe) {
         iframe.src = tallyUrl;
         placeholder.classList.add("hidden");
         frameWrapper.classList.remove("hidden");
