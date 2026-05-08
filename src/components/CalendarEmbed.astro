@@ -8,7 +8,7 @@ const calendarUrl = import.meta.env.PUBLIC_GOOGLE_CALENDAR_EMBED_URL || "";
 const hasCalendar = calendarUrl.length > 0;
 ---
 
-<div class="grid gap-6" data-calendar-embed>
+<div class="grid gap-6" data-calendar-embed data-calendar-url={calendarUrl}>
   {
     hasCalendar ? (
       <>
@@ -67,15 +67,17 @@ const hasCalendar = calendarUrl.length > 0;
   }
 </div>
 
-<script is:inline define:vars={{ calendarUrl }}>
-  const loadBtn = document.querySelector("[data-calendar-load]");
-  const placeholder = document.querySelector("[data-calendar-placeholder]");
-  const frameWrapper = document.querySelector("[data-calendar-frame]");
+<script>
+  const root = document.querySelector("[data-calendar-embed]");
+  const loadBtn = root?.querySelector("[data-calendar-load]");
+  const placeholder = root?.querySelector("[data-calendar-placeholder]");
+  const frameWrapper = root?.querySelector("[data-calendar-frame]");
+  const calendarUrl = root?.getAttribute("data-calendar-url") ?? "";
 
-  if (loadBtn && placeholder && frameWrapper) {
+  if (root && loadBtn && placeholder && frameWrapper && calendarUrl) {
     loadBtn.addEventListener("click", () => {
       const iframe = frameWrapper.querySelector("iframe");
-      if (iframe && calendarUrl) {
+      if (iframe) {
         iframe.src = calendarUrl;
         placeholder.classList.add("hidden");
         frameWrapper.classList.remove("hidden");

@@ -4,10 +4,15 @@ test.describe("SEO and Accessibility Basics", () => {
   const pages = [
     { url: "/", title: "Rifugio Paolo Barrasso" },
     { url: "/storia/", title: "Storia" },
+    { url: "/eventi/", title: "Eventi" },
+    { url: "/galleria/", title: "Galleria" },
     { url: "/escursioni-e-sci/", title: "Escursioni e Sci" },
     { url: "/info-e-regole/", title: "Info e Regole" },
     { url: "/prenotazioni/", title: "Prenotazioni" },
     { url: "/quaderno-del-rifugio/", title: "Quaderno" },
+    { url: "/grazie-prenotazione/", title: "Richiesta ricevuta" },
+    { url: "/privacy/", title: "Privacy" },
+    { url: "/404/", title: "Pagina non trovata" },
   ];
 
   for (const p of pages) {

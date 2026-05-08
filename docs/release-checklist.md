@@ -16,7 +16,7 @@ Usare questa checklist prima di pubblicare una nuova versione del sito.
 
 - Aggiornare `.env` in locale con i valori reali.
 - Aggiornare le variabili d'ambiente su Cloudflare Pages.
-- Se cambia Google Apps Script, ridistribuire lo script e aggiornare `PUBLIC_BOOKING_ENDPOINT`.
+- Se cambia Google Apps Script, ridistribuire il deployment Web App esistente. Aggiornare `PUBLIC_BOOKING_ENDPOINT` solo se cambia l'URL `/exec`.
 - Non committare `.env`, `dist`, `node_modules`, screenshot o report generati.
 
 ## Validazione
@@ -33,6 +33,10 @@ npm run lint
 npm run test:e2e:server
 npm run test:lighthouse
 ```
+
+Per modifiche al rate limiting Apps Script, verificare almeno che i test unitari
+coprano normalizzazione email/telefono, limite per email, limite per telefono e
+limite globale orario.
 
 ## Deploy
 

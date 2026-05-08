@@ -24,6 +24,15 @@ var NOTIFY_EMAIL = "rifugio.barrasso@gmail.com";
 /** Email opzionale in copia (webmaster o mail tecnica). Lasciare vuota se non serve. */
 var CC_EMAIL = "";
 
+/** Massimo richieste accettate per stessa email nelle ultime 24 ore. */
+var RATE_LIMIT_EMAIL_24H = 3;
+
+/** Massimo richieste accettate per stesso telefono nelle ultime 24 ore. */
+var RATE_LIMIT_PHONE_24H = 3;
+
+/** Massimo richieste accettate complessive nell'ultima ora. */
+var RATE_LIMIT_GLOBAL_HOUR = 30;
+
 /* ── handler principale ──────────────────────────────────── */
 
 function doPost(e) {
@@ -51,47 +60,17 @@ function doPost(e) {
       return buildResponse("error", errors.join(" | "));
     }
 
+    /* ── sheet e rate limiting ── */
+    var now = new Date();
+    var ss = SpreadsheetApp.openById(SHEET_ID);
+    var sheet = getOrCreateBookingSheet(ss);
+    var rateLimitError = checkRateLimit(sheet, p, now);
+    if (rateLimitError) {
+      return buildResponse("error", rateLimitError);
+    }
+
     /* ── booking id ── */
     var bookingId = generateBookingId();
-    var now = new Date();
-
-    /* ── salva su sheet ── */
-    var ss = SpreadsheetApp.openById(SHEET_ID);
-    var sheet = ss.getSheetByName(SHEET_NAME);
-    if (!sheet) {
-      sheet = ss.insertSheet(SHEET_NAME);
-      sheet.appendRow([
-        "booking_id",
-        "timestamp_server",
-        "lingua",
-        "tipo_richiesta",
-        "stato",
-        "nome",
-        "data_nascita",
-        "luogo_nascita",
-        "numero_documento",
-        "email",
-        "telefono",
-        "persone",
-        "elenco_partecipanti",
-        "data_arrivo",
-        "notti",
-        "data_partenza",
-        "attivita_prevista",
-        "note",
-        "accettazione_regole",
-        "accettazione_contributo",
-        "presa_visione_responsabilita",
-        "accettazione_privacy",
-        "consenso_ricontatto",
-        "page_url",
-        "user_agent",
-        "form_version",
-        "email_notifica_inviata",
-        "email_utente_inviata",
-        "note_gestore",
-      ]);
-    }
 
     var emailNotificaOk = false;
     var emailUtenteOk = false;
@@ -277,6 +256,151 @@ function validate(p) {
 }
 
 /* ── utilità ──────────────────────────────────────────────── */
+
+function getOrCreateBookingSheet(ss) {
+  var sheet = ss.getSheetByName(SHEET_NAME);
+  if (sheet) return sheet;
+
+  sheet = ss.insertSheet(SHEET_NAME);
+  sheet.appendRow([
+    "booking_id",
+    "timestamp_server",
+    "lingua",
+    "tipo_richiesta",
+    "stato",
+    "nome",
+    "data_nascita",
+    "luogo_nascita",
+    "numero_documento",
+    "email",
+    "telefono",
+    "persone",
+    "elenco_partecipanti",
+    "data_arrivo",
+    "notti",
+    "data_partenza",
+    "attivita_prevista",
+    "note",
+    "accettazione_regole",
+    "accettazione_contributo",
+    "presa_visione_responsabilita",
+    "accettazione_privacy",
+    "consenso_ricontatto",
+    "page_url",
+    "user_agent",
+    "form_version",
+    "email_notifica_inviata",
+    "email_utente_inviata",
+    "note_gestore",
+  ]);
+
+  return sheet;
+}
+
+function checkRateLimit(sheet, p, now) {
+  var lastRow = sheet.getLastRow();
+  if (lastRow <= 1) return "";
+
+  var nowTime = now.getTime();
+  var oneHourAgo = nowTime - 60 * 60 * 1000;
+  var oneDayAgo = nowTime - 24 * 60 * 60 * 1000;
+  var emailKey = normalizeEmail(p.email);
+  var phoneKey = normalizePhone(p.telefono);
+  var emailCount = 0;
+  var phoneCount = 0;
+  var globalCount = 0;
+
+  // Colonne B:K: timestamp_server ... email, telefono.
+  var rows = sheet.getRange(2, 2, lastRow - 1, 10).getValues();
+  for (var i = rows.length - 1; i >= 0; i--) {
+    var submittedAt = parseServerTimestamp(rows[i][0]);
+    if (!submittedAt) continue;
+
+    var submittedTime = submittedAt.getTime();
+    if (submittedTime >= oneHourAgo) {
+      globalCount++;
+    }
+
+    if (submittedTime >= oneDayAgo) {
+      if (emailKey && normalizeEmail(rows[i][8]) === emailKey) {
+        emailCount++;
+      }
+
+      if (phoneKey && normalizePhone(rows[i][9]) === phoneKey) {
+        phoneCount++;
+      }
+    }
+  }
+
+  if (globalCount >= RATE_LIMIT_GLOBAL_HOUR) {
+    return "Troppe richieste ricevute nell'ultima ora. Riprova più tardi o contatta direttamente il rifugio.";
+  }
+
+  if (emailCount >= RATE_LIMIT_EMAIL_24H) {
+    return "Troppe richieste con questa email nelle ultime 24 ore. Riprova domani o contatta direttamente il rifugio.";
+  }
+
+  if (phoneCount >= RATE_LIMIT_PHONE_24H) {
+    return "Troppe richieste con questo numero di telefono nelle ultime 24 ore. Riprova domani o contatta direttamente il rifugio.";
+  }
+
+  return "";
+}
+
+function normalizeEmail(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase();
+}
+
+function normalizePhone(value) {
+  var raw = String(value || "").trim();
+  var normalized = raw.replace(/[^\d+]/g, "");
+  var hasInternationalPrefix = normalized.charAt(0) === "+";
+
+  if (normalized.indexOf("00") === 0) {
+    normalized = "+" + normalized.slice(2);
+    hasInternationalPrefix = true;
+  }
+
+  if (normalized.charAt(0) === "+") {
+    normalized = "+" + normalized.slice(1).replace(/\D/g, "");
+  } else {
+    normalized = normalized.replace(/\D/g, "");
+  }
+
+  var digits = normalized.replace(/^\+/, "");
+  if (
+    hasInternationalPrefix &&
+    digits.indexOf("39") === 0 &&
+    digits.length >= 10 &&
+    digits.length <= 13
+  ) {
+    digits = digits.slice(2);
+  }
+
+  return digits;
+}
+
+function parseServerTimestamp(value) {
+  if (value instanceof Date && !isNaN(value.getTime())) return value;
+
+  var text = String(value || "").trim();
+  var match = text.match(
+    /^(\d{1,2})\/(\d{1,2})\/(\d{4})\s+(\d{1,2}):(\d{2})(?::(\d{2}))?$/,
+  );
+  if (!match) return null;
+
+  var day = parseInt(match[1], 10);
+  var month = parseInt(match[2], 10) - 1;
+  var year = parseInt(match[3], 10);
+  var hour = parseInt(match[4], 10);
+  var minute = parseInt(match[5], 10);
+  var second = parseInt(match[6] || "0", 10);
+  var parsed = new Date(year, month, day, hour, minute, second);
+
+  return isNaN(parsed.getTime()) ? null : parsed;
+}
 
 function generateBookingId() {
   var chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";

@@ -52,7 +52,7 @@ npm run deploy:cloudflare
 - `public/_headers` con header di sicurezza compatibili con Cloudflare Pages.
 - Cache lunga e immutable per `/assets/*`.
 - Cache breve per `robots.txt` e sitemap.
-- Form prenotazioni inviato a Google Apps Script via `PUBLIC_BOOKING_ENDPOINT`.
+- Form prenotazioni inviato a Google Apps Script via `PUBLIC_BOOKING_ENDPOINT`, con rate limiting lato Apps Script.
 
 ## Verifica pre-pubblicazione
 
@@ -72,6 +72,6 @@ npm run test:e2e:server
 
 ## Note operative
 
-- Dopo ogni nuovo deploy Apps Script, aggiornare `PUBLIC_BOOKING_ENDPOINT` in Cloudflare Pages e rilanciare il deploy del sito.
+- Dopo ogni modifica ad Apps Script, aggiornare il deployment Web App esistente. Aggiornare `PUBLIC_BOOKING_ENDPOINT` in Cloudflare Pages e rilanciare il deploy del sito solo se cambia l'URL `/exec`.
 - Il file locale `.env` è escluso dal repository; usare `.env.example` come template.
 - La cartella `dist` è un artefatto generato e non va committata.
