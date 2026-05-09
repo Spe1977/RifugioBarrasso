@@ -33,7 +33,7 @@ const endpoint = import.meta.env.PUBLIC_DEDICHE_ENDPOINT || "";
   </section>
 </BaseLayout>
 
-<script define:vars={{ endpoint }}>
+<script is:inline define:vars={{ endpoint }}>
   const grid = document.getElementById('dediche-grid');
   const loading = document.getElementById('dediche-loading');
   const colors = ["bg-[#fff8b8] border-yellow-200", "bg-[#eef7fa] border-blue-200", "bg-[#f2f8ec] border-green-200", "bg-[#fce4ec] border-pink-200"];

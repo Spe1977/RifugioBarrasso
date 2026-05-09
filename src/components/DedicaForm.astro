@@ -45,7 +45,7 @@ const endpoint = import.meta.env.PUBLIC_DEDICHE_ENDPOINT || "";
   )}
 </div>
 
-<script define:vars={{ endpoint }}>
+<script is:inline define:vars={{ endpoint }}>
   const form = document.getElementById('dedica-form');
   const feedback = document.getElementById('form-feedback');
   const btn = form?.querySelector('button[type="submit"]');
