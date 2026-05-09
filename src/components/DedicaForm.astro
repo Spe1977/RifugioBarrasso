@@ -81,20 +81,16 @@ const endpoint = import.meta.env.PUBLIC_DEDICHE_ENDPOINT || "";
       btn.textContent = "Invio in corso...";
 
       try {
-        const response = await fetch(endpoint, {
+        await fetch(endpoint, {
           method: 'POST',
+          mode: 'no-cors',
           body: formData
         });
         
-        const result = await response.json();
-        
-        if (result.status === 'success') {
-          form.reset();
-          feedback.textContent = "Grazie! La tua dedica è stata inviata e sarà pubblicata dopo la revisione.";
-          feedback.className = "mt-4 rounded-md p-4 text-sm font-bold bg-green-100 text-green-800 block";
-        } else {
-          throw new Error(result.message);
-        }
+        // Con "no-cors" la risposta è opaca, quindi se non esplode diamo per buono l'invio.
+        form.reset();
+        feedback.textContent = "Grazie! La tua dedica è stata inviata e sarà pubblicata dopo la revisione.";
+        feedback.className = "mt-4 rounded-md p-4 text-sm font-bold bg-green-100 text-green-800 block";
       } catch (err) {
         feedback.textContent = "Si è verificato un errore. Riprova più tardi.";
         feedback.className = "mt-4 rounded-md p-4 text-sm font-bold bg-red-100 text-red-800 block";
