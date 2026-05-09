@@ -1,87 +1,94 @@
 ---
 import PageHero from "@components/PageHero.astro";
 import SectionHeading from "@components/SectionHeading.astro";
-import TallyEmbed from "@components/TallyEmbed.astro";
+import DedicaForm from "@components/DedicaForm.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { pageMeta } from "@data/content";
-import { dediche } from "@data/dediche";
 import { site } from "@data/site";
 
-const postItColors: Record<string, string> = {
-  yellow: "bg-[#fff8b8] border-yellow-200",
-  blue: "bg-[#eef7fa] border-blue-200",
-  green: "bg-[#f2f8ec] border-green-200",
-  pink: "bg-[#fce4ec] border-pink-200",
-};
-
-const rotations = ["-rotate-2", "rotate-3", "-rotate-1", "rotate-2"];
+const endpoint = import.meta.env.PUBLIC_DEDICHE_ENDPOINT || "";
 ---
 
-<BaseLayout
-  title={pageMeta.quaderno.title}
-  description={pageMeta.quaderno.description}
->
-  <PageHero
-    eyebrow="Quaderno del Rifugio"
-    title="Tracce dei viandanti"
-    lead="Pensieri, ricordi e dediche di chi è passato dal Barrasso. Pubblicate solo dopo consenso e moderazione."
-  />
+<BaseLayout title={pageMeta.quaderno.title} description={pageMeta.quaderno.description}>
+  <PageHero eyebrow="Quaderno del Rifugio" title="Tracce dei viandanti" lead="Pensieri, ricordi e dediche di chi è passato dal Barrasso. Pubblicate solo dopo consenso e moderazione." />
 
   <section class="paper-surface py-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <SectionHeading
-        eyebrow="Messaggi approvati"
-        title="Voci dalla montagna"
-        lead={`Le notifiche delle nuove dediche arrivano a ${site.operativeEmail}. Solo quelle approvate compaiono qui.`}
-      />
-      {
-        dediche.length > 0 ? (
-          <div class="grid gap-6 md:grid-cols-3">
-            {dediche.map((item, index) => (
-              <article
-                class:list={[
-                  postItColors[item.colore] || postItColors.yellow,
-                  "border p-7 shadow-soft transition-transform duration-300 hover:-translate-y-1",
-                  rotations[index % rotations.length],
-                  index === 1 ? "md:translate-y-6" : "",
-                ]}
-              >
-                <p class="font-handwriting text-xl leading-snug text-majella-green md:text-2xl md:leading-relaxed">
-                  "{item.testo}"
-                </p>
-                <p class="mt-6 flex flex-col justify-between sm:flex-row sm:items-end">
-                  <span class="text-sm font-black uppercase tracking-widest text-majella-red">
-                    {item.nome}
-                    {item.luogo ? ` (${item.luogo})` : ""}
-                  </span>
-                  <span class="mt-2 text-xs font-bold text-majella-green sm:mt-0">
-                    {new Date(item.data).toLocaleDateString("it-IT", {
-                      day: "numeric",
-                      month: "short",
-                      year: "numeric",
-                    })}
-                  </span>
-                </p>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <p class="text-lg leading-8 text-gray-600">
-            Nessuna dedica pubblicata ancora. Sii il primo!
-          </p>
-        )
-      }
+      <SectionHeading eyebrow="Messaggi approvati" title="Voci dalla montagna" lead={`Le notifiche delle nuove dediche arrivano a ${site.operativeEmail}. Solo quelle approvate compaiono qui.`} />
+      
+      <div id="dediche-grid" class="grid gap-6 md:grid-cols-3">
+        <!-- Spinner di caricamento -->
+        <p class="col-span-full text-lg leading-8 text-gray-600" id="dediche-loading">
+          Caricamento dediche in corso...
+        </p>
+      </div>
     </div>
   </section>
 
   <section class="bg-white py-20">
     <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-      <SectionHeading
-        eyebrow="Scrivi"
-        title="Lascia la tua dedica"
-        lead="Il tuo messaggio sarà letto dal gestore e, se approvato, pubblicato su questa bacheca."
-      />
-      <TallyEmbed />
+      <SectionHeading eyebrow="Scrivi" title="Lascia la tua dedica" lead="Il tuo messaggio sarà letto dal gestore e, se approvato, pubblicato su questa bacheca." />
+      <DedicaForm />
     </div>
   </section>
 </BaseLayout>
+
+<script define:vars={{ endpoint }}>
+  const grid = document.getElementById('dediche-grid');
+  const loading = document.getElementById('dediche-loading');
+  const colors = ["bg-[#fff8b8] border-yellow-200", "bg-[#eef7fa] border-blue-200", "bg-[#f2f8ec] border-green-200", "bg-[#fce4ec] border-pink-200"];
+  const rotations = ["-rotate-2", "rotate-3", "-rotate-1", "rotate-2"];
+
+  async function loadDediche() {
+    if (!endpoint) {
+      loading.textContent = "Configurazione API mancante.";
+      return;
+    }
+
+    try {
+      const res = await fetch(endpoint);
+      const result = await res.json();
+      
+      if (result.status === 'success' && result.data.length > 0) {
+        grid.innerHTML = ''; // Rimuove loading
+        
+        result.data.forEach((item, index) => {
+          const colorClass = colors[index % colors.length];
+          const rotationClass = rotations[index % rotations.length];
+          const translationClass = (index % 3 === 1) ? "md:translate-y-6" : "";
+          
+          const article = document.createElement('article');
+          article.className = `${colorClass} border p-7 shadow-soft transition-transform duration-300 hover:-translate-y-1 ${rotationClass} ${translationClass}`;
+          
+          const text = document.createElement('p');
+          text.className = "font-handwriting text-xl leading-snug text-majella-green md:text-2xl md:leading-relaxed";
+          text.textContent = `"${item.testo}"`;
+          
+          const meta = document.createElement('p');
+          meta.className = "mt-6 flex flex-col justify-between sm:flex-row sm:items-end";
+          
+          const author = document.createElement('span');
+          author.className = "text-sm font-black uppercase tracking-widest text-majella-red";
+          author.textContent = item.luogo ? `${item.nome} (${item.luogo})` : item.nome;
+          
+          const date = document.createElement('span');
+          date.className = "mt-2 text-xs font-bold text-majella-green sm:mt-0";
+          // L'Apps script invia la data come dd/MM/yyyy HH:mm:ss o simile. Qui semplifichiamo stampandola.
+          date.textContent = item.data.split(' ')[0] || item.data;
+          
+          meta.appendChild(author);
+          meta.appendChild(date);
+          article.appendChild(text);
+          article.appendChild(meta);
+          grid.appendChild(article);
+        });
+      } else {
+        loading.textContent = "Nessuna dedica pubblicata ancora. Sii il primo!";
+      }
+    } catch (e) {
+      loading.textContent = "Errore nel caricamento delle dediche.";
+    }
+  }
+
+  loadDediche();
+</script>
