@@ -14,7 +14,7 @@ const endpoint = import.meta.env.PUBLIC_DEDICHE_ENDPOINT || "";
 
   <section class="paper-surface py-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <SectionHeading eyebrow="Messaggi approvati" title="Voci dalla montagna" lead={`Le notifiche delle nuove dediche arrivano a ${site.operativeEmail}. Solo quelle approvate compaiono qui.`} />
+      <SectionHeading eyebrow="Messaggi approvati" title="Voci dalla montagna" lead="Qui ci sono i messaggi che gli amici del Barrasso gli hanno dedicato." />
       
       <div id="dediche-grid" class="grid gap-6 md:grid-cols-3">
         <!-- Spinner di caricamento -->
@@ -27,7 +27,7 @@ const endpoint = import.meta.env.PUBLIC_DEDICHE_ENDPOINT || "";
 
   <section class="bg-white py-20">
     <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-      <SectionHeading eyebrow="Scrivi" title="Lascia la tua dedica" lead="Il tuo messaggio sarà letto dal gestore e, se approvato, pubblicato su questa bacheca." />
+      <SectionHeading eyebrow="Scrivi" title="Lascia la tua dedica" lead="Il tuo messaggio comparirà qui sotto dopo l'approvazione. Grazie per la tua dedica." />
       <DedicaForm />
     </div>
   </section>
