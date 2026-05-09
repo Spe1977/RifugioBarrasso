@@ -13,7 +13,7 @@ export interface Dedica {
 
 /**
  * Manually curated dedications approved for publication.
- * Add new entries here after reviewing submissions from Tally.
+ * Legacy static entries. New dediche are loaded from Google Sheets after review.
  */
 export const dediche: Dedica[] = [
   {

@@ -22,7 +22,7 @@ Impostare in Cloudflare Pages, sezione Settings > Environment variables:
 ```bash
 PUBLIC_BOOKING_ENDPOINT=https://script.google.com/macros/s/AKfycbxCib48ZpIhhRXbUoQk6UEKd7f7UlZY_uSTGYbBckEZ9iDI6K1HI1kkhFVfZhcoTWzluQ/exec
 PUBLIC_GOOGLE_CALENDAR_EMBED_URL=<url embed Google Calendar>
-PUBLIC_TALLY_FORM_ID=<id modulo Tally>
+PUBLIC_DEDICHE_ENDPOINT=https://script.google.com/macros/s/AKfycbwGyoVKWTGNpwzGuoSQiR1j4feegYBI4FfSRNo5ov_7s0VtDQ-6JThi0cVC-VjLFTBqhA/exec
 ```
 
 Le variabili `PUBLIC_` sono incorporate nel frontend. Non inserire segreti in queste variabili.
@@ -53,6 +53,7 @@ npm run deploy:cloudflare
 - Cache lunga e immutable per `/assets/*`.
 - Cache breve per `robots.txt` e sitemap.
 - Form prenotazioni inviato a Google Apps Script via `PUBLIC_BOOKING_ENDPOINT`, con rate limiting lato Apps Script.
+- Form dediche e caricamento dediche approvate collegati a Google Apps Script via `PUBLIC_DEDICHE_ENDPOINT`, con moderazione su Google Sheets.
 
 ## Verifica pre-pubblicazione
 
@@ -72,6 +73,6 @@ npm run test:e2e:server
 
 ## Note operative
 
-- Dopo ogni modifica ad Apps Script, aggiornare il deployment Web App esistente. Aggiornare `PUBLIC_BOOKING_ENDPOINT` in Cloudflare Pages e rilanciare il deploy del sito solo se cambia l'URL `/exec`.
+- Dopo ogni modifica ad Apps Script, aggiornare il deployment Web App esistente. Aggiornare `PUBLIC_BOOKING_ENDPOINT` o `PUBLIC_DEDICHE_ENDPOINT` in Cloudflare Pages e rilanciare il deploy del sito solo se cambia l'URL `/exec`.
 - Il file locale `.env` è escluso dal repository; usare `.env.example` come template.
 - La cartella `dist` è un artefatto generato e non va committata.

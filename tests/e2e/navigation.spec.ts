@@ -26,3 +26,11 @@ test("booking form exposes the official limits", async ({ page }) => {
       .getByRole("link", { name: "rifugio.barrasso@gmail.com" }),
   ).toBeVisible();
 });
+
+test("footer links to the refuge Facebook page", async ({ page }) => {
+  await page.goto("/");
+
+  await expect(
+    page.getByRole("contentinfo").getByRole("link", { name: "Facebook" }),
+  ).toHaveAttribute("href", "https://www.facebook.com/rifugio.barrasso");
+});

@@ -16,6 +16,7 @@ type SheetRow = [
 ];
 
 type BookingHandlerContext = {
+  doPost: (event: { parameter: Record<string, string> }) => unknown;
   checkRateLimit: (
     sheet: FakeSheet,
     payload: { email: string; telefono: string },
@@ -23,6 +24,7 @@ type BookingHandlerContext = {
   ) => string;
   normalizeEmail: (value: string) => string;
   normalizePhone: (value: string) => string;
+  toSheetText: (value: unknown) => string;
 };
 
 class FakeSheet {
@@ -45,6 +47,50 @@ const loadBookingHandler = () => {
     "utf8",
   );
   const context = vm.createContext({});
+
+  vm.runInContext(source, context);
+
+  return context as unknown as BookingHandlerContext;
+};
+
+const loadBookingHandlerWithGoogleFakes = (sheet: {
+  appendRow: (row: unknown[]) => void;
+  getLastRow: () => number;
+  getRange: (...args: unknown[]) => unknown;
+}) => {
+  const source = readFileSync(
+    new URL("./booking-handler.gs", import.meta.url),
+    "utf8",
+  );
+  const context = vm.createContext({
+    LockService: {
+      getScriptLock: () => ({
+        waitLock: () => undefined,
+        releaseLock: () => undefined,
+      }),
+    },
+    SpreadsheetApp: {
+      openById: () => ({
+        getSheetByName: () => sheet,
+        insertSheet: () => sheet,
+      }),
+    },
+    Utilities: {
+      formatDate: () => "09/05/2026 12:00:00",
+    },
+    MailApp: {
+      sendEmail: () => undefined,
+    },
+    ContentService: {
+      MimeType: { JSON: "application/json" },
+      createTextOutput: (body: string) => ({
+        body,
+        setMimeType() {
+          return this;
+        },
+      }),
+    },
+  });
 
   vm.runInContext(source, context);
 
@@ -154,5 +200,62 @@ describe("Apps Script booking rate limiting", () => {
         now,
       ),
     ).toBe("");
+  });
+});
+
+describe("Apps Script booking sheet safety", () => {
+  const handler = loadBookingHandler();
+
+  it("neutralizes formula-leading values before writing to Sheets", () => {
+    expect(handler.toSheetText("=HYPERLINK('https://example.invalid')")).toBe(
+      "'=HYPERLINK('https://example.invalid')",
+    );
+    expect(handler.toSheetText(" +SUM(1,2)")).toBe("' +SUM(1,2)");
+    expect(handler.toSheetText("-10+20")).toBe("'-10+20");
+    expect(handler.toSheetText("@cmd")).toBe("'@cmd");
+  });
+
+  it("leaves ordinary text unchanged", () => {
+    expect(handler.toSheetText("Mario Rossi")).toBe("Mario Rossi");
+    expect(handler.toSheetText("")).toBe("");
+    expect(handler.toSheetText(null)).toBe("");
+  });
+
+  it("writes formula-leading booking fields as inert sheet text", () => {
+    const rows: unknown[][] = [];
+    const sheet = {
+      appendRow: (row: unknown[]) => rows.push(row),
+      getLastRow: () => rows.length + 1,
+      getRange: () => ({
+        getValues: () => [],
+        setValue: () => undefined,
+      }),
+    };
+    const googleHandler = loadBookingHandlerWithGoogleFakes(sheet);
+
+    googleHandler.doPost({
+      parameter: {
+        nome: "=HYPERLINK('https://example.invalid')",
+        data_nascita: "1980-01-01",
+        luogo_nascita: "Roma",
+        numero_documento: "AX1234567",
+        email: "ospite@example.com",
+        telefono: "3401234567",
+        persone: "1",
+        elenco_partecipanti: "+Mario Rossi",
+        data_arrivo: "2026-06-01",
+        notti: "1",
+        data_partenza: "2026-06-02",
+        attivita_prevista: "Solo escursione",
+        accettazione_regole: "sì",
+        accettazione_contributo: "sì",
+        presa_visione_responsabilita: "sì",
+        accettazione_privacy: "sì",
+        consenso_ricontatto: "sì",
+      },
+    });
+
+    expect(rows[0][5]).toBe("'=HYPERLINK('https://example.invalid')");
+    expect(rows[0][12]).toBe("'+Mario Rossi");
   });
 });

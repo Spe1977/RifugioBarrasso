@@ -31,5 +31,4 @@ test.describe("External Embeds", () => {
     await expect(loadButton).not.toBeVisible();
     await expect(page.locator("[data-calendar-frame]")).toBeVisible();
   });
-
 });

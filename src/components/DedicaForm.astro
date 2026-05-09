@@ -3,91 +3,142 @@ const endpoint = import.meta.env.PUBLIC_DEDICHE_ENDPOINT || "";
 ---
 
 <div id="dedica-form-container">
-  {endpoint ? (
-    <form class="grid gap-6" id="dedica-form" novalidate>
-      <input class="hidden" type="text" name="honeypot" tabindex="-1" autocomplete="off" />
-      <div class="grid gap-5 md:grid-cols-2">
-        <label class="grid gap-2 text-sm font-bold text-majella-green">
-          Nome (o Nickname) *
-          <input class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone" name="nome" required />
-          <span class="hidden text-xs font-normal text-majella-red" data-error="nome">Campo obbligatorio</span>
-        </label>
-
-        <label class="grid gap-2 text-sm font-bold text-majella-green">
-          Indirizzo Email * (solo per comunicazioni, non pubblicato)
-          <input class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone" type="email" name="email" required />
-          <span class="hidden text-xs font-normal text-majella-red" data-error="email">Email non valida</span>
-        </label>
-
-        <label class="grid gap-2 text-sm font-bold text-majella-green md:col-span-2">
-          Città / Luogo (opzionale)
-          <input class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone" name="luogo" />
-        </label>
-
-        <label class="grid gap-2 text-sm font-bold text-majella-green md:col-span-2">
-          La tua Dedica *
-          <textarea class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone min-h-[120px]" name="testo" required></textarea>
-          <span class="hidden text-xs font-normal text-majella-red" data-error="testo">Campo obbligatorio</span>
-        </label>
-
-        <div class="md:col-span-2">
-          <label class="flex items-start gap-3 text-sm text-gray-700 cursor-pointer">
+  {
+    endpoint ? (
+      <form class="grid gap-6" id="dedica-form" novalidate>
+        <input
+          class="hidden"
+          type="text"
+          name="honeypot"
+          tabindex="-1"
+          autocomplete="off"
+        />
+        <div class="grid gap-5 md:grid-cols-2">
+          <label class="grid gap-2 text-sm font-bold text-majella-green">
+            Nome (o Nickname) *
             <input
-              type="checkbox"
-              name="consenso"
-              class="mt-1 h-4 w-4 shrink-0 accent-majella-red"
+              class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone"
+              name="nome"
               required
             />
-            <span class="leading-relaxed">
-              <strong>Consenso pubblicazione</strong> *<br />
-              Acconsento alla pubblicazione della mia dedica sul sito del Rifugio Paolo Barrasso
+            <span
+              class="hidden text-xs font-normal text-majella-red"
+              data-error="nome"
+            >
+              Campo obbligatorio
             </span>
           </label>
-          <span class="hidden text-xs font-normal text-majella-red mt-2" data-error="consenso">Devi acconsentire alla pubblicazione per inviare la dedica.</span>
-        </div>
-      </div>
 
-      <div class="mt-4">
-        <button type="submit" class="inline-flex items-center gap-3 rounded-full bg-majella-red px-7 py-3 text-sm font-black uppercase tracking-widest text-white transition hover:bg-red-800 disabled:opacity-50">
-          Invia Dedica
-        </button>
+          <label class="grid gap-2 text-sm font-bold text-majella-green">
+            Indirizzo Email * (solo per comunicazioni, non pubblicato)
+            <input
+              class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone"
+              type="email"
+              name="email"
+              required
+            />
+            <span
+              class="hidden text-xs font-normal text-majella-red"
+              data-error="email"
+            >
+              Email non valida
+            </span>
+          </label>
+
+          <label class="grid gap-2 text-sm font-bold text-majella-green md:col-span-2">
+            Città / Luogo (opzionale)
+            <input
+              class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone"
+              name="luogo"
+            />
+          </label>
+
+          <label class="grid gap-2 text-sm font-bold text-majella-green md:col-span-2">
+            La tua Dedica *
+            <textarea
+              class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone min-h-[120px]"
+              name="testo"
+              required
+            />
+            <span
+              class="hidden text-xs font-normal text-majella-red"
+              data-error="testo"
+            >
+              Campo obbligatorio
+            </span>
+          </label>
+
+          <div class="md:col-span-2">
+            <label class="flex items-start gap-3 text-sm text-gray-700 cursor-pointer">
+              <input
+                type="checkbox"
+                name="consenso"
+                class="mt-1 h-4 w-4 shrink-0 accent-majella-red"
+                required
+              />
+              <span class="leading-relaxed">
+                <strong>Consenso pubblicazione</strong> *<br />
+                Acconsento alla pubblicazione della mia dedica sul sito del
+                Rifugio Paolo Barrasso
+              </span>
+            </label>
+            <span
+              class="hidden text-xs font-normal text-majella-red mt-2"
+              data-error="consenso"
+            >
+              Devi acconsentire alla pubblicazione per inviare la dedica.
+            </span>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <button
+            type="submit"
+            class="inline-flex items-center gap-3 rounded-full bg-majella-red px-7 py-3 text-sm font-black uppercase tracking-widest text-white transition hover:bg-red-800 disabled:opacity-50"
+          >
+            Invia Dedica
+          </button>
+        </div>
+        <div
+          id="form-feedback"
+          class="hidden rounded-md p-4 text-sm font-bold"
+        />
+      </form>
+    ) : (
+      <div class="border-l-4 border-majella-red bg-white p-6 leading-8 text-gray-700 shadow-soft">
+        Il modulo sarà disponibile a breve.
       </div>
-      <div id="form-feedback" class="hidden rounded-md p-4 text-sm font-bold"></div>
-    </form>
-  ) : (
-    <div class="border-l-4 border-majella-red bg-white p-6 leading-8 text-gray-700 shadow-soft">
-      Il modulo sarà disponibile a breve.
-    </div>
-  )}
+    )
+  }
 </div>
 
 <script is:inline define:vars={{ endpoint }}>
-  const form = document.getElementById('dedica-form');
-  const feedback = document.getElementById('form-feedback');
+  const form = document.getElementById("dedica-form");
+  const feedback = document.getElementById("form-feedback");
   const btn = form?.querySelector('button[type="submit"]');
 
   if (form && endpoint) {
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      
+
       const formData = new FormData(form);
-      
+
       // Normalizzazione email
-      const emailInput = formData.get('email');
+      const emailInput = formData.get("email");
       if (emailInput) {
-        formData.set('email', emailInput.toString().trim().toLowerCase());
+        formData.set("email", emailInput.toString().trim().toLowerCase());
       }
-      
+
       // Validazione basica
       let hasErrors = false;
-      ['nome', 'email', 'testo', 'consenso'].forEach(field => {
+      ["nome", "email", "testo", "consenso"].forEach((field) => {
         const val = formData.get(field);
         const errSpan = form.querySelector(`[data-error="${field}"]`);
-        if (!val || (field === 'email' && !val.includes('@'))) {
-          errSpan.classList.remove('hidden');
+        if (!val || (field === "email" && !val.includes("@"))) {
+          errSpan.classList.remove("hidden");
           hasErrors = true;
         } else {
-          errSpan.classList.add('hidden');
+          errSpan.classList.add("hidden");
         }
       });
 
@@ -98,18 +149,21 @@ const endpoint = import.meta.env.PUBLIC_DEDICHE_ENDPOINT || "";
 
       try {
         await fetch(endpoint, {
-          method: 'POST',
-          mode: 'no-cors',
-          body: formData
+          method: "POST",
+          mode: "no-cors",
+          body: formData,
         });
-        
+
         // Con "no-cors" la risposta è opaca, quindi se non esplode diamo per buono l'invio.
         form.reset();
-        feedback.textContent = "Grazie! La tua dedica è stata inviata e sarà pubblicata dopo la revisione.";
-        feedback.className = "mt-4 rounded-md p-4 text-sm font-bold bg-green-100 text-green-800 block";
-      } catch (err) {
+        feedback.textContent =
+          "Grazie! La tua dedica è stata inviata e sarà pubblicata dopo la revisione.";
+        feedback.className =
+          "mt-4 rounded-md p-4 text-sm font-bold bg-green-100 text-green-800 block";
+      } catch {
         feedback.textContent = "Si è verificato un errore. Riprova più tardi.";
-        feedback.className = "mt-4 rounded-md p-4 text-sm font-bold bg-red-100 text-red-800 block";
+        feedback.className =
+          "mt-4 rounded-md p-4 text-sm font-bold bg-red-100 text-red-800 block";
       } finally {
         btn.disabled = false;
         btn.textContent = "Invia Dedica";

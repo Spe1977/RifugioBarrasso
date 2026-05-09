@@ -5,8 +5,8 @@ interface ImportMetaEnv {
   readonly PUBLIC_BOOKING_ENDPOINT: string;
   /** Google Calendar embed iframe URL (free/busy view). */
   readonly PUBLIC_GOOGLE_CALENDAR_EMBED_URL: string;
-  /** Tally form ID for the guestbook / dedications form. */
-  readonly PUBLIC_TALLY_FORM_ID: string;
+  /** Google Apps Script endpoint for the guestbook / dedications form. */
+  readonly PUBLIC_DEDICHE_ENDPOINT: string;
 }
 
 interface ImportMeta {

@@ -1,6 +1,6 @@
 # Stato sviluppo Rifugio Barrasso
 
-Aggiornato: 2026-05-08.
+Aggiornato: 2026-05-09.
 
 ## Stato app
 
@@ -16,21 +16,22 @@ Aggiornato: 2026-05-08.
 - `robots.txt` presente.
 - Form prenotazioni collegato tramite variabile:
   `PUBLIC_BOOKING_ENDPOINT`.
-- Embed Google Calendar e Tally caricati solo dopo click esplicito
-  dell'utente, con URL/ID letti da variabili pubbliche.
+- Embed Google Calendar caricato solo dopo click esplicito dell'utente.
+- Quaderno del rifugio collegato a Google Apps Script tramite
+  `PUBLIC_DEDICHE_ENDPOINT`, con dediche caricate da Google Sheets dopo
+  approvazione.
 
 Variabili da impostare su Cloudflare Pages:
 
 - `PUBLIC_BOOKING_ENDPOINT`
 - `PUBLIC_GOOGLE_CALENDAR_EMBED_URL`
-- `PUBLIC_TALLY_FORM_ID`
+- `PUBLIC_DEDICHE_ENDPOINT`
 
 ## Sicurezza
 
 - Nessun segreto noto committato.
 - Il vettore `GHSA-j687-52p2-xcff` / XSS Astro `define:vars` è chiuso lato
-  codice: `CalendarEmbed.astro` e `TallyEmbed.astro` non usano più
-  `define:vars`.
+  codice: `CalendarEmbed.astro` non usa più `define:vars` con dati non fidati.
 - Astro aggiornato a `6.3.1` nel branch dedicato `upgrade-astro-6`.
   `npm audit --omit dev` non segnala vulnerabilità di produzione.
 - L'audit completo segnala ancora 9 vulnerabilità dev-only, quindi non
@@ -47,6 +48,9 @@ Variabili da impostare su Cloudflare Pages:
 - Rate limiting Apps Script implementato in `apps-script/booking-handler.gs`:
   3 richieste per stessa email/24h, 3 per stesso telefono/24h, 30 richieste
   complessive/ora. Email e telefono vengono normalizzati prima del confronto.
+- Rate limiting Apps Script implementato in `apps-script/dediche-handler.gs`:
+  3 dediche per stessa email/24h e 30 dediche complessive/ora. I campi scritti
+  su Google Sheets vengono neutralizzati se iniziano con caratteri da formula.
 - Rimozione di `'unsafe-inline'` dalla CSP ancora opzionale: Astro continua a
   generare script inline in alcuni casi, quindi serve strategia dedicata
   tramite bundle esterni, hash o nonce.
@@ -55,7 +59,7 @@ Variabili da impostare su Cloudflare Pages:
 
 Suite aggiornata:
 
-- 35 test unitari Vitest.
+- 44 test unitari Vitest.
 - 64 test E2E Playwright su Chromium desktop e Pixel 7.
 - `@axe-core/playwright` integrato per controlli accessibilità automatici.
 
@@ -73,7 +77,10 @@ Copertura E2E critica ora presente:
   - soggiorno oltre 2 notti.
 - Gating privacy degli embed:
   - iframe Google Calendar assente prima del consenso e presente dopo click;
-  - iframe Tally assente prima del consenso e presente dopo click.
+- Quaderno del rifugio:
+  - validazione dediche;
+  - neutralizzazione formule prima della scrittura su Google Sheets;
+  - rate limiting email/globale.
 - Rate limiting Apps Script:
   - normalizzazione email e telefono;
   - blocco quarta richiesta per stessa email/24h;
@@ -89,7 +96,7 @@ Correzioni fatte perché emerse dai test a11y:
 Verifiche passate:
 
 - `npm run lint`
-- `npm test` -> 35 passed
+- `npm test` -> 44 passed
 - `npm run build`
 - `npm run test:e2e:server` -> 64 passed
 
@@ -102,3 +109,7 @@ Verifiche passate:
 4. Test immagini responsive e `alt` significativi.
 5. Visual regression su home, prenotazioni e galleria.
 6. Progetto WebKit Playwright per copertura Safari/iOS.
+
+PUBLIC_BOOKING_ENDPOINT = https://script.google.com/macros/s/AKfycbxCib48ZpIhhRXbUoQk6UEKd7f7UlZY_uSTGYbBckEZ9iDI6K1HI1kkhFVfZhcoTWzluQ/exec
+
+PUBLIC_DEDICHE_ENDPOINT = https://script.google.com/macros/s/AKfycbwGyoVKWTGNpwzGuoSQiR1j4feegYBI4FfSRNo5ov_7s0VtDQ-6JThi0cVC-VjLFTBqhA/exec

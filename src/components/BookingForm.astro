@@ -455,8 +455,8 @@ const bookingDeclarations = [
     data-submit-hint
     aria-live="polite"
   >
-    Per inviare la richiesta è necessario spuntare tutte e 5 le caselle di
-    accettazione e presa visione.
+    Per inviare la richiesta è necessario compilare tutti i campi obbligatori e
+    spuntare tutte e 5 le caselle di accettazione e presa visione.
   </p>
 
   <!-- Success feedback -->
@@ -693,8 +693,20 @@ const bookingDeclarations = [
     );
   }
 
+  function requiredControls(scope: HTMLFormElement) {
+    return Array.from(
+      scope.querySelectorAll<
+        HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+      >("input[required], select[required], textarea[required]"),
+    );
+  }
+
+  function allRequiredFieldsValid(scope: HTMLFormElement): boolean {
+    return requiredControls(scope).every((control) => control.checkValidity());
+  }
+
   function syncSubmitGate(scope: HTMLFormElement) {
-    const ok = allDeclarationsChecked(scope);
+    const ok = allDeclarationsChecked(scope) && allRequiredFieldsValid(scope);
     if (submitBtn) submitBtn.disabled = !ok;
     submitHint?.classList.toggle("hidden", ok);
   }
@@ -705,9 +717,8 @@ const bookingDeclarations = [
       form.querySelector<HTMLInputElement>("[data-page-url]");
     if (pageUrlInput) pageUrlInput.value = window.location.href;
 
-    declarationCheckboxes(form).forEach((checkbox) => {
-      checkbox.addEventListener("change", () => syncSubmitGate(form));
-    });
+    form.addEventListener("input", () => syncSubmitGate(form));
+    form.addEventListener("change", () => syncSubmitGate(form));
     syncSubmitGate(form);
 
     form.addEventListener("submit", async (event) => {

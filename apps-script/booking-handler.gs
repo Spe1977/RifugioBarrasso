@@ -81,27 +81,27 @@ function doPost(e) {
       p.lingua || "it",
       p.tipo_richiesta || "pernottamento",
       "nuova",
-      p.nome,
-      p.data_nascita,
-      p.luogo_nascita,
-      p.numero_documento,
-      p.email,
-      p.telefono,
+      toSheetText(p.nome),
+      toSheetText(p.data_nascita),
+      toSheetText(p.luogo_nascita),
+      toSheetText(p.numero_documento),
+      toSheetText(p.email),
+      toSheetText(p.telefono),
       parseInt(p.persone, 10),
-      p.elenco_partecipanti,
-      p.data_arrivo,
+      toSheetText(p.elenco_partecipanti),
+      toSheetText(p.data_arrivo),
       parseInt(p.notti, 10),
-      p.data_partenza,
-      p.attivita_prevista,
-      p.note || "",
-      p.accettazione_regole || "",
-      p.accettazione_contributo || "",
-      p.presa_visione_responsabilita || "",
-      p.accettazione_privacy || "",
-      p.consenso_ricontatto || "",
-      p.page_url || "",
-      (e && e.parameter && e.parameter.user_agent) || "",
-      p.form_version || "",
+      toSheetText(p.data_partenza),
+      toSheetText(p.attivita_prevista),
+      toSheetText(p.note || ""),
+      toSheetText(p.accettazione_regole || ""),
+      toSheetText(p.accettazione_contributo || ""),
+      toSheetText(p.presa_visione_responsabilita || ""),
+      toSheetText(p.accettazione_privacy || ""),
+      toSheetText(p.consenso_ricontatto || ""),
+      toSheetText(p.page_url || ""),
+      toSheetText((e && e.parameter && e.parameter.user_agent) || ""),
+      toSheetText(p.form_version || ""),
       "", // email_notifica_inviata
       "", // email_utente_inviata
       "", // note_gestore
@@ -351,6 +351,11 @@ function normalizeEmail(value) {
   return String(value || "")
     .trim()
     .toLowerCase();
+}
+
+function toSheetText(value) {
+  var text = String(value || "");
+  return /^[\s]*[=+\-@]/.test(text) ? "'" + text : text;
 }
 
 function normalizePhone(value) {

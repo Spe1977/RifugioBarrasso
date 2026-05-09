@@ -6,6 +6,7 @@ export const site = {
   domain: "https://www.rifugiobarrasso.com",
   operativeEmail: "rifugio.barrasso@gmail.com",
   technicalEmail: "sito.barrasso@gmail.com",
+  facebookUrl: "https://www.facebook.com/rifugio.barrasso",
   manager:
     "Associazione Culturale Amici del Barrasso Caramanico Terme (PE) C.F. 91177910683",
   municipality: "Comune di Caramanico Terme",

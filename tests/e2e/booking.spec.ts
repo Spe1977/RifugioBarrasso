@@ -29,24 +29,24 @@ test.describe("Booking Form", () => {
     await page.getByLabel("Solo escursione").check();
   }
 
-  test("shows validation errors on empty submit", async ({ page }) => {
-    // The submit button is gated on declarations; tick them so it becomes
-    // clickable, then click without filling the rest of the form.
-    await tickAllDeclarations(page);
-
+  test("keeps submit disabled until required fields and declarations are complete", async ({
+    page,
+  }) => {
     const submit = page.getByRole("button", { name: "Invia richiesta" });
+
+    await expect(submit).toBeDisabled();
+
+    await tickAllDeclarations(page);
+    await expect(submit).toBeDisabled();
+
+    await fillRequiredFields(page);
+    await expect(submit).toBeDisabled();
+
+    await page.getByLabel(/Data di Arrivo/).fill("2099-12-01");
+    await page.getByLabel(/Data di Partenza/).fill("2099-12-02");
+    await page.getByLabel("1 Notte").check();
+
     await expect(submit).toBeEnabled();
-    await submit.click();
-
-    // Form must not navigate.
-    await expect(page).toHaveURL(/\/prenotazioni\/$/);
-
-    // Visible JS validation errors must appear.
-    const errorSpans = page.locator("span[data-error]");
-    const visibleErrors = await errorSpans.evaluateAll(
-      (spans) => spans.filter((s) => !s.classList.contains("hidden")).length,
-    );
-    expect(visibleErrors).toBeGreaterThan(0);
   });
 
   test("successfully submits when correctly filled", async ({ page }) => {
@@ -136,6 +136,7 @@ test.describe("Booking Form", () => {
       extraNights.value = "3";
       extraNights.checked = true;
       document.querySelector("[data-booking-form]")?.append(extraNights);
+      extraNights.dispatchEvent(new Event("change", { bubbles: true }));
     });
 
     await page.getByRole("button", { name: "Invia richiesta" }).click();
