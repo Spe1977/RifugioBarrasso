@@ -12,7 +12,7 @@ function getOrCreateSheet(ss) {
   var sheet = ss.getSheetByName(SHEET_NAME);
   if (!sheet) {
     sheet = ss.insertSheet(SHEET_NAME);
-    sheet.appendRow(["ID", "Timestamp", "Nome", "Email", "Luogo", "Testo", "Approvata"]);
+    sheet.appendRow(["ID", "Timestamp", "Nome", "Email", "Luogo", "Testo", "Consenso", "Approvata"]);
   }
   return sheet;
 }
@@ -42,6 +42,7 @@ function doPost(e) {
       email,
       p.luogo || "",
       p.testo,
+      p.consenso === "on" ? "SI" : "NO",
       "" // Approvata
     ]);
     
@@ -69,7 +70,7 @@ function doGet(e) {
     for (var i = 1; i < data.length; i++) {
       var row = data[i];
       // Check if "Approvata" contains "SI" (case insensitive)
-      if (row[6] && row[6].toString().toUpperCase().trim() === "SI") {
+      if (row[7] && row[7].toString().toUpperCase().trim() === "SI") {
         dediche.push({
           id: row[0],
           data: row[1],

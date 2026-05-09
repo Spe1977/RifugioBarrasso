@@ -29,6 +29,22 @@ const endpoint = import.meta.env.PUBLIC_DEDICHE_ENDPOINT || "";
           <textarea class="rounded-md border border-majella-green/18 bg-white px-4 py-3 font-normal text-majella-darkstone min-h-[120px]" name="testo" required></textarea>
           <span class="hidden text-xs font-normal text-majella-red" data-error="testo">Campo obbligatorio</span>
         </label>
+
+        <div class="md:col-span-2">
+          <label class="flex items-start gap-3 text-sm text-gray-700 cursor-pointer">
+            <input
+              type="checkbox"
+              name="consenso"
+              class="mt-1 h-4 w-4 shrink-0 accent-majella-red"
+              required
+            />
+            <span class="leading-relaxed">
+              <strong>Consenso pubblicazione</strong> *<br />
+              Acconsento alla pubblicazione della mia dedica sul sito del Rifugio Paolo Barrasso
+            </span>
+          </label>
+          <span class="hidden text-xs font-normal text-majella-red mt-2" data-error="consenso">Devi acconsentire alla pubblicazione per inviare la dedica.</span>
+        </div>
       </div>
 
       <div class="mt-4">
@@ -64,7 +80,7 @@ const endpoint = import.meta.env.PUBLIC_DEDICHE_ENDPOINT || "";
       
       // Validazione basica
       let hasErrors = false;
-      ['nome', 'email', 'testo'].forEach(field => {
+      ['nome', 'email', 'testo', 'consenso'].forEach(field => {
         const val = formData.get(field);
         const errSpan = form.querySelector(`[data-error="${field}"]`);
         if (!val || (field === 'email' && !val.includes('@'))) {
