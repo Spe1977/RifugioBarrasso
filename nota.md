@@ -113,3 +113,5 @@ Verifiche passate:
 PUBLIC_BOOKING_ENDPOINT = https://script.google.com/macros/s/AKfycbxCib48ZpIhhRXbUoQk6UEKd7f7UlZY_uSTGYbBckEZ9iDI6K1HI1kkhFVfZhcoTWzluQ/exec
 
 PUBLIC_DEDICHE_ENDPOINT = https://script.google.com/macros/s/AKfycbwGyoVKWTGNpwzGuoSQiR1j4feegYBI4FfSRNo5ov_7s0VtDQ-6JThi0cVC-VjLFTBqhA/exec
+
+PUBLIC_GOOGLE_CALENDAR_EMBED_URL = https://calendar.google.com/calendar/embed?src=b228cf7cd6642ee180bc7093c8431d0be6c005506571eeef55900a7f19cb7173%40group.calendar.google.com&ctz=Europe%2FRome&mode=MONTH&showTitle=0&showPrint=0&showTabs=1&showCalendars=0
