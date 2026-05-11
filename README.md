@@ -88,3 +88,4 @@ Checklist di rilascio: [docs/release-checklist.md](docs/release-checklist.md).
 
 - Spe1977
 - OpenAI Codex
+- Claude Code
