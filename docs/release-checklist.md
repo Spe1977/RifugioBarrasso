@@ -6,6 +6,7 @@ Usare questa checklist prima di pubblicare una nuova versione del sito.
 
 - Verificare testi, date, regolamenti e contributi nella pagina Prenotazioni.
 - Verificare che la galleria usi solo immagini autorizzate.
+- Verificare che eventuali nuove immagini in galleria dichiarino dimensioni e orientamento corretti in `src/data/content.ts`.
 - Verificare che il calendario mostri correttamente le disponibilità.
 - Verificare che il Quaderno carichi le dediche approvate e che l'invio di una dedica mostri il feedback corretto.
 - Verificare che l'informativa privacy nel form sia coerente con la pagina Privacy.
@@ -40,6 +41,8 @@ coprano normalizzazione email/telefono, limite per email, limite per telefono e
 limite globale orario.
 Per modifiche al sistema dediche, verificare anche validazione, consenso,
 neutralizzazione formule e rate limiting email/globale.
+Per modifiche alla lettura pubblica delle dediche, verificare eventuali cache,
+limiti di righe o controlli anti-abuso su `doGet`.
 
 ## Deploy
 

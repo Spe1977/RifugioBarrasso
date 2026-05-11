@@ -5,7 +5,7 @@
 - Un account Google (la **mail tecnica dedicata** del progetto).
 - Accesso a [Google Apps Script](https://script.google.com).
 
-## Passaggi
+## Passaggi prenotazioni
 
 ### 1. Creare il Google Sheet
 
@@ -55,6 +55,29 @@ PUBLIC_BOOKING_ENDPOINT=https://script.google.com/macros/s/.../exec
    - L'email arriva a `rifugio.barrasso@gmail.com`.
    - L'email di ricevuta arriva all'indirizzo inserito nel form.
 
+## Passaggi dediche
+
+Il quaderno del rifugio usa `dediche-handler.gs` come Web App Apps Script separata.
+
+1. Creare un Google Sheet dedicato alle dediche con la mail tecnica.
+2. Condividere il foglio in modifica con il gestore che approva i messaggi.
+3. Creare un nuovo progetto Apps Script e incollare `dediche-handler.gs`.
+4. Verificare `SHEET_ID`, `SHEET_NAME`, `NOTIFY_EMAIL` e `CC_EMAIL`.
+5. Pubblicare come Web App:
+   - Esegui come: **Me** (la mail tecnica).
+   - Chi può accedere: **Anyone**.
+6. Inserire l'URL `/exec` in Cloudflare Pages:
+
+```env
+PUBLIC_DEDICHE_ENDPOINT=https://script.google.com/macros/s/.../exec
+```
+
+### Moderazione dediche
+
+- Le nuove dediche vengono salvate con colonna `Approvata` vuota.
+- Per pubblicare una dedica, scrivere `SI` nella colonna `Approvata`.
+- Il sito mostra solo nome, luogo, testo e data delle righe approvate.
+
 ## Note
 
 - L'URL dell'Apps Script è **pubblico** (sta nel frontend). Non è un segreto.
@@ -68,3 +91,10 @@ PUBLIC_BOOKING_ENDPOINT=https://script.google.com/macros/s/.../exec
 - Il rate limit di `MailApp.sendEmail` è ~100 email/giorno per account gratuito.
 - `LockService` previene scritture concorrenti.
 - Per aggiornare lo script: **Deploy** → **Manage deployments** → **Edit** → incrementare versione.
+
+## Note di sicurezza
+
+- I valori scritti su Google Sheets vengono neutralizzati quando iniziano con caratteri tipici delle formule (`=`, `+`, `-`, `@`).
+- I POST di prenotazioni e dediche applicano rate limiting lato Apps Script.
+- Il `doGet` delle dediche e' pubblico per permettere il caricamento del quaderno. Se il traffico aumenta, aggiungere `CacheService` o limitare il numero di righe restituite per ridurre consumo quota.
+- Le risposte pubbliche agli errori dovrebbero restare generiche; i dettagli tecnici vanno tenuti nei log Apps Script.

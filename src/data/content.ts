@@ -92,6 +92,11 @@ export const galleryImages = [
   "Foto da Leonardo(14).jpg",
   "Foto da Leonardo(15).jpg",
   "Foto da Leonardo(16).jpg",
+  { src: "025.jpg", width: 1200, height: 1600, orientation: "portrait" },
+  { src: "017.jpg", width: 1200, height: 1600, orientation: "portrait" },
+  { src: "016.jpg", width: 902, height: 1600, orientation: "portrait" },
+  { src: "042.jpg", width: 3072, height: 4096, orientation: "portrait" },
+  { src: "714.jpg", width: 4096, height: 3072, orientation: "landscape" },
 ];
 
 export const excursionsAndSkiSections = [

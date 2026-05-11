@@ -14,7 +14,7 @@ Sito statico multipagina del Rifugio Paolo Barrasso, realizzato con Astro e Tail
 ## Funzionalità
 
 - Pagine statiche: home, storia, galleria, escursioni e sci, prenotazioni, quaderno del rifugio, eventi, info e regole, privacy, 404.
-- Galleria fotografica locale senza dipendenze esterne.
+- Galleria fotografica locale senza dipendenze esterne, con supporto a immagini portrait e landscape.
 - Modulo prenotazioni con validazione lato client, dichiarazioni obbligatorie (incluso luogo di nascita e numero documento), rate limiting lato Apps Script e invio a Google Apps Script.
 - Quaderno del rifugio con modulo dediche integrato, moderazione su Google Sheets e caricamento dinamico delle dediche approvate.
 - Calendario disponibilità caricato solo dopo consenso dell'utente.
@@ -72,8 +72,19 @@ npm run deploy:cloudflare
 
 Checklist di rilascio: [docs/release-checklist.md](docs/release-checklist.md).
 
+## Sicurezza
+
+- Le variabili `PUBLIC_*` sono pubbliche nel frontend: non inserirvi segreti.
+- Gli handler Apps Script validano lato server, applicano rate limiting sui POST e neutralizzano valori compatibili con formule Google Sheets.
+- Ultima analisi repository-wide: [docs/security-scan-2026-05-11.md](docs/security-scan-2026-05-11.md).
+
 ## Note operative
 
 - `dist`, `.env`, `node_modules`, report e screenshot generati sono esclusi dal repository.
 - Dopo ogni modifica ad Apps Script, aggiornare il deployment Web App esistente. Aggiornare `PUBLIC_BOOKING_ENDPOINT` o `PUBLIC_DEDICHE_ENDPOINT` su Cloudflare Pages solo se cambia l'URL `/exec`.
 - `sito.md`, `stile.html` e i documenti sorgente restano riferimenti di progetto.
+
+## Contributori
+
+- Spe1977
+- OpenAI Codex

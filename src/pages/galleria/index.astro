@@ -18,18 +18,37 @@ import { galleryImages, pageMeta } from "@data/content";
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {
-          galleryImages.map((image, index) => (
-            <figure class="group rounded-[0.625rem] border border-majella-green/10 bg-white/80 p-2 shadow-soft ring-1 ring-white/70 transition duration-300 hover:-translate-y-1 hover:border-majella-wood/45 hover:bg-white">
-              <div class="relative aspect-[3/4] overflow-hidden rounded-md bg-majella-lightgreen">
-                <img
-                  src={`/assets/images/${image}`}
-                  alt={`Foto ${index + 1} del Rifugio Paolo Barrasso e della Majella`}
-                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
-                />
-              </div>
-            </figure>
-          ))
+          galleryImages.map((image, index) => {
+            const photo =
+              typeof image === "string"
+                ? {
+                    src: image,
+                    width: 1200,
+                    height: 1600,
+                    orientation: "portrait",
+                  }
+                : image;
+            const isLandscape = photo.orientation === "landscape";
+
+            return (
+              <figure
+                class={`group self-start rounded-[0.625rem] border border-majella-green/10 bg-white/80 p-2 shadow-soft ring-1 ring-white/70 transition duration-300 hover:-translate-y-1 hover:border-majella-wood/45 hover:bg-white ${isLandscape ? "sm:col-span-2" : ""}`}
+              >
+                <div
+                  class={`relative overflow-hidden rounded-md bg-majella-lightgreen ${isLandscape ? "aspect-[4/3]" : "aspect-[3/4]"}`}
+                >
+                  <img
+                    src={`/assets/images/${photo.src}`}
+                    alt={`Foto ${index + 1} del Rifugio Paolo Barrasso e della Majella`}
+                    width={photo.width}
+                    height={photo.height}
+                    class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+            );
+          })
         }
       </div>
     </div>
