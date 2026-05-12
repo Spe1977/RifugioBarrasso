@@ -1,2 +1,3 @@
 # Redirects configurati
 # (eventuali redirect vecchi -> nuovi possono essere aggiunti qui)
+https://rifugiobarrasso.com/* https://www.rifugiobarrasso.com/:splat 301
