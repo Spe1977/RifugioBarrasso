@@ -84,8 +84,13 @@ a {
 }
 
 main :where(p:not(.font-display), li) {
-  text-align: justify;
   text-wrap: pretty;
+}
+
+@media (min-width: 640px) {
+  main :where(p:not(.font-display), li) {
+    text-align: justify;
+  }
 }
 
 .reveal {

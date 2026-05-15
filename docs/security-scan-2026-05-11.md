@@ -8,7 +8,7 @@ Analisi repository-wide eseguita con Codex Security sul codice del sito Rifugio 
 - 1 finding `low` di hardening/availability.
 - 1 nota di hardening su messaggi di errore Apps Script.
 - `npm test`: 44 test passati.
-- `npm audit --omit=dev`: 0 vulnerabilità production.
+- `npm audit`: 0 vulnerabilità.
 
 ## Finding low
 
@@ -30,6 +30,7 @@ Mitigazioni consigliate:
 - `apps-script/booking-handler.gs` restituisce il messaggio dell'eccezione in caso di errore inatteso. Preferire una risposta pubblica generica e logging privato.
 - `public/_headers` consente script inline nella CSP. Non e' stata trovata una catena XSS raggiungibile, ma una CSP con nonce/hash o script bundle esterni sarebbe piu' restrittiva.
 - Gli ID dei Google Sheet presenti negli script non sono credenziali. La protezione reale dipende dagli ACL dei fogli e dall'esecuzione controllata degli Apps Script.
+- Gli override npm bloccano `tmp` a `0.2.5` e `yaml` a `2.9.0` per chiudere vulnerabilità transitivamente introdotte dal tooling di sviluppo.
 
 ## Copertura
 

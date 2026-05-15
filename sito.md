@@ -1098,6 +1098,12 @@ Nella pagina prenotazioni e nelle regole deve essere sempre evidente che:
 
 - il locale bivacco è sempre aperto e non si prenota;
 - il locale chiuso richiede prenotazione e conferma;
+- il locale chiuso contiene tavolo con panche, fornello con bombola a gas,
+  armadietto chiuso con attrezzatura da cucina, legna per il camino e soppalco
+  con tavolato utilizzabile come zona notte;
+- per il pernottamento è necessario portare sacco a pelo e
+  stuoino/materassino;
+- il locale aperto contiene tavolo con panche, camino, stufa e legna da ardere;
 - la richiesta online non equivale a conferma;
 - massimo 2 notti;
 - contributo di 10 euro al giorno per persona;
@@ -1183,15 +1189,18 @@ Sezioni:
 
 Sezioni:
 
-1. regole complete;
-2. patto del buon viandante;
-3. divieto cani;
-4. acqua e servizi;
-5. rifiuti;
-6. camino e cenere;
-7. chiusura rifugio;
-8. contatti;
-9. mappa.
+1. patto del buon viandante;
+2. riquadro informativo "COSA TROVI ALL'INTERNO DEL BARRASSO";
+3. dotazioni del locale chiuso, con parola "PRENOTAZIONE" linkata a
+   `/prenotazioni/`;
+4. dotazioni del locale aperto sempre liberamente accessibile;
+5. divieto cani;
+6. acqua e servizi;
+7. rifiuti;
+8. camino e cenere;
+9. chiusura rifugio;
+10. contatti;
+11. regolamento tecnico.
 
 ---
 

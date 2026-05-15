@@ -23,6 +23,10 @@
     "@astrojs/sitemap": "^3.7.2",
     "astro": "^6.3.1"
   },
+  "overrides": {
+    "tmp": "0.2.5",
+    "yaml": "2.9.0"
+  },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@axe-core/playwright": "^4.11.3",

@@ -27,6 +27,25 @@ test("booking form exposes the official limits", async ({ page }) => {
   ).toBeVisible();
 });
 
+test("info and rules booking word link opens the reservations page", async ({
+  page,
+}) => {
+  await page.goto("/info-e-regole/");
+
+  const bookingWordLink = page
+    .getByRole("article", { name: "COSA TROVI ALL'INTERNO DEL BARRASSO" })
+    .getByRole("link", { name: "PRENOTAZIONE" });
+
+  await expect(bookingWordLink).toHaveAttribute("href", "/prenotazioni/");
+
+  await bookingWordLink.click();
+
+  await expect(page).toHaveURL(/\/prenotazioni\/$/);
+  await expect(
+    page.getByRole("heading", { name: "Richiedi il locale chiuso" }),
+  ).toBeVisible();
+});
+
 test("footer links to the refuge Facebook page", async ({ page }) => {
   await page.goto("/");
 

@@ -8,6 +8,7 @@ Usare questa checklist prima di pubblicare una nuova versione del sito.
 - Verificare che la galleria usi solo immagini autorizzate.
 - Verificare che eventuali nuove immagini in galleria dichiarino dimensioni e orientamento corretti in `src/data/content.ts`.
 - Verificare che il calendario mostri correttamente le disponibilità.
+- Verificare nella pagina Info e Regole il riquadro "COSA TROVI ALL'INTERNO DEL BARRASSO": dotazioni del locale chiuso, dotazioni del locale aperto e link "PRENOTAZIONE" verso `/prenotazioni/`.
 - Verificare che il Quaderno carichi le dediche approvate e che l'invio di una dedica mostri il feedback corretto.
 - Verificare che l'informativa privacy nel form sia coerente con la pagina Privacy.
 - Verificare che le immagini hero e il logo abbiano tutte le varianti responsive
@@ -26,6 +27,7 @@ Usare questa checklist prima di pubblicare una nuova versione del sito.
 ```bash
 npm run test
 npm run build
+npm audit
 ```
 
 Controlli opzionali:

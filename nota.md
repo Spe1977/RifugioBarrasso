@@ -1,6 +1,6 @@
 # Stato sviluppo Rifugio Barrasso
 
-Aggiornato: 2026-05-09.
+Aggiornato: 2026-05-15.
 
 ## Stato app
 
@@ -20,6 +20,10 @@ Aggiornato: 2026-05-09.
 - Quaderno del rifugio collegato a Google Apps Script tramite
   `PUBLIC_DEDICHE_ENDPOINT`, con dediche caricate da Google Sheets dopo
   approvazione.
+- Pagina Info e Regole aggiornata con riquadro dotazioni del Barrasso:
+  locale chiuso accessibile solo su prenotazione, locale aperto sempre
+  accessibile, testo regole ingrandito e link "PRENOTAZIONE" verso
+  `/prenotazioni/`.
 
 Variabili da impostare su Cloudflare Pages:
 
@@ -32,19 +36,10 @@ Variabili da impostare su Cloudflare Pages:
 - Nessun segreto noto committato.
 - Il vettore `GHSA-j687-52p2-xcff` / XSS Astro `define:vars` è chiuso lato
   codice: `CalendarEmbed.astro` non usa più `define:vars` con dati non fidati.
-- Astro aggiornato a `6.3.1` nel branch dedicato `upgrade-astro-6`.
-  `npm audit --omit dev` non segnala vulnerabilità di produzione.
-- L'audit completo segnala ancora 9 vulnerabilità dev-only, quindi non
-  incluse nel bundle statico di produzione:
-  - `tmp <=0.2.3`, via `@lhci/cli` e `inquirer -> external-editor -> tmp`:
-    gestione insicura di directory temporanee tramite symlink; rischio pratico
-    basso in questo progetto perché riguarda tooling di sviluppo/CI.
-  - `yaml 2.0.0 - 2.8.2`, via
-    `@astrojs/check -> @astrojs/language-server -> volar-service-yaml`:
-    possibile stack overflow con YAML molto annidati; gravità moderate,
-    limitata al tooling di check/language server.
-  - `npm audit fix --force` propone fix breaking/downgrade, quindi meglio
-    attendere aggiornamenti non-breaking di `@lhci/cli` e `@astrojs/check`.
+- Astro aggiornato a `6.3.1`; `npm audit` non segnala vulnerabilità.
+- Override npm presenti per il tooling di sviluppo:
+  - `tmp` bloccato a `0.2.5`;
+  - `yaml` bloccato a `2.9.0`.
 - Rate limiting Apps Script implementato in `apps-script/booking-handler.gs`:
   3 richieste per stessa email/24h, 3 per stesso telefono/24h, 30 richieste
   complessive/ora. Email e telefono vengono normalizzati prima del confronto.
@@ -60,7 +55,7 @@ Variabili da impostare su Cloudflare Pages:
 Suite aggiornata:
 
 - 44 test unitari Vitest.
-- 64 test E2E Playwright su Chromium desktop e Pixel 7.
+- 68 test E2E Playwright su Chromium desktop e Pixel 7.
 - `@axe-core/playwright` integrato per controlli accessibilità automatici.
 
 Copertura E2E critica ora presente:
@@ -71,6 +66,8 @@ Copertura E2E critica ora presente:
   `/grazie-prenotazione/`, `/privacy/`, `/404/`.
 - Accessibilità automatica axe su tutte le pagine principali.
 - Menu mobile.
+- Link "PRENOTAZIONE" nel riquadro dotazioni della pagina Info e Regole.
+- Allineamento leggibile dei testi lunghi su mobile.
 - Flusso prenotazioni: validazione vuota, submit riuscito, errore rete.
 - UX cross-field prenotazioni:
   - partenza non successiva all'arrivo;
