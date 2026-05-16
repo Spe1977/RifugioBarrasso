@@ -10,24 +10,149 @@ import { site } from "@data/site";
   <PageHero
     eyebrow="Info e regole"
     title="Il patto del buon viandante"
-    lead="Il rifugio è aperto alla montagna, ma resta utilizzabile solo se ogni persona contribuisce a conservarlo."
+    lead="Salire fino al Barrasso significa vivere la montagna in modo autentico, e lasciare il rifugio pulito, sicuro e accogliente è un dono per noi e per gli altri."
+    leadClass="text-justify"
   />
 
-  <section class="paper-surface py-20">
+  <section
+    class="paper-surface py-20 [&_li]:text-justify [&_p]:text-justify [&_span.block]:text-justify"
+  >
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
       <div>
-        <div
-          class="mb-12 rounded-3xl bg-white p-8 shadow-sm border border-majella-green/10 sm:p-10"
+        <article
+          class="mb-12 overflow-hidden rounded-3xl border border-majella-green/10 bg-white shadow-soft"
+          aria-labelledby="come-raggiungere-rifugio"
         >
-          <p
-            class="font-display text-left text-lg font-medium leading-relaxed text-majella-darkstone sm:text-justify sm:text-xl"
-          >
-            Scegliere di salire fino al Barrasso significa abbracciare la
-            filosofia della montagna più autentica. Questo rifugio è la casa di
-            tutti: mantenerla accogliente, pulita e sicura per chi verrà dopo di
-            te è il dono più grande che puoi fare alla Majella.
-          </p>
-        </div>
+          <div class="grid gap-0 lg:grid-cols-[0.9fr_1.4fr]">
+            <div
+              class="bg-majella-green p-7 text-majella-stone sm:p-9 lg:self-start lg:rounded-br-3xl lg:p-10"
+            >
+              <div
+                class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-majella-wood text-3xl shadow-sm"
+                aria-hidden="true"
+              >
+                🥾
+              </div>
+              <p
+                class="mb-3 text-xs font-black uppercase tracking-[0.24em] text-majella-wood"
+              >
+                Accesso al rifugio
+              </p>
+              <h2
+                id="come-raggiungere-rifugio"
+                class="font-display text-2xl font-black uppercase leading-tight sm:text-3xl"
+              >
+                Come raggiungere il Rifugio
+              </h2>
+              <p
+                class="mt-5 text-base font-medium leading-relaxed text-majella-stone/85"
+              >
+                Il percorso alterna strada comunale, tratti brecciati e sentiero
+                escursionistico. Valuta sempre condizioni meteo, mezzo e
+                attrezzatura.
+              </p>
+            </div>
+
+            <div class="space-y-7 p-6 sm:p-8 lg:p-10">
+              <div class="grid gap-4 sm:grid-cols-[3rem_1fr]">
+                <div
+                  class="flex h-12 w-12 items-center justify-center rounded-full bg-majella-lightgreen font-display text-lg font-black text-majella-green"
+                  aria-hidden="true"
+                >
+                  1
+                </div>
+                <div>
+                  <h3
+                    class="font-display text-lg font-black leading-snug text-majella-green"
+                  >
+                    Verso San Nicolao e Macchie Piane
+                  </h3>
+                  <p class="mt-2 text-base leading-relaxed text-gray-700">
+                    Raggiungi il paese di Caramanico Terme e segui le
+                    indicazioni per la frazione di San Nicolao (circa 3 km).
+                    Superato il piccolo abitato, prosegui in direzione della
+                    località Macchie Piane.
+                  </p>
+                </div>
+              </div>
+
+              <div class="grid gap-4 sm:grid-cols-[3rem_1fr]">
+                <div
+                  class="flex h-12 w-12 items-center justify-center rounded-full bg-majella-lightgreen font-display text-lg font-black text-majella-green"
+                  aria-hidden="true"
+                >
+                  2
+                </div>
+                <div>
+                  <h3
+                    class="font-display text-lg font-black leading-snug text-majella-green"
+                  >
+                    Da Macchie Piane a Guado Sant'Antonio (1.220 m s.l.m.)
+                  </h3>
+                  <p class="mt-2 text-base leading-relaxed text-gray-700">
+                    Giunto in località Macchie Piane, troverai un piccolo
+                    parcheggio brecciato. Da qui hai due opzioni per raggiungere
+                    Guado Sant'Antonio:
+                  </p>
+                  <ul
+                    class="mt-3 space-y-3 text-base leading-relaxed text-gray-700"
+                  >
+                    <li class="flex gap-3">
+                      <span class="text-majella-wood" aria-hidden="true">•</span
+                      >
+                      <span>
+                        <strong>A piedi (consigliato):</strong> lascia l'auto al parcheggio
+                        e imbocca la strada comunale. È un percorso di circa 3 km
+                        che richiede 1 ora di cammino.
+                      </span>
+                    </li>
+                    <li class="flex gap-3">
+                      <span class="text-majella-wood" aria-hidden="true">•</span
+                      >
+                      <span>
+                        <strong>In auto:</strong> è possibile tentare di salire con
+                        l'auto percorrendo la stessa strada comunale, ma
+                        <strong> attenzione</strong>: il fondo stradale è molto
+                        rovinato, quindi valuta bene il mezzo a disposizione.
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="grid gap-4 sm:grid-cols-[3rem_1fr]">
+                <div
+                  class="flex h-12 w-12 items-center justify-center rounded-full bg-majella-lightgreen font-display text-lg font-black text-majella-green"
+                  aria-hidden="true"
+                >
+                  3
+                </div>
+                <div>
+                  <h3
+                    class="font-display text-lg font-black leading-snug text-majella-green"
+                  >
+                    L'ultimo tratto: il Sentiero B3
+                  </h3>
+                  <p class="mt-2 text-base leading-relaxed text-gray-700">
+                    Una volta arrivato a Guado Sant'Antonio, prendi il
+                    <strong> sentiero B3</strong>. In circa un'ora di cammino
+                    arriverai a destinazione al Rifugio.
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=42.13584,14.06078"
+                target="_blank"
+                rel="noreferrer"
+                class="mx-auto flex w-[85%] items-center justify-center rounded-2xl bg-majella-green px-4 py-4 text-center font-display text-base font-black uppercase tracking-[0.04em] text-white shadow-sm transition-colors hover:bg-majella-wood-dark focus-visible:outline-majella-red sm:w-fit"
+                aria-label="Naviga verso il Rifugio Paolo Barrasso su Google Maps"
+              >
+                Naviga verso il Rifugio
+              </a>
+            </div>
+          </div>
+        </article>
 
         <article
           class="mb-8 overflow-hidden rounded-[2rem] bg-majella-green text-majella-stone shadow-soft ring-1 ring-majella-green/20"
@@ -165,7 +290,9 @@ import { site } from "@data/site";
             </div>
           </li>
 
-          <li class="flex items-start">
+          <li
+            class="flex items-start rounded-2xl border border-blue-100 bg-blue-50 p-5"
+          >
             <div
               class="mr-4 mt-1 shrink-0 rounded-full bg-blue-50 p-3 shadow-sm flex items-center justify-center w-12 h-12"
             >
@@ -185,7 +312,9 @@ import { site } from "@data/site";
             </div>
           </li>
 
-          <li class="flex items-start">
+          <li
+            class="flex items-start rounded-2xl border border-gray-200 bg-gray-50 p-5"
+          >
             <div
               class="mr-4 mt-1 shrink-0 rounded-full bg-gray-100 p-3 shadow-sm flex items-center justify-center w-12 h-12"
             >
@@ -206,7 +335,9 @@ import { site } from "@data/site";
             </div>
           </li>
 
-          <li class="flex items-start">
+          <li
+            class="flex items-start rounded-2xl border border-orange-100 bg-orange-50 p-5"
+          >
             <div
               class="mr-4 mt-1 shrink-0 rounded-full bg-orange-50 p-3 shadow-sm flex items-center justify-center w-12 h-12"
             >
@@ -226,7 +357,9 @@ import { site } from "@data/site";
             </div>
           </li>
 
-          <li class="flex items-start">
+          <li
+            class="flex items-start rounded-2xl border border-majella-green/15 bg-majella-stone p-5"
+          >
             <div
               class="mr-4 mt-1 shrink-0 rounded-full border border-gray-200 bg-white p-3 shadow-sm flex items-center justify-center w-12 h-12"
             >
@@ -246,10 +379,10 @@ import { site } from "@data/site";
           </li>
         </ul>
 
-        <div
-          class="mt-16 rounded-3xl border-l-8 border-majella-green bg-white p-8 shadow-sm sm:flex sm:items-center sm:justify-between sm:p-10"
-        >
-          <div class="mb-6 sm:mb-0">
+        <div class="mt-16 grid gap-6 md:grid-cols-2">
+          <div
+            class="rounded-3xl border border-majella-green/15 bg-white p-8 shadow-sm sm:p-10"
+          >
             <p
               class="mb-2 text-sm font-black uppercase tracking-widest text-majella-red"
             >
@@ -261,24 +394,34 @@ import { site } from "@data/site";
               {site.manager}
             </p>
           </div>
-          <div class="sm:text-right">
+
+          <div
+            class="rounded-3xl border border-majella-green/15 bg-white p-8 shadow-sm sm:p-10"
+          >
             <p
               class="mb-2 text-sm font-black uppercase tracking-widest text-majella-red"
             >
               Contatto operativo
             </p>
-            <a
-              href={`mailto:${site.operativeEmail}`}
-              class="font-display text-xl font-bold text-majella-darkstone underline transition-colors hover:text-majella-red sm:text-2xl"
-              >{site.operativeEmail}</a
-            >
+            <div class="space-y-3">
+              <a
+                href={`mailto:${site.operativeEmail}`}
+                class="block break-all font-display text-base font-bold text-majella-darkstone underline transition-colors hover:text-majella-red sm:text-lg lg:text-xl"
+                >{site.operativeEmail}</a
+              >
+              <a
+                href={`mailto:${site.infoEmail}`}
+                class="block break-all font-display text-base font-bold text-majella-darkstone underline transition-colors hover:text-majella-red sm:text-lg lg:text-xl"
+                >{site.infoEmail}</a
+              >
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="bg-white py-20">
+  <section class="bg-white py-20 [&_li]:text-justify">
     <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
       <SectionHeading eyebrow="Utilizzo" title="Regolamento Tecnico" />
       <ul class="grid gap-3 md:grid-cols-2">

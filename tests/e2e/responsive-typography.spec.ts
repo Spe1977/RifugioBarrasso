@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("Responsive typography", () => {
-  test("keeps long informational copy left aligned on narrow screens", async ({
+  test("keeps long informational copy justified on narrow screens", async ({
     page,
   }) => {
     await page.setViewportSize({ width: 393, height: 852 });
@@ -9,11 +9,13 @@ test.describe("Responsive typography", () => {
 
     const heroLead = page
       .locator("p")
-      .filter({ hasText: "Il rifugio è aperto alla montagna" })
+      .filter({
+        hasText: "Salire fino al Barrasso significa vivere la montagna",
+      })
       .first();
     const introCopy = page
       .locator("p")
-      .filter({ hasText: "Scegliere di salire fino al Barrasso" })
+      .filter({ hasText: "Il percorso alterna strada comunale" })
       .first();
 
     await expect(heroLead).toBeVisible();
@@ -24,7 +26,7 @@ test.describe("Responsive typography", () => {
         (element) => getComputedStyle(element).textAlign,
       );
 
-      expect(["left", "start"]).toContain(textAlign);
+      expect(textAlign).toBe("justify");
     }
   });
 });

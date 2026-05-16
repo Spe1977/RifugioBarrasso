@@ -16,7 +16,8 @@ Sito statico multipagina del Rifugio Paolo Barrasso, realizzato con Astro e Tail
 - Pagine statiche: home, storia, galleria, escursioni e sci, prenotazioni, quaderno del rifugio, eventi, info e regole, privacy, 404.
 - Galleria fotografica locale senza dipendenze esterne, con supporto a immagini portrait e landscape.
 - Modulo prenotazioni con validazione lato client, dichiarazioni obbligatorie (incluso luogo di nascita e numero documento), rate limiting lato Apps Script e invio a Google Apps Script.
-- Pagina Info e Regole con riquadro dotazioni del Barrasso: locale chiuso accessibile solo su prenotazione, locale aperto sempre liberamente accessibile e link diretto alla pagina Prenotazioni.
+- Pagina Info e Regole con percorso di accesso al rifugio, CTA Google Maps, riquadro dotazioni del Barrasso, locale chiuso accessibile solo su prenotazione, locale aperto sempre liberamente accessibile e link diretto alla pagina Prenotazioni.
+- CTA "Vivi l'esperienza" in home verso la pagina Prenotazioni e contatti operativi con email principale e informativa.
 - Quaderno del rifugio con modulo dediche integrato, moderazione su Google Sheets e caricamento dinamico delle dediche approvate.
 - Calendario disponibilità caricato solo dopo consenso dell'utente.
 - Immagini hero e logo responsive con `<picture>`, varianti WebP/JPEG/PNG e `srcset` multi-dimensione (400/800/1600 px per le foto, 96/384 px per il logo).
@@ -41,7 +42,7 @@ npm run dev
 npm run test:e2e
 ```
 
-`npm run test:e2e:server` usa invece il webserver automatico di Playwright.
+`npm run test:e2e:server` usa invece il webserver automatico di Playwright, imposta endpoint di test per il modulo prenotazioni e isola la suite dalla porta locale eventualmente già aperta.
 
 ## Variabili d'ambiente
 

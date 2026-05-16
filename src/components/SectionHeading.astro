@@ -3,9 +3,10 @@ type Props = {
   eyebrow?: string;
   title: string;
   lead?: string;
+  leadClass?: string;
 };
 
-const { eyebrow, title, lead } = Astro.props;
+const { eyebrow, title, lead, leadClass = "" } = Astro.props;
 ---
 
 <div class="mb-10 max-w-3xl">
@@ -21,5 +22,11 @@ const { eyebrow, title, lead } = Astro.props;
   >
     {title}
   </h2>
-  {lead && <p class="mt-4 text-lg leading-8 text-gray-600">{lead}</p>}
+  {
+    lead && (
+      <p class:list={["mt-4 text-lg leading-8 text-gray-600", leadClass]}>
+        {lead}
+      </p>
+    )
+  }
 </div>

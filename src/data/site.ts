@@ -5,6 +5,7 @@ export const site = {
   altitude: "1.542 m s.l.m.",
   domain: "https://www.rifugiobarrasso.com",
   operativeEmail: "rifugio.barrasso@gmail.com",
+  infoEmail: "info@rifugiobarrasso.com",
   technicalEmail: "sito.barrasso@gmail.com",
   facebookUrl: "https://www.facebook.com/rifugio.barrasso",
   manager:

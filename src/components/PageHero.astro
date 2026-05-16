@@ -3,10 +3,11 @@ type Props = {
   eyebrow?: string;
   title: string;
   lead: string;
+  leadClass?: string;
   tone?: "dark" | "light";
 };
 
-const { eyebrow, title, lead, tone = "dark" } = Astro.props;
+const { eyebrow, title, lead, leadClass = "", tone = "dark" } = Astro.props;
 const dark = tone === "dark";
 ---
 
@@ -41,6 +42,7 @@ const dark = tone === "dark";
         class:list={[
           dark ? "text-white/82" : "text-majella-darkstone",
           "mt-6 measure text-lg leading-8",
+          leadClass,
         ]}
       >
         {lead}
