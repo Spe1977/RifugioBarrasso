@@ -1,6 +1,6 @@
 # Stato sviluppo Rifugio Barrasso
 
-Aggiornato: 2026-05-15.
+Aggiornato: 2026-05-17.
 
 ## Stato app
 
@@ -36,7 +36,7 @@ Variabili da impostare su Cloudflare Pages:
 - Nessun segreto noto committato.
 - Il vettore `GHSA-j687-52p2-xcff` / XSS Astro `define:vars` è chiuso lato
   codice: `CalendarEmbed.astro` non usa più `define:vars` con dati non fidati.
-- Astro aggiornato a `6.3.1`; `npm audit` non segnala vulnerabilità.
+- Astro aggiornato a `6.3.3`; `npm audit` non segnala vulnerabilità.
 - Override npm presenti per il tooling di sviluppo:
   - `tmp` bloccato a `0.2.5`;
   - `yaml` bloccato a `2.9.0`.
@@ -55,7 +55,7 @@ Variabili da impostare su Cloudflare Pages:
 Suite aggiornata:
 
 - 44 test unitari Vitest.
-- 68 test E2E Playwright su Chromium desktop e Pixel 7.
+- 80 test E2E Playwright su Chromium desktop e Pixel 7.
 - `@axe-core/playwright` integrato per controlli accessibilità automatici.
 
 Copertura E2E critica ora presente:
@@ -95,7 +95,7 @@ Verifiche passate:
 - `npm run lint`
 - `npm test` -> 44 passed
 - `npm run build`
-- `npm run test:e2e:server` -> 64 passed
+- `npm run test:e2e:server` -> 80 passed
 
 ## Priorità rimaste
 

@@ -19,12 +19,7 @@ import { excursionsAndSkiSections, pageMeta } from "@data/content";
       <div class="grid gap-16">
         {
           excursionsAndSkiSections.map((item, index) => (
-            <article
-              class:list={[
-                "grid items-center gap-8 lg:grid-cols-2 lg:gap-14",
-                index % 2 === 1 ? "lg:[&_.season-media]:order-2" : "",
-              ]}
-            >
+            <article class="grid items-start gap-8 lg:grid-cols-2 lg:gap-14">
               <p class="mb-[-1rem] text-sm font-bold uppercase tracking-[0.28em] text-majella-red lg:hidden">
                 {item.season}
               </p>

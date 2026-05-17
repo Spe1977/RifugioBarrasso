@@ -80,6 +80,45 @@ test("info and rules maps call to action opens Google Maps", async ({
   await expect(mapsLink).toHaveAttribute("rel", "noreferrer");
 });
 
+test("info and rules access section uses a full-width desktop heading and updated route wording", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/info-e-regole/");
+
+  const accessArticle = page.getByRole("article", {
+    name: "Come raggiungere il Rifugio",
+  });
+  const accessHeader = accessArticle.locator("[data-access-heading]");
+  const routeList = accessArticle.locator("[data-access-steps]");
+
+  await expect(
+    accessArticle.getByRole("heading", {
+      name: "Da Caramanico Terme verso San Nicolao e Macere Piane",
+    }),
+  ).toBeVisible();
+  await expect(
+    accessArticle.getByRole("heading", {
+      name: "Da Macere Piane a Guado Sant'Antonio (1.220 m s.l.m.)",
+    }),
+  ).toBeVisible();
+  await expect(
+    accessArticle.getByText("Una volta arrivato in località Macere Piane"),
+  ).toBeVisible();
+
+  const [articleBox, headerBox, routeListBox] = await Promise.all([
+    accessArticle.boundingBox(),
+    accessHeader.boundingBox(),
+    routeList.boundingBox(),
+  ]);
+
+  expect(articleBox).not.toBeNull();
+  expect(headerBox).not.toBeNull();
+  expect(routeListBox).not.toBeNull();
+  expect(headerBox!.width).toBeGreaterThan(articleBox!.width * 0.9);
+  expect(routeListBox!.y).toBeGreaterThan(headerBox!.y + headerBox!.height);
+});
+
 test("info and rules contact box exposes both operational emails", async ({
   page,
 }) => {
